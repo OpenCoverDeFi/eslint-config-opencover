@@ -14,7 +14,7 @@ Then, add this to your `.eslintrc.js`:
 
 ```js
 module.exports = {
-	extends: "@GeltFinance/eslint-config-opencover",
+	extends: "@opencover/eslint-config-opencover",
 	rules: {
 		// your overrides
 	},
@@ -27,7 +27,7 @@ Adjust your `.eslintrc.js` like this:
 
 ```js
 module.exports = {
-	extends: "@GeltFinance/eslint-config-opencover/with-react",
+	extends: "@opencover/eslint-config-opencover/with-react",
 	rules: {
 		// your overrides
 	},

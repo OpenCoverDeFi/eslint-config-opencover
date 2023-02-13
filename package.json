@@ -1,5 +1,5 @@
 {
-	"name": "@geltfinance/eslint-config-opencover",
+	"name": "@opencover/eslint-config-opencover",
 	"version": "1.0.0",
 	"description": "ESLint Typescript shareable config for OpenCover's coding style.",
 	"keywords": [
