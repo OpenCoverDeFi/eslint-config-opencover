@@ -1,0 +1,60 @@
+{
+	"name": "@geltfinance/eslint-config-opencover",
+	"version": "0.0.1",
+	"description": "ESLint Typescript shareable config for OpenCover's coding style.",
+	"keywords": [
+		"eslint",
+		"eslintrc",
+		"eslintconfig",
+		"config",
+		"styleguide",
+		"react",
+		"node"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "Thanos Diamantidis",
+		"email": "thanos@opencover.com",
+		"url": "https://opencover.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/GeltFinance/eslint-config-opencover.git"
+	},
+	"main": "index.js",
+	"files": [
+		"index.js",
+		"with-react.js",
+		"lib"
+	],
+	"scripts": {
+		"lint": "eslint . --cache",
+		"test": "ava -v"
+	},
+	"devDependencies": {
+		"ava": "^5.0.1",
+		"eslint": "^8.27.0",
+		"typescript": "^4.8.4"
+	},
+	"peerDependencies": {
+		"eslint": "^8.0.0",
+		"typescript": "^4.0.0"
+	},
+	"dependencies": {
+		"@typescript-eslint/eslint-plugin": "^5.42.1",
+		"@typescript-eslint/parser": "^5.42.1",
+		"eslint-config-airbnb": "^19.0.4",
+		"eslint-config-prettier": "^8.5.0",
+		"eslint-import-resolver-typescript": "^3.5.2",
+		"eslint-plugin-import": "^2.26.0",
+		"eslint-plugin-jsx-a11y": "^6.6.1",
+		"eslint-plugin-prettier": "^4.2.1",
+		"eslint-plugin-react": "^7.31.10",
+		"eslint-plugin-react-hooks": "^4.6.0",
+		"eslint-plugin-unicorn": "^45.0.2",
+		"prettier": "^2.7.1"
+	},
+	"engines": {
+		"node": ">=16.0.0"
+	}
+}
