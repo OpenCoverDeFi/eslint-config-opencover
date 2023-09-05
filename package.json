@@ -1,6 +1,6 @@
 {
 	"name": "@opencover/eslint-config-opencover",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "ESLint Typescript shareable config for OpenCover's coding style.",
 	"keywords": [
 		"eslint",
