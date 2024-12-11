@@ -14,6 +14,9 @@ test('With React ESLint Rules', async (t) => {
 
 	const element = <h1>Hello, world</h1>; //an uncapitalized comment without a space before it
 	ReactDOM.render(element, document.querySelector("#root"));
+	// This comment is valid since it has the correct capitalization.
+	// this comment is ignored since it follows another comment,
+	// and this one as well because it follows yet another comment.
 	`.replace(/\t*/g, '');
     const [{ errorCount, messages, warningCount }] = await linter.lintText(code);
     t.is(errorCount, 4);

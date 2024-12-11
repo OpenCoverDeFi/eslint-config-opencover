@@ -13,6 +13,9 @@ test('Basic ESLint Rules', async (t) => {
     const code = `const notUsed = "5";
 	const fn = (x) => x; //an uncapitalized comment without a space before it
 	fn({a:1});
+	// This comment is valid since it has the correct capitalization.
+	// this comment is ignored since it follows another comment,
+	// and this one as well because it follows yet another comment.
 	`.replace(/\t*/g, '');
 
     const [{ errorCount, warningCount, messages }] = await linter.lintText(code);
