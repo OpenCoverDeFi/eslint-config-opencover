@@ -5,8 +5,9 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
+import type { Linter } from 'eslint';
 
-export default [
+const config = [
 	js.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	reactPlugin.configs.flat.recommended,
@@ -60,5 +61,7 @@ export default [
 			],
 		},
 	},
-];
+] as Linter.Config[];
+
+export default config;
 

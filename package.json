@@ -22,25 +22,29 @@
 		"url": "https://github.com/GeltFinance/eslint-config-opencover.git"
 	},
 	"type": "module",
-	"main": "index.mjs",
+	"main": "main/default.js",
 	"files": [
-		"index.mjs",
-		"with-react.mjs",
-		"lib"
+		"main/default.js",
+		"main/with-react.js"
 	],
 	"scripts": {
-		"test": "ava -v",
+		"test": "vitest run",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"test:ui": "vitest --ui",
 		"prepare": "husky",
 		"lint": "eslint --max-warnings=0 . && prettier --check .",
 		"format": "eslint --fix . && prettier --write ."
 	},
 	"devDependencies": {
 		"@types/node": "^24.10.0",
-		"ava": "^6.4.1",
+		"@vitest/ui": "^4.0.8",
 		"eslint": "^9.39.1",
 		"husky": "^9.1.7",
+		"jiti": "^2.6.1",
+		"tsc-alias": "^1.8.16",
 		"tsx": "^4.20.6",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.8"
 	},
 	"peerDependencies": {
 		"eslint": "^9.0.0",
@@ -71,14 +75,5 @@
 		],
 		"*.{json,yml}": "prettier --cache --write",
 		".{prettierrc,eslintrc}": "prettier --cache --write"
-	},
-	"ava": {
-		"extensions": {
-			"ts": "module"
-		},
-		"nodeArguments": [
-			"--import",
-			"tsx"
-		]
 	}
 }

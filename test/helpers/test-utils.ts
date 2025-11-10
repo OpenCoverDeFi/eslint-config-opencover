@@ -32,6 +32,7 @@ export const createESLintInstance = async (config: Linter.Config<RulesConfig> | 
 	const rootDir = resolve(__dirname, '../..');
 
 	return new ESLint({
+		overrideConfigFile: true,
 		overrideConfig: [
 			...configArray,
 			{

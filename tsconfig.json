@@ -8,19 +8,15 @@
 		"skipLibCheck": true,
 		"resolveJsonModule": true,
 		"outDir": "dist",
-		"allowImportingTsExtensions": true,
-		"noEmit": true,
-		"types": [
-			"node"
-		]
+		"paths": {
+			"@/*": [
+				"./src/*"
+			]
+		}
 	},
 	"include": [
-		"lib/**/*",
-		"test/**/*",
-		"*.mjs"
-	],
-	"exclude": [
-		"node_modules",
-		"dist",
+		"src",
+		"test",
+		"eslint.config.ts"
 	]
 }

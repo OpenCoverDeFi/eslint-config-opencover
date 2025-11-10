@@ -2,16 +2,17 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import customPlugin from './plugin.ts';
+import customPlugin from './plugin.js';
+import type { Linter } from 'eslint';
 
-export default [
+const config = [
 	js.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	{
 		plugins: {
 			import: importPlugin,
 			unicorn: unicornPlugin,
-			'@opencover': customPlugin,
+			'@opencover-eslint': customPlugin,
 		},
 		languageOptions: {
 			parser: tseslint.parser,
@@ -30,7 +31,7 @@ export default [
 			// Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
 			// E.g. '@typescript-eslint/explicit-function-return-type': 'off',
 			'@typescript-eslint/no-non-null-assertion': 'error',
-			'@opencover/no-unnecessary-optional-chain': 'error',
+			'@opencover-eslint/no-unnecessary-optional-chain': 'error',
 			'import/prefer-default-export': 'off',
 			'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
 			semi: ['error', 'always'],
@@ -76,5 +77,7 @@ export default [
 			'unicorn/no-array-callback-reference': 'error',
 		},
 	},
-];
+] as Linter.Config[];
+
+export default config;
 
