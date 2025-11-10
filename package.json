@@ -21,10 +21,10 @@
 		"type": "git",
 		"url": "https://github.com/GeltFinance/eslint-config-opencover.git"
 	},
-	"main": "index.js",
+	"main": "index.mjs",
 	"files": [
-		"index.js",
-		"with-react.js",
+		"index.mjs",
+		"with-react.mjs",
 		"lib"
 	],
 	"scripts": {
@@ -32,29 +32,29 @@
 		"test": "ava -v"
 	},
 	"devDependencies": {
-		"ava": "^5.0.1",
-		"eslint": "^8.27.0",
-		"typescript": "^4.8.4"
+		"ava": "^6.4.1",
+		"eslint": "^9.39.1",
+		"typescript": "^5.9.3"
 	},
 	"peerDependencies": {
-		"eslint": "^8.0.0",
+		"eslint": "^9.0.0",
 		"typescript": "^5.0.0"
 	},
 	"dependencies": {
-		"@typescript-eslint/eslint-plugin": "^5.42.1",
-		"@typescript-eslint/parser": "^5.42.1",
-		"eslint-config-airbnb": "^19.0.4",
-		"eslint-config-prettier": "^8.5.0",
-		"eslint-import-resolver-typescript": "^3.5.2",
-		"eslint-plugin-import": "^2.26.0",
-		"eslint-plugin-jsx-a11y": "^6.6.1",
-		"eslint-plugin-prettier": "^4.2.1",
-		"eslint-plugin-react": "^7.31.10",
-		"eslint-plugin-react-hooks": "^4.6.0",
-		"eslint-plugin-unicorn": "^45.0.2",
-		"prettier": "^2.7.1"
+		"@eslint/compat": "^1.4.1",
+		"@eslint/js": "^9.39.1",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-import-resolver-typescript": "^4.4.4",
+		"eslint-plugin-import": "^2.32.0",
+		"eslint-plugin-jsx-a11y": "^6.10.2",
+		"eslint-plugin-prettier": "^5.5.4",
+		"eslint-plugin-react": "^7.37.5",
+		"eslint-plugin-react-hooks": "^7.0.1",
+		"eslint-plugin-unicorn": "^62.0.0",
+		"prettier": "^3.6.2",
+		"typescript-eslint": "^8.46.3"
 	},
 	"engines": {
-		"node": ">=16.0.0"
+		"node": ">=22.20.0"
 	}
 }
