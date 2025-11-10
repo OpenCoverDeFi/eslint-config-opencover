@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "es2024",
+		"module": "nodenext",
+		"strict": true,
+		"preserveConstEnums": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"resolveJsonModule": true,
+		"outDir": "dist",
+		"allowImportingTsExtensions": true,
+		"noEmit": true,
+		"types": ["node"]
+	},
+	"include": ["test/**/*", "lib/**/*", ".temp/**/*", "*.mjs"]
+}

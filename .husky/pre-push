@@ -1,0 +1,7 @@
+export GITHUB_TOKEN=
+
+# Typecheck code.
+yarn tsc --noEmit
+
+# Run all tests.
+yarn test
