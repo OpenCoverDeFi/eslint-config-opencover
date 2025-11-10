@@ -2,10 +2,10 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
+import { defineConfig } from 'eslint/config';
 import customPlugin from './plugin.js';
-import type { Linter } from 'eslint';
 
-const config = [
+const config = defineConfig([
 	js.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	{
@@ -77,7 +77,6 @@ const config = [
 			'unicorn/no-array-callback-reference': 'error',
 		},
 	},
-] as Linter.Config[];
+]);
 
 export default config;
-

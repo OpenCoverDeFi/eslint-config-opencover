@@ -1,8 +1,8 @@
+import { unlinkSync } from 'fs';
 import { describe, it, beforeEach, afterEach, expect } from 'vitest';
 import { ESLint } from 'eslint';
 import { createTempFile, createESLintInstance } from './helpers/test-utils.js';
 import withReactConfig from '@/with-react.js';
-import { unlinkSync } from 'fs';
 
 let tempFilePath: string;
 let linter: ESLint;
@@ -13,9 +13,9 @@ afterEach(() => {
 	}
 });
 
-beforeEach(async () => {
+beforeEach(() => {
 	tempFilePath = createTempFile('', 'ts');
-	linter = await createESLintInstance(withReactConfig);
+	linter = createESLintInstance(withReactConfig);
 });
 
 // TODO: Fix this test

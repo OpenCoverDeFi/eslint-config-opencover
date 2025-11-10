@@ -5,16 +5,17 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
-import type { Linter } from 'eslint';
+import type { ESLint } from 'eslint';
+import { defineConfig } from 'eslint/config';
 
-const config = [
+const config = defineConfig([
 	js.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	reactPlugin.configs.flat.recommended,
 	prettierConfig,
 	{
 		plugins: {
-			'react-hooks': reactHooksPlugin,
+			'react-hooks': reactHooksPlugin as ESLint.Plugin,
 			prettier: prettierPlugin,
 			import: importPlugin,
 		},
@@ -61,7 +62,6 @@ const config = [
 			],
 		},
 	},
-] as Linter.Config[];
+]);
 
 export default config;
-

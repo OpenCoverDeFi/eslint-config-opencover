@@ -25,8 +25,7 @@ export const createTempFile = (content: string, suffix: string): string => {
 	return filePath;
 };
 
-
-export const createESLintInstance = async (config: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[]): Promise<ESLint> => {
+export const createESLintInstance = (config: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[]): ESLint => {
 	const configArray = Array.isArray(config) ? config : [config];
 
 	const rootDir = resolve(__dirname, '../..');
@@ -38,10 +37,11 @@ export const createESLintInstance = async (config: Linter.Config<RulesConfig> | 
 			{
 				languageOptions: {
 					parserOptions: {
+						// We need this, as eslint-typescript-parser will need the file on top of the code to lint.
 						projectService: {
 							maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 1000000,
-							allowDefaultProject: ['.temp/*.ts'], // for loading code for eslint to lint
-						}
+							allowDefaultProject: ['.temp/*.ts'], // For loading code for eslint to lint
+						},
 					},
 				},
 			},

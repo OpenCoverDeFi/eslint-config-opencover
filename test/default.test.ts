@@ -1,8 +1,8 @@
+import { unlinkSync } from 'fs';
 import { describe, it, beforeEach, afterEach, expect } from 'vitest';
 import { ESLint } from 'eslint';
 import { createTempFile, createESLintInstance } from './helpers/test-utils.js';
 import defaultConfig from '@/default.js';
-import { unlinkSync } from 'fs';
 
 let tempFilePath: string;
 let linter: ESLint;
@@ -17,9 +17,9 @@ afterEach(() => {
 	}
 });
 
-beforeEach(async () => {
+beforeEach(() => {
 	tempFilePath = createTempFile('', 'ts');
-	linter = await createESLintInstance(defaultConfig);
+	linter = createESLintInstance(defaultConfig);
 });
 
 describe('Basic ESLint Rules', () => {

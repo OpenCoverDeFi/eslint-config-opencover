@@ -9,14 +9,8 @@
 		"resolveJsonModule": true,
 		"outDir": "dist",
 		"paths": {
-			"@/*": [
-				"./src/*"
-			]
+			"@/*": ["./src/*"]
 		}
 	},
-	"include": [
-		"src",
-		"test",
-		"eslint.config.ts"
-	]
+	"include": ["src", "test", "eslint.config.ts", "vitest.config.ts"]
 }
