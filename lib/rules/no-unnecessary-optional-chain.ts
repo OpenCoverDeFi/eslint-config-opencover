@@ -1,18 +1,13 @@
-// Plugin for the rule no-unnecessary-optional-chain.mjs
+// Plugin for the rule no-unnecessary-optional-chain
 import { ESLintUtils } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
 
-export const rule = ESLintUtils.RuleCreator((name) => `https://your-docs-url/${name}`)({
+export const rule = ESLintUtils.RuleCreator((name) => `https://opencover.com/eslint-config-opencover/${name}`)({
 	name: 'no-unnecessary-optional-chain',
 	meta: {
 		type: 'problem',
-		docs: {
-			description: 'Disallow unnecessary optional chaining',
-			recommended: 'error',
-		},
-		messages: {
-			unnecessaryOptionalChain: 'Unnecessary optional chain - the value is not nullable',
-		},
+		docs: { description: 'Disallow unnecessary optional chaining' },
+		messages: { unnecessaryOptionalChain: 'Unnecessary optional chain - the value is not nullable' },
 		schema: [],
 	},
 	defaultOptions: [],
@@ -44,3 +39,4 @@ export const rule = ESLintUtils.RuleCreator((name) => `https://your-docs-url/${n
 		};
 	},
 });
+

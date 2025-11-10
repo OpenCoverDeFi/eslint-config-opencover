@@ -10,7 +10,17 @@
 		"outDir": "dist",
 		"allowImportingTsExtensions": true,
 		"noEmit": true,
-		"types": ["node"]
+		"types": [
+			"node"
+		]
 	},
-	"include": ["test/**/*", "lib/**/*", ".temp/**/*", "*.mjs"]
+	"include": [
+		"lib/**/*",
+		"test/**/*",
+		"*.mjs"
+	],
+	"exclude": [
+		"node_modules",
+		"dist",
+	]
 }

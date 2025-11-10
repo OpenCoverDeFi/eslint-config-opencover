@@ -1,1 +1,1 @@
-export { default } from './lib/default.mjs';
+export { default } from './lib/default.js';

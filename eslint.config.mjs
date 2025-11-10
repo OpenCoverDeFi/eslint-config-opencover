@@ -13,7 +13,7 @@ const defaultLanguageOptions = defaultConfig.reduce(
 			...(curr.languageOptions || {}),
 		};
 	},
-	/** @type {import('eslint').Linter.LanguageOptions} */ ({})
+	/** @type {import('eslint').Linter.LanguageOptions} */({})
 );
 
 export default [
@@ -27,7 +27,7 @@ export default [
 			parserOptions: {
 				...defaultLanguageOptions.parserOptions,
 				projectService: {
-					allowDefaultProject: ['*.mjs', 'lib/*.mjs', 'lib/rules/*.mjs'],
+					allowDefaultProject: ['*.mjs', 'lib/*.ts', 'lib/rules/*.ts'],
 				},
 			},
 		},

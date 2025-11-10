@@ -1,1 +1,1 @@
-export { default } from './lib/with-react.mjs';
+export { default } from './lib/with-react.js';

@@ -1,6 +1,6 @@
 import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
-import { writeFileSync, unlinkSync, mkdirSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
 import { ESLint, Linter } from 'eslint';
 
@@ -25,46 +25,27 @@ export const createTempFile = (content: string, suffix: string): string => {
 	return filePath;
 };
 
-export const cleanupTempFile = (filePath: string): void => {
-	try {
-		unlinkSync(filePath);
-		tempFiles.delete(filePath);
-	} catch {
-		// Ignore cleanup errors
-	}
-};
 
-export const cleanupAllTempFiles = (): void => {
-	for (const filePath of tempFiles) {
-		try {
-			unlinkSync(filePath);
-		} catch {
-			// Ignore cleanup errors
-		}
-	}
-	tempFiles.clear();
-};
+export const createESLintInstance = async (config: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[]): Promise<ESLint> => {
+	const configArray = Array.isArray(config) ? config : [config];
 
-type ConfigModule = {
-	default: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
-};
-
-const isConfigModule = (value: unknown): value is ConfigModule => {
-	return isObject(value) && 'default' in value && (typeof value.default === 'object' || Array.isArray(value.default));
-};
-
-export const createESLintInstance = async (configPath: string): Promise<ESLint> => {
-	const importedModule: unknown = await import(configPath);
-	if (!isConfigModule(importedModule)) {
-		throw new Error(`Invalid config module: ${configPath}`);
-	}
-	const workspaceRoot = resolve(__dirname, '../..');
+	const rootDir = resolve(__dirname, '../..');
 
 	return new ESLint({
-		overrideConfig: importedModule.default,
-		cwd: workspaceRoot,
+		overrideConfig: [
+			...configArray,
+			{
+				languageOptions: {
+					parserOptions: {
+						projectService: {
+							maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 1000000,
+							allowDefaultProject: ['.temp/*.ts'], // for loading code for eslint to lint
+						}
+					},
+				},
+			},
+		],
+		cwd: rootDir,
+		ignore: false,
 	});
 };
-
-export const isObject = (value: unknown): value is Record<string, unknown> =>
-	value !== null && typeof value === 'object' && value.constructor === Object;

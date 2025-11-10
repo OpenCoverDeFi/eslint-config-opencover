@@ -2,7 +2,7 @@ import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import customPlugin from './plugin.mjs';
+import customPlugin from './plugin.ts';
 
 export default [
 	js.configs.recommended,
@@ -77,3 +77,4 @@ export default [
 		},
 	},
 ];
+

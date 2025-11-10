@@ -1,26 +1,25 @@
-import { resolve, dirname } from 'path';
-import { fileURLToPath } from 'url';
 import test from 'ava';
 import { ESLint } from 'eslint';
-import { cleanupAllTempFiles, createTempFile, createESLintInstance } from './helpers/test-utils.ts';
+import { createTempFile, createESLintInstance } from './helpers/test-utils.ts';
+import defaultConfig from '../lib/default.ts';
+import { unlinkSync } from 'fs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const configPath = resolve(__dirname, '../index.mjs');
-
-let lintText: (code: string) => Promise<ESLint.LintResult[]>;
+let tempFilePath: string;
+let linter: ESLint;
 
 test.afterEach(() => {
-	cleanupAllTempFiles();
+	if (tempFilePath) {
+		try {
+			unlinkSync(tempFilePath);
+		} catch {
+			// Ignore
+		}
+	}
 });
-test.beforeEach(() => {
-	lintText = async (code: string) => {
-		const tempFilePath = createTempFile(code, 'ts');
-		const linter = await createESLintInstance(configPath);
-		return await linter.lintText(code, {
-			filePath: tempFilePath,
-		});
-	};
+
+test.beforeEach(async () => {
+	tempFilePath = createTempFile('', 'ts');
+	linter = await createESLintInstance(defaultConfig);
 });
 
 test('Basic ESLint Rules', async (t) => {
@@ -32,7 +31,9 @@ test('Basic ESLint Rules', async (t) => {
 	// and this one as well because it follows yet another comment.
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, warningCount, messages }] = await lintText(code);
+	const [{ errorCount, warningCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 
 	t.is(warningCount, 4);
 	t.is(errorCount, 4);
@@ -53,7 +54,9 @@ test('no-multiple-empty-lines rule throws error', async (t) => {
 const y = 2;
 `.replace(/\t*/g, '');
 
-	const [{ warningCount, messages }] = await lintText(code);
+	const [{ warningCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(warningCount > 0);
 	const multipleEmptyLinesWarning = messages.find((msg) => msg.ruleId === 'no-multiple-empty-lines');
 	t.truthy(multipleEmptyLinesWarning);
@@ -66,7 +69,9 @@ test('unicorn/no-array-callback-reference rule throws error', async (t) => {
 	const foo = array.map(callback);
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const noArrayCallbackReferenceError = messages.find((msg) => msg.ruleId === 'unicorn/no-array-callback-reference');
 	t.truthy(noArrayCallbackReferenceError);
@@ -79,7 +84,9 @@ test('@typescript-eslint/no-non-null-assertion rule throws error for ex!.optiona
 	const result = ex!.optional;
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const nonNullAssertionError = messages.find((msg) => msg.ruleId === '@typescript-eslint/no-non-null-assertion');
 	t.truthy(nonNullAssertionError);
@@ -92,7 +99,9 @@ test('@typescript-eslint/no-non-null-assertion rule throws error for ex.optional
 	const result = ex.optional!;
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const nonNullAssertionError = messages.find((msg) => msg.ruleId === '@typescript-eslint/no-non-null-assertion');
 	t.truthy(nonNullAssertionError);
@@ -104,7 +113,9 @@ test('@typescript-eslint/no-non-null-assertion rule throws error for value!.toSt
 	const result = value!.toString();
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const nonNullAssertionError = messages.find((msg) => msg.ruleId === '@typescript-eslint/no-non-null-assertion');
 	t.truthy(nonNullAssertionError);
@@ -117,7 +128,9 @@ test('@opencover/no-unnecessary-optional-chain rule throws error for ex?.value w
 	const result = ex?.value;
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const unnecessaryOptionalChainError = messages.find(
 		(msg) => msg.ruleId === '@opencover/no-unnecessary-optional-chain'
@@ -132,7 +145,9 @@ test('@opencover/no-unnecessary-optional-chain rule throws error for ex.value?.(
 	const result = ex.value?.();
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const unnecessaryOptionalChainError = messages.find(
 		(msg) => msg.ruleId === '@opencover/no-unnecessary-optional-chain'
@@ -147,7 +162,9 @@ test('@opencover/no-unnecessary-optional-chain rule throws error for ex?.[0] whe
 	const result = ex?.[0];
 	`.replace(/\t*/g, '');
 
-	const [{ errorCount, messages }] = await lintText(code);
+	const [{ errorCount, messages }] = await linter.lintText(code, {
+		filePath: tempFilePath,
+	});
 	t.true(errorCount > 0);
 	const unnecessaryOptionalChainError = messages.find(
 		(msg) => msg.ruleId === '@opencover/no-unnecessary-optional-chain'
