@@ -1,11 +1,11 @@
 import { describe, it, beforeAll } from 'vitest';
-import { lintFileWithName, expectRuleError, expectNoRuleError, createTempFileWithName } from '../setup.js';
+import { lintFileWithName, expectRuleError, expectNoRuleError, createTempFile } from '../setup.js';
 import defaultConfig from '@/default.js';
 
 let filePath: string;
 
 beforeAll(() => {
-	filePath = createTempFileWithName('', 'test.test.ts');
+	filePath = createTempFile('test.test.ts');
 });
 
 describe('Vitest Padding Rules', () => {

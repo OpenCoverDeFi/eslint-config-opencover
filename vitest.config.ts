@@ -2,9 +2,11 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
 	test: {
-		globals: true,
-		include: ['test/**/*.test.ts'],
-		setupFiles: ['test/setup.ts'],
+		setupFiles: ['tests/setup.ts'],
+		testTimeout: 60000,
+		coverage: {
+			reporter: ['text', 'json', 'html'],
+		},
 	},
 	resolve: {
 		alias: {

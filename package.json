@@ -13,8 +13,8 @@
 	],
 	"license": "MIT",
 	"author": {
-		"name": "Thanos Diamantidis",
-		"email": "thanos@opencover.com",
+		"name": "OpenCover",
+		"email": "team@opencover.com",
 		"url": "https://opencover.com"
 	},
 	"repository": {
@@ -22,15 +22,20 @@
 		"url": "https://github.com/GeltFinance/eslint-config-opencover.git"
 	},
 	"type": "module",
-	"main": "main/default.js",
+	"main": "dist/default.js",
 	"files": [
-		"main/default.js",
-		"main/with-react.js"
+		"dist/default.js",
+		"dist/with-react.js",
+		"dist/plugin.js",
+		"dist/rules/no-unnecessary-optional-chain.js",
+		"dist/rules/filename-no-dots.js",
+		"dist/rules/no-enum.js"
 	],
 	"scripts": {
 		"test": "vitest run",
-		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"test:ui": "vitest --ui",
+		"test:coverage": "vitest run --coverage",
+		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"prepare": "husky",
 		"lint": "eslint --max-warnings=0 . && prettier --check .",
 		"format": "eslint --fix . && prettier --write ."
@@ -38,6 +43,7 @@
 	"devDependencies": {
 		"@eslint/js": "^9.39.1",
 		"@types/node": "^24.10.0",
+		"@vitest/coverage-v8": "4.0.8",
 		"@vitest/eslint-plugin": "^1.4.2",
 		"@vitest/ui": "^4.0.8",
 		"eslint": "^9.39.1",

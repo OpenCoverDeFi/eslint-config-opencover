@@ -14,21 +14,7 @@ export const tempDir = resolve(__dirname, '../.temp');
 let tempFilePath: string | null = null;
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
 
-export const createTempFile = (content: string, suffix: string): string => {
-	try {
-		mkdirSync(tempDir, { recursive: true });
-	} catch {
-		// Ignore
-	}
-	const timestamp = Date.now();
-	const randomId = Math.random().toString(36).substring(7);
-	const filePath = join(tempDir, `temp-${timestamp}-${randomId}.${suffix}`);
-
-	writeFileSync(filePath, content, 'utf8');
-	return filePath;
-};
-
-export const createTempFileWithName = (content: string, filename: string): string => {
+export const createTempFile = (filename: string): string => {
 	const filePath = join(tempDir, filename);
 	const fileDir = dirname(filePath);
 
@@ -38,7 +24,7 @@ export const createTempFileWithName = (content: string, filename: string): strin
 		// Ignore
 	}
 
-	writeFileSync(filePath, content, 'utf8');
+	writeFileSync(filePath, '', 'utf8');
 	return filePath;
 };
 export const createESLintInstance = (config: Config): ESLint => {
@@ -84,7 +70,10 @@ export const lintFileWithName = async (
 
 export const lintText = async (config: Config, code: string) => {
 	if (!tempFilePath) {
-		tempFilePath = createTempFile('', 'ts');
+		const timestamp = Date.now();
+		const randomId = Math.random().toString(36).substring(7);
+		const filename = `temp-${timestamp}-${randomId}.ts`;
+		tempFilePath = createTempFile(filename);
 	}
 
 	const linter = createESLintInstance(config);
