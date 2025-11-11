@@ -1,15 +1,10 @@
 import { resolve, dirname, join } from 'path';
-import { fileURLToPath } from 'url';
-import { writeFileSync, mkdirSync, rmSync } from 'fs';
+import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
 import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
-import { afterAll, expect } from 'vitest';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-export const tempDir = resolve(__dirname, '../.temp');
+import { expect } from 'vitest';
+import { tempDir } from './global-setup.js';
 
 let tempFilePath: string | null = null;
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
@@ -96,11 +91,3 @@ export const expectRuleWarning = (result: ESLint.LintResult, ruleId: string) => 
 export const expectNoRuleError = (result: ESLint.LintResult, ruleId: string) => {
 	expect(result.messages).not.toContainEqual(expect.objectContaining({ ruleId }));
 };
-
-afterAll(() => {
-	try {
-		rmSync(tempDir, { recursive: true, force: true });
-	} catch {
-		// Ignore cleanup errors
-	}
-});

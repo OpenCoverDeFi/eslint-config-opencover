@@ -1,17 +1,19 @@
 import { describe, it } from 'vitest';
-import { lintText, expectRuleError } from '../setup.js';
+import dedent from 'dedent';
+import { lintText, expectRuleError } from '../test-utils.js';
 import defaultConfig from '@/default.js';
 
 const ruleName = 'space-in-parens';
 
 describe(ruleName, () => {
-	it('should enforce no space in parens', async () => {
-		const code = `const result = ( 1 + 2 );
-	function test( x ) { return x; }
-	`.replace(/\t*/g, '');
+    it('should enforce no space in parens', async () => {
+        const code = dedent`
+			const result = ( 1 + 2 );
+			function test( x ) { return x; }
+		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 });
