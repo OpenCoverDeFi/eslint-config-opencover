@@ -1,7 +1,7 @@
 import { describe, it, beforeAll } from 'vitest';
 import dedent from 'dedent';
-import { lintFileWithName, expectRuleError, expectNoRuleError, createTempFile } from '../../test-utils.js';
-import defaultConfig from '@/default.js';
+import { lintFileWithName, expectRuleError, expectNoRuleError, createTempFile } from '@tests/test-utils.js';
+import defaultConfig from '@eslint-config-opencover/default.js';
 
 let filePath: string;
 

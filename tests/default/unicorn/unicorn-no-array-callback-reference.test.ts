@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError } from '../../test-utils.js';
-import defaultConfig from '@/default.js';
+import { lintText, expectRuleError } from '@tests/test-utils.js';
+import defaultConfig from '@eslint-config-opencover/default.js';
 
 const ruleName = 'unicorn/no-array-callback-reference';
 

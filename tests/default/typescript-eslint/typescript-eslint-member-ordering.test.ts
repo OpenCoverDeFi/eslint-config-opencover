@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '../../test-utils.js';
-import defaultConfig from '@/default.js';
+import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import defaultConfig from '@eslint-config-opencover/default.js';
 
 const ruleName = '@typescript-eslint/member-ordering';
 

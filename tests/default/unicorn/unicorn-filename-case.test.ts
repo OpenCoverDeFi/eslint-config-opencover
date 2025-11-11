@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
-import { createTempFile, lintFile, expectRuleError, expectNoRuleError } from '../../test-utils.js';
-import defaultConfig from '@/default.js';
+import { createTempFile, lintFile, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import defaultConfig from '@eslint-config-opencover/default.js';
 
 const ruleName = 'unicorn/filename-case';
 

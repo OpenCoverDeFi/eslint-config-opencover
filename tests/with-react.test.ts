@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
 import { lintText, expectRuleError, expectRuleWarning } from './test-utils.js';
-import withReactConfig from '@/with-react.js';
+import withReactConfig from '@eslint-config-opencover/with-react.js';
 
 // TODO: Fix this test
 describe.skip('With React ESLint Rules', () => {
