@@ -4,6 +4,7 @@ export default defineConfig({
 	test: {
 		globals: true,
 		include: ['test/**/*.test.ts'],
+		setupFiles: ['test/setup.ts'],
 	},
 	resolve: {
 		alias: {

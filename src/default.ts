@@ -28,23 +28,17 @@ const config = defineConfig([
 			},
 		},
 		rules: {
-			// Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
-			// E.g. '@typescript-eslint/explicit-function-return-type': 'off',
-			'@typescript-eslint/no-non-null-assertion': 'error',
 			'@opencover-eslint/no-unnecessary-optional-chain': 'error',
-			'import/prefer-default-export': 'off',
-			'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
-			semi: ['error', 'always'],
-			quotes: [2, 'single', { avoidEscape: true }],
-			'object-curly-spacing': ['warn', 'always'],
-			'key-spacing': ['warn', { mode: 'strict' }],
-			'space-before-blocks': ['error', 'always'],
+			'@typescript-eslint/no-non-null-assertion': 'error',
 			'block-spacing': ['error', 'always'],
-			'space-infix-ops': 'error',
+			'capitalized-comments': [
+				'warn',
+				'always',
+				{
+					ignoreConsecutiveComments: true,
+				},
+			],
 			'comma-spacing': ['error', { before: false, after: true }],
-			'keyword-spacing': ['error', { before: true }],
-			'space-in-parens': ['error', 'never'],
-			'no-multi-spaces': 'error',
 			'import/order': [
 				'warn',
 				{
@@ -57,7 +51,18 @@ const config = defineConfig([
 					],
 				},
 			],
+			'import/prefer-default-export': 'off',
+			'key-spacing': ['warn', { mode: 'strict' }],
+			'keyword-spacing': ['error', { before: true }],
+			'no-multi-spaces': 'error',
+			'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
+			'object-curly-spacing': ['warn', 'always'],
 			'quote-props': [1, 'as-needed'],
+			quotes: [2, 'single', { avoidEscape: true }],
+			semi: ['error', 'always'],
+			'space-before-blocks': ['error', 'always'],
+			'space-in-parens': ['error', 'never'],
+			'space-infix-ops': 'error',
 			'spaced-comment': [
 				'error',
 				'always',
@@ -65,13 +70,6 @@ const config = defineConfig([
 					block: {
 						balanced: true,
 					},
-				},
-			],
-			'capitalized-comments': [
-				'warn',
-				'always',
-				{
-					ignoreConsecutiveComments: true,
 				},
 			],
 			'unicorn/no-array-callback-reference': 'error',
