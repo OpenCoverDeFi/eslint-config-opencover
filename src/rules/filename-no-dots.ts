@@ -1,4 +1,5 @@
-import type { Rule } from 'eslint';
+import type { TSESTree } from '@typescript-eslint/utils';
+import { createRule } from '../utils.js';
 
 type Options = [
 	{
@@ -7,9 +8,6 @@ type Options = [
 ];
 
 type OptionsObject = Options[0];
-
-type RuleContext = Parameters<Rule.RuleModule['create']>[0];
-type RuleListener = ReturnType<Rule.RuleModule['create']>;
 
 function isOptionsObject(value: unknown): value is OptionsObject {
 	if (typeof value !== 'object' || value === null) {
@@ -24,12 +22,13 @@ function isOptionsObject(value: unknown): value is OptionsObject {
 	return true;
 }
 
-function getOptions(context: RuleContext): OptionsObject {
-	const firstOption: unknown = Array.isArray(context.options) ? context.options[0] : {};
+function getOptions(options: Options): OptionsObject {
+	const firstOption: unknown = options[0];
 	return isOptionsObject(firstOption) ? firstOption : {};
 }
 
-export const rule: Rule.RuleModule = {
+export const rule = createRule({
+	name: 'filename-no-dots',
 	meta: {
 		type: 'problem',
 		docs: {
@@ -53,9 +52,10 @@ export const rule: Rule.RuleModule = {
 			},
 		],
 	},
-	create(context: RuleContext): RuleListener {
-		const options = getOptions(context);
-		const ignorePatterns = options.ignorePattern ?? [];
+	defaultOptions: [{}],
+	create(context, [options]) {
+		const optionsObject = getOptions([options]);
+		const ignorePatterns = optionsObject.ignorePattern ?? [];
 
 		const basename = context.filename.split('/').pop() ?? '';
 
@@ -92,15 +92,15 @@ export const rule: Rule.RuleModule = {
 
 		if (shouldReport) {
 			return {
-				Program(node: Rule.Node) {
+				Program(node: TSESTree.Program) {
 					context.report({
 						node,
 						messageId: 'noDotsInFilename',
 					});
 				},
-			} as RuleListener;
+			};
 		}
 
 		return {};
 	},
-};
+});

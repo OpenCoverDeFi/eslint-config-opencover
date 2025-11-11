@@ -1,7 +1,6 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
-
-const createRule = ESLintUtils.RuleCreator((name) => `https://opencover.com/rules/${name}`);
+import { AST_NODE_TYPES } from '@typescript-eslint/utils';
+import { createRule } from '../utils.js';
 
 type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 

@@ -1,12 +1,9 @@
 // Plugin for the rule no-unnecessary-typeof
-import type { Rule } from 'eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-
-type RuleContext = Parameters<Rule.RuleModule['create']>[0];
-type RuleListener = ReturnType<Rule.RuleModule['create']>;
+import { createRule } from '../utils.js';
 
 function extractTypeofInfo(
 	node: TSESTree.BinaryExpression
@@ -89,19 +86,17 @@ function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecke
 }
 
 function handleBinaryExpression(
-	node: Rule.Node,
-	context: RuleContext,
+	node: TSESTree.BinaryExpression,
+	context: Parameters<Parameters<typeof createRule>[0]['create']>[0],
 	services: ParserServices,
 	checker: ts.TypeChecker
 ): void {
-	const esTreeNode = node as unknown as TSESTree.BinaryExpression;
-
 	// Only check === and !== operators
-	if (esTreeNode.operator !== '===' && esTreeNode.operator !== '!==') {
+	if (node.operator !== '===' && node.operator !== '!==') {
 		return;
 	}
 
-	const typeofInfo = extractTypeofInfo(esTreeNode);
+	const typeofInfo = extractTypeofInfo(node);
 	if (!typeofInfo) {
 		return;
 	}
@@ -129,7 +124,8 @@ function handleBinaryExpression(
 	}
 }
 
-export const rule: Rule.RuleModule = {
+export const rule = createRule({
+	name: 'no-unnecessary-typeof',
 	meta: {
 		type: 'problem',
 		docs: {
@@ -140,16 +136,15 @@ export const rule: Rule.RuleModule = {
 		},
 		schema: [],
 	},
-	create(context: RuleContext): RuleListener {
-		const services = ESLintUtils.getParserServices(
-			context as unknown as Parameters<typeof ESLintUtils.getParserServices>[0]
-		);
+	defaultOptions: [],
+	create(context) {
+		const services = ESLintUtils.getParserServices(context);
 		const checker = services.program.getTypeChecker();
 
 		return {
-			BinaryExpression(node: Rule.Node) {
+			BinaryExpression(node: TSESTree.BinaryExpression) {
 				handleBinaryExpression(node, context, services, checker);
 			},
-		} as RuleListener;
+		};
 	},
-};
+});

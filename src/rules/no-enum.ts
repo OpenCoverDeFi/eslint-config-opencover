@@ -1,10 +1,8 @@
-import type { Rule } from 'eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
+import { createRule } from '../utils.js';
 
-type RuleContext = Parameters<Rule.RuleModule['create']>[0];
-type RuleListener = ReturnType<Rule.RuleModule['create']>;
-
-export const rule: Rule.RuleModule = {
+export const rule = createRule({
+	name: 'no-enum',
 	meta: {
 		type: 'problem',
 		docs: {
@@ -15,7 +13,8 @@ export const rule: Rule.RuleModule = {
 		},
 		schema: [],
 	},
-	create(context: RuleContext): RuleListener {
+	defaultOptions: [],
+	create(context) {
 		return {
 			TSEnumDeclaration(node: TSESTree.TSEnumDeclaration) {
 				context.report({
@@ -23,6 +22,6 @@ export const rule: Rule.RuleModule = {
 					messageId: 'noEnum',
 				});
 			},
-		} as unknown as RuleListener;
+		};
 	},
-};
+});

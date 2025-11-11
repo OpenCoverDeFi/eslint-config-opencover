@@ -1,13 +1,11 @@
 // Plugin for the rule no-unnecessary-optional-chain
-import type { Rule } from 'eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
 import { ESLintUtils } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
+import { createRule } from '../utils.js';
 
-type RuleContext = Parameters<Rule.RuleModule['create']>[0];
-type RuleListener = ReturnType<Rule.RuleModule['create']>;
-
-export const rule: Rule.RuleModule = {
+export const rule = createRule({
+	name: 'no-unnecessary-optional-chain',
 	meta: {
 		type: 'problem',
 		docs: {
@@ -18,15 +16,14 @@ export const rule: Rule.RuleModule = {
 		},
 		schema: [],
 	},
-	create(context: RuleContext): RuleListener {
-		const services = ESLintUtils.getParserServices(
-			context as unknown as Parameters<typeof ESLintUtils.getParserServices>[0]
-		);
+	defaultOptions: [],
+	create(context) {
+		const services = ESLintUtils.getParserServices(context);
 		const checker = services.program.getTypeChecker();
 
 		return {
-			ChainExpression(node: Rule.Node) {
-				const tsNode = services.esTreeNodeToTSNodeMap.get(node as unknown as TSESTree.ChainExpression);
+			ChainExpression(node: TSESTree.ChainExpression) {
+				const tsNode = services.esTreeNodeToTSNodeMap.get(node);
 				const type = checker.getTypeAtLocation(tsNode);
 
 				// Check if the type includes null or undefined
@@ -42,6 +39,6 @@ export const rule: Rule.RuleModule = {
 					});
 				}
 			},
-		} as RuleListener;
+		};
 	},
-};
+});

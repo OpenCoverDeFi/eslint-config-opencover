@@ -1,11 +1,8 @@
 // Plugin for the rule no-unnecessary-as-assertion
-import type { Rule } from 'eslint';
 import type { TSESTree } from '@typescript-eslint/utils';
 import { ESLintUtils } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-
-type RuleContext = Parameters<Rule.RuleModule['create']>[0];
-type RuleListener = ReturnType<Rule.RuleModule['create']>;
+import { createRule } from '../utils.js';
 
 function isFromAnyOrUnknown(expressionType: ts.Type): boolean {
 	const isFromAny = (expressionType.flags & ts.TypeFlags.Any) !== 0;
@@ -50,7 +47,8 @@ function checkUnionNarrowing(
 	return false;
 }
 
-export const rule: Rule.RuleModule = {
+export const rule = createRule({
+	name: 'no-unnecessary-as-assertion',
 	meta: {
 		type: 'problem',
 		docs: {
@@ -61,15 +59,14 @@ export const rule: Rule.RuleModule = {
 		},
 		schema: [],
 	},
-	create(context: RuleContext): RuleListener {
-		const services = ESLintUtils.getParserServices(
-			context as unknown as Parameters<typeof ESLintUtils.getParserServices>[0]
-		);
+	defaultOptions: [],
+	create(context) {
+		const services = ESLintUtils.getParserServices(context);
 		const checker = services.program.getTypeChecker();
 
 		return {
-			TSAsExpression(node: Rule.Node) {
-				const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node as unknown as TSESTree.TSAsExpression);
+			TSAsExpression(node: TSESTree.TSAsExpression) {
+				const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
 
 				if (!ts.isAsExpression(tsAsExpression)) {
 					return;
@@ -116,6 +113,6 @@ export const rule: Rule.RuleModule = {
 					}
 				}
 			},
-		} as RuleListener;
+		};
 	},
-};
+});
