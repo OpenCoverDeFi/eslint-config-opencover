@@ -4,6 +4,7 @@ import { rule as filenameNoDotsRule } from './rules/filename-no-dots.js';
 import { rule as noEnumRule } from './rules/no-enum.js';
 import { rule as noUnnecessaryAsAssertionRule } from './rules/no-unnecessary-as-assertion.js';
 import { rule as noUnnecessaryTypeofRule } from './rules/no-unnecessary-typeof.js';
+import { rule as noUnnecessaryLogicalOrRule } from './rules/no-unnecessary-logical-or.js';
 import { rule as complexFunctionsRequireReturnTypeRule } from './rules/complex-functions-require-return-type.js';
 
 export default {
@@ -13,6 +14,8 @@ export default {
 		'no-enum': noEnumRule,
 		'no-unnecessary-as-assertion': noUnnecessaryAsAssertionRule,
 		'no-unnecessary-typeof': noUnnecessaryTypeofRule,
+		'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
 		'complex-functions-require-return-type': complexFunctionsRequireReturnTypeRule,
 	},
-} satisfies ESLint.Plugin;
+	// TODO: Figure out types
+} as unknown as ESLint.Plugin;

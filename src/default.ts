@@ -39,7 +39,13 @@ const config = defineConfig([
 			'@opencover-eslint/no-enum': 'error',
 			'@opencover-eslint/no-unnecessary-as-assertion': 'error',
 			'@opencover-eslint/no-unnecessary-typeof': 'error',
-			'@opencover-eslint/complex-functions-require-return-type': 'error',
+			'@opencover-eslint/no-unnecessary-logical-or': 'error',
+			'@opencover-eslint/complex-functions-require-return-type': [
+				'error',
+				{
+					maxComplexity: 10,
+				},
+			],
 			'@typescript-eslint/consistent-type-imports': [
 				'error',
 				{
@@ -47,9 +53,10 @@ const config = defineConfig([
 					disallowTypeAnnotations: false,
 				},
 			],
+			'@typescript-eslint/explicit-member-accessibility': 'error',
 			'@typescript-eslint/member-ordering': 'error',
 			'@typescript-eslint/no-non-null-assertion': 'error',
-			'@typescript-eslint/no-unnecessary-condition': 'error',
+			'@typescript-eslint/no-unnecessary-condition': ['error'],
 			'@typescript-eslint/no-restricted-types': [
 				'error',
 				{
