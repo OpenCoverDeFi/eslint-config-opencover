@@ -6,14 +6,14 @@ import defaultConfig from '@/default.js';
 const ruleName = 'space-in-parens';
 
 describe(ruleName, () => {
-    it('should enforce no space in parens', async () => {
-        const code = dedent`
+	it('should enforce no space in parens', async () => {
+		const code = dedent`
 			const result = ( 1 + 2 );
 			function test( x ) { return x; }
 		`;
 
-        const [result] = await lintText(defaultConfig, code);
+		const [result] = await lintText(defaultConfig, code);
 
-        expectRuleError(result, ruleName);
-    });
+		expectRuleError(result, ruleName);
+	});
 });

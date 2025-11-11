@@ -18,7 +18,7 @@ function isOptionsObject(value: unknown): value is OptionsObject {
 	if (!('ignorePattern' in value) || !Array.isArray(value.ignorePattern)) {
 		return false;
 	}
-	if (value.ignorePattern.some((pattern: string) => typeof pattern !== 'string')) {
+	if (value.ignorePattern.some((pattern: unknown) => typeof pattern !== 'string')) {
 		return false;
 	}
 	return true;

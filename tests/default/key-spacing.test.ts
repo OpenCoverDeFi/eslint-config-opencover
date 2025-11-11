@@ -6,14 +6,14 @@ import defaultConfig from '@/default.js';
 const ruleName = 'key-spacing';
 
 describe(ruleName, () => {
-    it('should enforce key spacing', async () => {
-        const code = dedent`
+	it('should enforce key spacing', async () => {
+		const code = dedent`
 			const fn = (x) => x;
 			fn({a:1});
 		`;
 
-        const [result] = await lintText(defaultConfig, code);
+		const [result] = await lintText(defaultConfig, code);
 
-        expectRuleWarning(result, ruleName);
-    });
+		expectRuleWarning(result, ruleName);
+	});
 });

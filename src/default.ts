@@ -37,6 +37,9 @@ const config = defineConfig([
 				},
 			],
 			'@opencover-eslint/no-enum': 'error',
+			'@opencover-eslint/no-unnecessary-as-assertion': 'error',
+			'@opencover-eslint/no-unnecessary-typeof': 'error',
+			'@opencover-eslint/complex-functions-require-return-type': 'error',
 			'@typescript-eslint/consistent-type-imports': [
 				'error',
 				{

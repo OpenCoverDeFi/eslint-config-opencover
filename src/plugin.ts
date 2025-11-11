@@ -2,11 +2,17 @@ import type { ESLint } from 'eslint';
 import { rule as noUnnecessaryOptionalChainRule } from './rules/no-unnecessary-optional-chain.js';
 import { rule as filenameNoDotsRule } from './rules/filename-no-dots.js';
 import { rule as noEnumRule } from './rules/no-enum.js';
+import { rule as noUnnecessaryAsAssertionRule } from './rules/no-unnecessary-as-assertion.js';
+import { rule as noUnnecessaryTypeofRule } from './rules/no-unnecessary-typeof.js';
+import { rule as complexFunctionsRequireReturnTypeRule } from './rules/complex-functions-require-return-type.js';
 
 export default {
 	rules: {
 		'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,
 		'filename-no-dots': filenameNoDotsRule,
 		'no-enum': noEnumRule,
+		'no-unnecessary-as-assertion': noUnnecessaryAsAssertionRule,
+		'no-unnecessary-typeof': noUnnecessaryTypeofRule,
+		'complex-functions-require-return-type': complexFunctionsRequireReturnTypeRule,
 	},
 } satisfies ESLint.Plugin;

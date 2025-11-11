@@ -6,14 +6,14 @@ import defaultConfig from '@/default.js';
 const ruleName = 'semi';
 
 describe(ruleName, () => {
-    it('should enforce semicolons', async () => {
-        const code = dedent`
+	it('should enforce semicolons', async () => {
+		const code = dedent`
 			const x = 1
 			const y = 2
 		`;
 
-        const [result] = await lintText(defaultConfig, code);
+		const [result] = await lintText(defaultConfig, code);
 
-        expectRuleError(result, ruleName);
-    });
+		expectRuleError(result, ruleName);
+	});
 });
