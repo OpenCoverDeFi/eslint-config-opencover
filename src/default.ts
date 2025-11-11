@@ -1,4 +1,4 @@
-import js from '@eslint/js';
+import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
@@ -7,7 +7,7 @@ import vitest from '@vitest/eslint-plugin';
 import customPlugin from './plugin.js';
 
 const config = defineConfig([
-	js.configs.recommended,
+	eslint.configs.recommended,
 	...tseslint.configs.recommendedTypeChecked,
 	{
 		plugins: {

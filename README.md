@@ -10,35 +10,65 @@
 yarn add -D eslint-config-opencover
 ```
 
-Then, add this to your `.eslintrc.js`:
+Then, create an `eslint.config.ts` file:
 
-```js
-module.exports = {
-	extends: '@opencover/eslint-config-opencover',
-	rules: {
-		// your overrides
+```ts
+import { defineConfig } from 'eslint/config';
+import opencoverConfig from '@opencover/eslint-config-opencover';
+
+export default defineConfig([
+	...opencoverConfig,
+	{
+		rules: {
+			// your overrides
+		},
 	},
-};
+]);
 ```
 
 ### Usage for React
 
-Adjust your `.eslintrc.js` like this:
+Adjust your `eslint.config.ts` like this:
 
-```js
-module.exports = {
-	extends: '@opencover/eslint-config-opencover/with-react',
-	rules: {
-		// your overrides
+```ts
+import { defineConfig } from 'eslint/config';
+import opencoverReactConfig from '@opencover/eslint-config-opencover/with-react';
+
+export default defineConfig([
+	...opencoverReactConfig,
+	{
+		rules: {
+			// your overrides
+		},
 	},
-};
+]);
 ```
 
-### Add to .eslintignore certain files, for example:
+## Rules
 
-```
-*.css
-*.svg
+This package configures ESLint with a comprehensive set of rules for TypeScript projects. Detailed documentation for each section is available in the [`rules/`](./rules/) directory:
+
+- **[OpenCover Custom Rules](./rules/opencover/README.md)** - Rules specific to OpenCover's coding standards
+- **[TypeScript ESLint Rules](./rules/typescript-eslint/README.md)** - TypeScript-specific linting rules with all recommended and overridden settings
+- **[ESLint Rules](./rules/eslint/README.md)** - Core JavaScript/TypeScript formatting and best practices
+- **[Import Plugin Rules](./rules/import/README.md)** - Import/export statement linting
+- **[Unicorn Plugin Rules](./rules/unicorn/README.md)** - Additional best practices
+- **[Vitest Plugin Rules](./rules/vitest/README.md)** - Test file specific rules (applied to `*.test.ts` files)
+
+### Ignore certain files
+
+Add files to ignore in your `eslint.config.ts`:
+
+```ts
+import { defineConfig } from 'eslint/config';
+import opencoverConfig from '@opencover/eslint-config-opencover';
+
+export default defineConfig([
+	{
+		ignores: ['*.css', '*.svg'],
+	},
+	...opencoverConfig,
+]);
 ```
 
 ### (Optional) Add .prettierc.json with this preferred configuration
