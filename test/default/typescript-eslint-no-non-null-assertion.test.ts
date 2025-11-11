@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('@typescript-eslint/no-non-null-assertion', () => {
+const ruleName = '@typescript-eslint/no-non-null-assertion';
+
+describe(ruleName, () => {
 	it('should throw error for ex!.optional', async () => {
 		const code = `type Example = { optional?: boolean };
 	const ex: Example = {};
@@ -11,7 +13,7 @@ describe('@typescript-eslint/no-non-null-assertion', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@typescript-eslint/no-non-null-assertion');
+		expectRuleError(result, ruleName);
 	});
 
 	it('should throw error for ex.optional!', async () => {
@@ -22,7 +24,7 @@ describe('@typescript-eslint/no-non-null-assertion', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@typescript-eslint/no-non-null-assertion');
+		expectRuleError(result, ruleName);
 	});
 
 	it('should throw error for value!.toString()', async () => {
@@ -32,6 +34,6 @@ describe('@typescript-eslint/no-non-null-assertion', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@typescript-eslint/no-non-null-assertion');
+		expectRuleError(result, ruleName);
 	});
 });

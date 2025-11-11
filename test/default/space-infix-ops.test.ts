@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('space-infix-ops', () => {
+const ruleName = 'space-infix-ops';
+
+describe(ruleName, () => {
 	it('should enforce space around infix operators', async () => {
 		const code = `const x = 1+2;
 	const y = 3*4;
@@ -10,6 +12,6 @@ describe('space-infix-ops', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, 'space-infix-ops');
+		expectRuleError(result, ruleName);
 	});
 });

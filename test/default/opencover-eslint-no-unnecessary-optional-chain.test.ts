@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('@opencover-eslint/no-unnecessary-optional-chain', () => {
+const ruleName = '@opencover-eslint/no-unnecessary-optional-chain';
+
+describe(ruleName, () => {
 	it('should throw error for ex?.value when ex is not nullable', async () => {
 		const code = `type Example = { value: boolean };
 	const ex: Example = { value: true };
@@ -11,7 +13,7 @@ describe('@opencover-eslint/no-unnecessary-optional-chain', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@opencover-eslint/no-unnecessary-optional-chain');
+		expectRuleError(result, ruleName);
 	});
 
 	it('should throw error for ex.value?.() when value is not a function', async () => {
@@ -22,7 +24,7 @@ describe('@opencover-eslint/no-unnecessary-optional-chain', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@opencover-eslint/no-unnecessary-optional-chain');
+		expectRuleError(result, ruleName);
 	});
 
 	it('should throw error for ex?.[0] when ex is not nullable', async () => {
@@ -33,6 +35,6 @@ describe('@opencover-eslint/no-unnecessary-optional-chain', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, '@opencover-eslint/no-unnecessary-optional-chain');
+		expectRuleError(result, ruleName);
 	});
 });

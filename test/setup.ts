@@ -2,7 +2,8 @@ import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { writeFileSync, mkdirSync, rmSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
-import { ESLint, Linter } from 'eslint';
+import type { Linter } from 'eslint';
+import { ESLint } from 'eslint';
 import { afterAll, expect } from 'vitest';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -11,6 +12,7 @@ const __dirname = dirname(__filename);
 export const tempDir = resolve(__dirname, '../.temp');
 
 let tempFilePath: string | null = null;
+type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
 
 export const createTempFile = (content: string, suffix: string): string => {
 	try {
@@ -26,7 +28,20 @@ export const createTempFile = (content: string, suffix: string): string => {
 	return filePath;
 };
 
-export const createESLintInstance = (config: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[]): ESLint => {
+export const createTempFileWithName = (content: string, filename: string): string => {
+	const filePath = join(tempDir, filename);
+	const fileDir = dirname(filePath);
+
+	try {
+		mkdirSync(fileDir, { recursive: true });
+	} catch {
+		// Ignore
+	}
+
+	writeFileSync(filePath, content, 'utf8');
+	return filePath;
+};
+export const createESLintInstance = (config: Config): ESLint => {
 	const configArray = Array.isArray(config) ? config : [config];
 	const rootDir = resolve(__dirname, '..');
 
@@ -38,7 +53,8 @@ export const createESLintInstance = (config: Linter.Config<RulesConfig> | Linter
 				languageOptions: {
 					parserOptions: {
 						projectService: {
-							allowDefaultProject: ['.temp/*.ts'],
+							allowDefaultProject: ['.temp/*.ts', '.temp/*.test.ts'],
+							maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
 						},
 					},
 				},
@@ -49,7 +65,24 @@ export const createESLintInstance = (config: Linter.Config<RulesConfig> | Linter
 	});
 };
 
-export const lintText = async (config: Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[], code: string) => {
+export const lintFile = async (config: Config, filePath: string): Promise<ESLint.LintResult[]> => {
+	const linter = createESLintInstance(config);
+	return await linter.lintFiles([filePath]);
+};
+
+export const lintFileWithName = async (
+	config: Config,
+	filePath: string,
+	code: string
+): Promise<ESLint.LintResult[]> => {
+	const linter = createESLintInstance(config);
+
+	return await linter.lintText(code, {
+		filePath, // We need to pass this for test rules to work
+	});
+};
+
+export const lintText = async (config: Config, code: string) => {
 	if (!tempFilePath) {
 		tempFilePath = createTempFile('', 'ts');
 	}
@@ -69,6 +102,10 @@ export const expectRuleError = (result: ESLint.LintResult, ruleId: string) => {
 export const expectRuleWarning = (result: ESLint.LintResult, ruleId: string) => {
 	expect(result.warningCount).toBeGreaterThan(0);
 	expect(result.messages).toContainEqual(expect.objectContaining({ ruleId }));
+};
+
+export const expectNoRuleError = (result: ESLint.LintResult, ruleId: string) => {
+	expect(result.messages).not.toContainEqual(expect.objectContaining({ ruleId }));
 };
 
 afterAll(() => {

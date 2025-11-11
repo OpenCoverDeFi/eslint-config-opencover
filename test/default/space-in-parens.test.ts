@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('space-in-parens', () => {
+const ruleName = 'space-in-parens';
+
+describe(ruleName, () => {
 	it('should enforce no space in parens', async () => {
 		const code = `const result = ( 1 + 2 );
 	function test( x ) { return x; }
@@ -10,6 +12,6 @@ describe('space-in-parens', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, 'space-in-parens');
+		expectRuleError(result, ruleName);
 	});
 });

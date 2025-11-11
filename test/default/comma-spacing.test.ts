@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('comma-spacing', () => {
+const ruleName = 'comma-spacing';
+
+describe(ruleName, () => {
 	it('should enforce comma spacing', async () => {
 		const code = `const arr = [1,2,3];
 	const obj = {a:1,b:2};
@@ -10,6 +12,6 @@ describe('comma-spacing', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, 'comma-spacing');
+		expectRuleError(result, ruleName);
 	});
 });

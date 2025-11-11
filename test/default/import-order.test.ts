@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleWarning } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('import/order', () => {
+const ruleName = 'import/order';
+
+describe(ruleName, () => {
 	it('should enforce import order', async () => {
 		const code = `import { something } from './local';
 	import fs from 'fs';
@@ -10,6 +12,6 @@ describe('import/order', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleWarning(result, 'import/order');
+		expectRuleWarning(result, ruleName);
 	});
 });

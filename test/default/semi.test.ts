@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleError } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('semi', () => {
+const ruleName = 'semi';
+
+describe(ruleName, () => {
 	it('should enforce semicolons', async () => {
 		const code = `const x = 1
 	const y = 2
@@ -10,6 +12,6 @@ describe('semi', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, 'semi');
+		expectRuleError(result, ruleName);
 	});
 });

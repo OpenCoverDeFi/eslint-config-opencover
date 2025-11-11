@@ -2,7 +2,9 @@ import { describe, it } from 'vitest';
 import { lintText, expectRuleWarning } from '../setup.js';
 import defaultConfig from '@/default.js';
 
-describe('capitalized-comments', () => {
+const ruleName = 'capitalized-comments';
+
+describe(ruleName, () => {
 	it('should enforce capitalized comments', async () => {
 		const code = `const fn = (x) => x; //an uncapitalized comment without a space before it
 	// This comment is valid since it has the correct capitalization.
@@ -12,6 +14,6 @@ describe('capitalized-comments', () => {
 
 		const [result] = await lintText(defaultConfig, code);
 
-		expectRuleWarning(result, 'capitalized-comments');
+		expectRuleWarning(result, ruleName);
 	});
 });
