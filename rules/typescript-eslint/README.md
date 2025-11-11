@@ -6,6 +6,8 @@ This section documents the TypeScript ESLint rules that are enabled and configur
 
 The configuration extends `typescript-eslint.configs.recommendedTypeChecked`, which includes all recommended type-checked rules from the TypeScript ESLint plugin. This provides comprehensive TypeScript-specific linting with type-aware rules.
 
+See the [recommended-type-checked configuration](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslintrc/recommended-type-checked.ts) for more details.
+
 ### Rules Included from recommendedTypeChecked
 
 The following rules are automatically enabled from `typescript-eslint.configs.recommendedTypeChecked` and are verified to be working:
