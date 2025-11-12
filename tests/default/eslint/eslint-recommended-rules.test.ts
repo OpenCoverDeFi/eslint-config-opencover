@@ -46,20 +46,6 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'no-constant-condition');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-constructor-return', async () => {
-		const code = dedent`
-			class A {
-				constructor(a) {
-					this.a = a;
-					return a;
-				}
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-constructor-return');
-	});
-
 	it('should enforce no-control-regex', async () => {
 		const code = 'const regex = /\\x1f/;';
 		const [result] = await lintText(defaultConfig, code);
@@ -128,14 +114,6 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'no-empty-static-block');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-
-	it.skip('should enforce no-eval', async () => {
-		const code = '(0, eval)("const a = 0");';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-eval');
-	});
-
 	it('should enforce no-ex-assign', async () => {
 		const code = dedent`
 			try {}
@@ -151,13 +129,6 @@ describe('eslint.configs.recommended rules', () => {
 		const code = 'if (!!x) {}';
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-extra-boolean-cast');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-extra-semi', async () => {
-		const code = 'const x = 1;;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-extra-semi');
 	});
 
 	it('should enforce no-fallthrough', async () => {
@@ -181,33 +152,10 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'no-global-assign');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-inner-declarations', async () => {
-		const code = dedent`
-			if (test) {
-				function doSomethingElse () { }
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-inner-declarations');
-	});
-
 	it('should enforce no-invalid-regexp', async () => {
 		const code = 'new RegExp("[");';
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-invalid-regexp');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-invalid-this', async () => {
-		const code = dedent`
-			const bar = function() {
-				this.a = 0;
-				baz(() => this);
-			};
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-invalid-this');
 	});
 
 	it('should enforce no-irregular-whitespace', async () => {
@@ -216,67 +164,35 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'no-irregular-whitespace');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-iterator', async () => {
-		const code = dedent`
-			Foo.prototype.__iterator__ = function() {
-				return new FooIterator(this);
-			};
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-iterator');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-labels', async () => {
-		const code = 'label: while(true) { break label; }';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-labels');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-lone-blocks', async () => {
-		const code = dedent`
-			{
-				const x = 1;
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-lone-blocks');
-	});
-
 	it('should enforce no-loss-of-precision', async () => {
 		const code = 'const x = 9007199254740993;';
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-loss-of-precision');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-misleading-character-class', async () => {
-		const code = 'const regex = /[\\u{1D306}-\\u{1D308}]/u;';
+	it('should enforce no-misleading-character-class', async () => {
+		const code = dedent`
+			/^[Á]$/u;
+			/^[❇️]$/u;
+			/^[👶🏻]$/u;
+			/^[🇯🇵]$/u;
+			/^[👨‍👩‍👦]$/u;
+			/^[👍]$/;
+			new RegExp("[🎵]");
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-misleading-character-class');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-new-wrappers', async () => {
-		const code = 'const str = new String("test");';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-new-wrappers');
-	});
-
-	// TODO: this rule should be working, but it's not.'
+	// NOTE: this is a bug, even if you reenable it, it will still fail.
+	// code is copied from eslint website
 	it.skip('should enforce no-octal', async () => {
-		const code = 'const x = 071;';
+		const code = dedent`
+			const num = 071;
+			const result = 5 + 07;
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-octal');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-octal-escape', async () => {
-		const code = 'const str = "\\251";';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-octal-escape');
 	});
 
 	it('should enforce no-prototype-builtins', async () => {
@@ -295,13 +211,6 @@ describe('eslint.configs.recommended rules', () => {
 		const code = 'x = x;';
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-self-assign');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-self-compare', async () => {
-		const code = 'if (x === x) {}';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-self-compare');
 	});
 
 	it('should enforce no-shadow-restricted-names', async () => {
@@ -325,45 +234,52 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'no-unexpected-multiline');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-unmodified-loop-condition', async () => {
+	it('should enforce no-unsafe-finally', async () => {
 		const code = dedent`
-			let x = 0;
-			while (x < 10) {
-				console.log(x);
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-unmodified-loop-condition');
-	});
+			let foo = function() {
+				try {
+					return 1;
+				} catch(err) {
+					return 2;
+				} finally {
+					return 3;
+				}
+			};
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-unreachable-loop', async () => {
-		const code = dedent`
-			for (let i = 0; i < 10; i++) {
-				break;
-				console.log(i);
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-unreachable-loop');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-unsafe-finally', async () => {
-		const code = dedent`
-			try {}
-			finally {
-				return 1;
-			}
 		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-unsafe-finally');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-unsafe-optional-chaining', async () => {
-		const code = 'const x = obj?.prop.toString();';
+	it('should enforce no-unsafe-optional-chaining', async () => {
+		const code = dedent`
+			(obj?.foo)();
+			(obj?.foo).bar;
+			(foo?.()).bar;
+			(foo?.()).bar();
+			(obj?.foo ?? obj?.bar)();
+			(foo || obj?.foo)();
+			(obj?.foo && foo)();
+			(foo ? obj?.foo : bar)();
+			(foo, obj?.bar).baz;
+			(obj?.foo)\`template\`;
+			new (obj?.foo)();
+			[...obj?.foo];
+			bar(...obj?.foo);
+			1 in obj?.foo;
+			bar instanceof obj?.foo;
+			for (bar of obj?.foo);
+			const { bar } = obj?.foo;
+			[{ bar } = obj?.foo] = [];
+			with (obj?.foo);
+			class A extends obj?.foo {}
+			const a = class A extends obj?.foo {};
+			async function foo () {
+				const { bar } = await obj?.foo;
+			   (await obj?.foo)();
+			   (await obj?.foo).bar;
+			}
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectRuleError(result, 'no-unsafe-optional-chaining');
 	});
@@ -432,86 +348,117 @@ describe('eslint.configs.recommended rules', () => {
 		expectRuleError(result, 'for-direction');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce getter-return', async () => {
+	// NOTE: this is a bug, even if you reenable it, it will still fail.
+	// code is copied from eslint website
+	it.skip('should enforce no-nonoctal-decimal-escape', async () => {
+		const code = dedent`
+			"\\8";
+			"\\9";
+			const foo = "w\\8less";
+			const bar = "December 1\\9";
+			const baz = "Don't use \\8 and \\9 escapes.";
+			const quux = "\\0\\8";
+		`;
+		const [result] = await lintText(defaultConfig, code);
+		expectRuleError(result, 'no-nonoctal-decimal-escape');
+	});
+});
+
+describe('Rules disabled by typescript-eslint', () => {
+	it('should not enforce no-array-constructor (replaced by @typescript-eslint/no-array-constructor)', async () => {
+		const code = 'const arr = new Array(1, 2, 3);';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-array-constructor');
+	});
+
+	it('should not enforce no-unused-expressions (replaced by @typescript-eslint/no-unused-expressions)', async () => {
+		const code = '1 + 1;';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-unused-expressions');
+	});
+
+	it('should not enforce no-unused-vars (replaced by @typescript-eslint/no-unused-vars)', async () => {
+		const code = 'const unused = 1;';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-unused-vars');
+	});
+
+	it('should not enforce no-implied-eval (replaced by @typescript-eslint/no-implied-eval)', async () => {
+		const code = 'setTimeout("alert(\'Hi!\');", 100);';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-implied-eval');
+	});
+
+	it('should not enforce no-throw-literal (replaced by @typescript-eslint/only-throw-error)', async () => {
+		const code = dedent`
+			throw "error";
+			throw 0;
+			throw false;
+			throw null;
+		`;
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-throw-literal');
+	});
+
+	it('should not enforce prefer-promise-reject-errors (replaced by @typescript-eslint/prefer-promise-reject-errors)', async () => {
+		const code = 'Promise.reject("something bad happened");';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'prefer-promise-reject-errors');
+	});
+
+	it('should not enforce require-await (replaced by @typescript-eslint/require-await)', async () => {
+		const code = 'async function foo() { return 1; }';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'require-await');
+	});
+
+	it('should not enforce constructor-super (handled by TypeScript)', async () => {
+		const code = dedent`
+			class A {}
+			class B extends A {
+				constructor() {
+					// Missing super() call
+				}
+			}
+		`;
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'constructor-super');
+	});
+
+	it('should not enforce getter-return (handled by TypeScript)', async () => {
 		const code = dedent`
 			const obj = {
-				get prop(): number {
+				get prop() {
 					// Missing return
 				}
 			};
 		`;
 		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'getter-return');
+		expectNoRuleError(result, 'getter-return');
 	});
 
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-nonoctal-decimal-escape', async () => {
-		const code = 'const str = "\\8";';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-nonoctal-decimal-escape');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-unassigned-vars', async () => {
-		const code = dedent`
-			// @ts-expect-error - module doesn't exist, just testing the rule
-			import { foo } from './nonexistent-module';
-			// foo is imported but never used
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-unassigned-vars');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce no-useless-assignment', async () => {
-		const code = dedent`
-			let x = 1;
-			x = 2;
-			console.log(x);
-			x = 3;
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'no-useless-assignment');
-	});
-
-	// TODO: this rule should be working, but it's not.'
-	it.skip('should enforce preserve-caught-error', async () => {
-		const code = dedent`
-			try {
-				throw new Error();
-			} catch (e) {
-				e = new Error('new error');
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, 'preserve-caught-error');
-	});
-});
-
-describe('Rules disabled by typescript-eslint', () => {
-	it('should not enforce no-class-assign (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-class-assign (handled by TypeScript)', async () => {
 		const code = dedent`
 			class A {}
-			A = 1;
+			A = 0;
 		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-class-assign');
 	});
 
-	it('should not enforce no-const-assign (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-const-assign (handled by TypeScript)', async () => {
 		const code = 'const x = 1; x = 2;';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-const-assign');
 	});
 
-	it('should not enforce no-dupe-args (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-dupe-args (handled by TypeScript)', async () => {
 		const code = 'function foo(a, a) {}';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-dupe-args');
 	});
 
-	it('should not enforce no-dupe-class-members (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-dupe-class-members (handled by TypeScript)', async () => {
 		const code = dedent`
 			class A {
 				foo() {}
@@ -522,43 +469,60 @@ describe('Rules disabled by typescript-eslint', () => {
 		expectNoRuleError(result, 'no-dupe-class-members');
 	});
 
-	it('should not enforce no-dupe-keys (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-dupe-keys (handled by TypeScript)', async () => {
 		const code = 'const obj = { a: 1, a: 2 };';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-dupe-keys');
 	});
 
-	it('should not enforce no-func-assign (disabled by typescript-eslint)', async () => {
-		const code = 'function foo() {} foo = 1;';
+	it('should not enforce no-func-assign (handled by TypeScript)', async () => {
+		const code = dedent`
+			function foo() {}
+			foo = 1;
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-func-assign');
 	});
 
-	it('should not enforce no-import-assign (disabled by typescript-eslint)', async () => {
-		const code = 'import { foo } from "./module"; foo = 1;';
+	it('should not enforce no-import-assign (handled by TypeScript)', async () => {
+		const code = dedent`
+			import mod from './mod';
+			mod = 1;
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-import-assign');
 	});
+});
 
-	it('should not enforce no-new-native-nonconstructor (disabled by typescript-eslint)', async () => {
+describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v8 compatibility, will be re-enabled after ESLint v8 support is dropped)', () => {
+	it('should not enforce no-new-native-nonconstructor (handled by TypeScript)', async () => {
 		const code = 'const x = new Symbol();';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-new-native-nonconstructor');
 	});
 
-	it('should not enforce no-obj-calls (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-new-symbol (handled by TypeScript)', async () => {
+		const code = 'const x = new Symbol();';
+		const [result] = await lintText(defaultConfig, code);
+		expectNoRuleError(result, 'no-new-symbol');
+	});
+
+	it('should not enforce no-obj-calls (handled by TypeScript)', async () => {
 		const code = 'const x = Math();';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-obj-calls');
 	});
 
-	it('should not enforce no-redeclare (disabled by typescript-eslint)', async () => {
-		const code = 'let x = 1; let x = 2;';
+	it('should not enforce no-redeclare (handled by TypeScript)', async () => {
+		const code = dedent`
+			let x = 1;
+			let x = 2;
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-redeclare');
 	});
 
-	it('should not enforce no-setter-return (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-setter-return (handled by TypeScript)', async () => {
 		const code = dedent`
 			const obj = {
 				set prop(value) {
@@ -570,9 +534,10 @@ describe('Rules disabled by typescript-eslint', () => {
 		expectNoRuleError(result, 'no-setter-return');
 	});
 
-	it('should not enforce no-this-before-super (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-this-before-super (handled by TypeScript)', async () => {
 		const code = dedent`
-			class A extends B {
+			class A {}
+			class B extends A {
 				constructor() {
 					this.x = 1;
 					super();
@@ -583,104 +548,36 @@ describe('Rules disabled by typescript-eslint', () => {
 		expectNoRuleError(result, 'no-this-before-super');
 	});
 
-	it('should not enforce no-undef (disabled by typescript-eslint)', async () => {
-		const code = 'const x = undefinedVar;';
+	it('should not enforce no-undef (handled by TypeScript)', async () => {
+		const code = 'const x = undefinedVariable;';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-undef');
 	});
 
-	it('should not enforce no-unreachable (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-unreachable (handled by TypeScript)', async () => {
 		const code = dedent`
 			function foo() {
 				return 1;
-				console.log('unreachable');
+				return 2;
 			}
 		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-unreachable');
 	});
 
-	it('should not enforce no-unsafe-negation (disabled by typescript-eslint)', async () => {
+	it('should not enforce no-unsafe-negation (handled by TypeScript)', async () => {
 		const code = 'if (!x in obj) {}';
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-unsafe-negation');
 	});
 
-	it('should not enforce no-with (disabled by typescript-eslint)', async () => {
-		const code = 'with (obj) { x = 1; }';
+	it('should not enforce no-with (handled by TypeScript)', async () => {
+		const code = dedent`
+			with (obj) {
+				prop = 1;
+			}
+		`;
 		const [result] = await lintText(defaultConfig, code);
 		expectNoRuleError(result, 'no-with');
-	});
-
-	it('should not enforce no-unused-vars (replaced by @typescript-eslint/no-unused-vars)', async () => {
-		const code = 'const unused = 1;';
-		const [result] = await lintText(defaultConfig, code);
-		expectNoRuleError(result, 'no-unused-vars');
-	});
-
-	it('should not enforce constructor-super (disabled by typescript-eslint)', async () => {
-		const code = dedent`
-			class B {}
-			class A extends B {
-				constructor() {
-					// Missing super()
-				}
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectNoRuleError(result, 'constructor-super');
-	});
-
-	it('should not enforce getter-return (disabled by typescript-eslint)', async () => {
-		const code = dedent`
-			const obj = {
-				get prop(): number {
-					// Missing return
-				}
-			};
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectNoRuleError(result, 'getter-return');
-	});
-
-	it('should not enforce no-nonoctal-decimal-escape (might be disabled or handled by TypeScript)', async () => {
-		const code = 'const str = "\\8";';
-		const [result] = await lintText(defaultConfig, code);
-		// This rule might be disabled or handled differently
-		expectNoRuleError(result, 'no-nonoctal-decimal-escape');
-	});
-
-	it('should not enforce no-unassigned-vars (replaced by @typescript-eslint/no-unused-vars)', async () => {
-		const code = dedent`
-			// @ts-expect-error - module doesn't exist, just testing the rule
-			import { foo } from './nonexistent-module';
-			// foo is imported but never used
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectNoRuleError(result, 'no-unassigned-vars');
-	});
-
-	it('should not enforce no-useless-assignment (might not be in recommended config)', async () => {
-		const code = dedent`
-			let x = 1;
-			x = 2;
-			console.log(x);
-			x = 3;
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectNoRuleError(result, 'no-useless-assignment');
-	});
-
-	it('should not enforce preserve-caught-error (handled by no-ex-assign)', async () => {
-		const code = dedent`
-			try {
-				throw new Error();
-			} catch (e) {
-				e = new Error('new error');
-			}
-		`;
-		const [result] = await lintText(defaultConfig, code);
-		// Preserve-caught-error might not be enabled, but no-ex-assign should catch this
-		expectNoRuleError(result, 'preserve-caught-error');
 	});
 });

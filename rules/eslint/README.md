@@ -6,61 +6,96 @@ This section documents the core ESLint rules that are enabled and configured in 
 
 The configuration extends `eslint.configs.recommended`, which includes all recommended rules from the core ESLint JavaScript plugin.
 
-See the [eslint-recommended configuration](https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js) and the [typescript-eslint eslint-recommended-raw configuration](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/src/configs/eslint-recommended-raw.ts) for more details.
-
-**Note:** When using TypeScript ESLint's `recommendedTypeChecked` config, certain base ESLint rules are automatically disabled because TypeScript's type system handles these cases better, or they are replaced by TypeScript-specific versions:
-
-**Disabled (handled by TypeScript compiler or replaced by TypeScript-specific rules):**
-
-- `no-class-assign`, `no-const-assign`, `no-dupe-args`, `no-dupe-class-members`, `no-dupe-keys`, `no-func-assign`, `no-import-assign`, `no-new-native-nonconstructor`, `no-obj-calls`, `no-redeclare`, `no-setter-return`, `no-this-before-super`, `no-undef`, `no-unreachable`, `no-unsafe-negation`, `no-with`, `constructor-super`, `getter-return`, `no-unused-vars` (replaced by `@typescript-eslint/no-unused-vars`), `no-nonoctal-decimal-escape`, `no-unassigned-vars` (replaced by `@typescript-eslint/no-unused-vars`), `no-useless-assignment`, `preserve-caught-error`
-
-**Note:** The rules listed above are verified to be disabled through our test suite. Some rules from `eslint.configs.recommended` may not be actively enforced due to TypeScript's type system or configuration limitations. The working rules listed below are verified to be working through our test suite.
+See the [eslint-recommended configuration](https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js) for more details.
 
 ### Rules Included from eslint.configs.recommended
 
-The following rules are automatically enabled from `eslint.configs.recommended` and are verified to be working:
+The following rules are automatically enabled from `eslint.configs.recommended`:
 
-| Rule Name                         | Description                                                                 | Severity |
-| --------------------------------- | --------------------------------------------------------------------------- | -------- |
-| `no-async-promise-executor`       | Disallows using an async function as a Promise executor                     | error    |
-| `no-case-declarations`            | Disallows lexical declarations in case/default clauses                      | error    |
-| `no-compare-neg-zero`             | Disallows comparing against `-0`                                            | error    |
-| `no-cond-assign`                  | Disallows assignment operators in conditional expressions                   | error    |
-| `no-constant-binary-expression`   | Disallows expressions where the operation doesn't affect the value          | error    |
-| `no-constant-condition`           | Disallows constant expressions in conditions                                | error    |
-| `no-control-regex`                | Disallows control characters in regular expressions                         | error    |
-| `no-debugger`                     | Disallows `debugger` statements                                             | error    |
-| `no-delete-var`                   | Disallows deleting variables                                                | error    |
-| `no-dupe-else-if`                 | Disallows duplicate conditions in if-else-if chains                         | error    |
-| `no-duplicate-case`               | Disallows duplicate case labels                                             | error    |
-| `no-empty`                        | Disallows empty block statements                                            | error    |
-| `no-empty-character-class`        | Disallows empty character classes in regular expressions                    | error    |
-| `no-empty-pattern`                | Disallows empty destructuring patterns                                      | error    |
-| `no-empty-static-block`           | Disallows empty static blocks                                               | error    |
-| `no-ex-assign`                    | Disallows reassigning exceptions in `catch` clauses                         | error    |
-| `no-extra-boolean-cast`           | Disallows unnecessary boolean casts                                         | error    |
-| `no-fallthrough`                  | Disallows fallthrough of `case` statements                                  | error    |
-| `no-global-assign`                | Disallows assignments to native objects or read-only global variables       | error    |
-| `no-invalid-regexp`               | Disallows invalid regular expression strings in `RegExp` constructors       | error    |
-| `no-irregular-whitespace`         | Disallows irregular whitespace                                              | error    |
-| `no-loss-of-precision`            | Disallows literal numbers that lose precision                               | error    |
-| `no-prototype-builtins`           | Disallows calling some `Object.prototype` methods directly on objects       | error    |
-| `no-regex-spaces`                 | Disallows multiple spaces in regular expression literals                    | error    |
-| `no-self-assign`                  | Disallows assignments where both sides are exactly the same                 | error    |
-| `no-shadow-restricted-names`      | Disallows shadowing of restricted names                                     | error    |
-| `no-sparse-arrays`                | Disallows sparse arrays                                                     | error    |
-| `no-unexpected-multiline`         | Disallows confusing multiline expressions                                   | error    |
-| `no-unused-labels`                | Disallows unused labels                                                     | error    |
-| `no-unused-private-class-members` | Disallows unused private class members                                      | error    |
-| `no-useless-backreference`        | Disallows useless backreferences in regular expressions                     | error    |
-| `no-useless-catch`                | Disallows unnecessary `catch` clauses                                       | error    |
-| `no-useless-escape`               | Disallows unnecessary escape characters                                     | error    |
-| `require-yield`                   | Requires generator functions to contain `yield`                             | error    |
-| `use-isnan`                       | Requires calls to `isNaN()` to be compared with a number                    | error    |
-| `valid-typeof`                    | Enforces comparing `typeof` expressions against valid strings               | error    |
-| `for-direction`                   | Enforces `for` loop update clause moving the counter in the right direction | error    |
+| Rule Name                         | Severity                                                      |
+| --------------------------------- | ------------------------------------------------------------- |
+| `constructor-super`               | error (disabled by typescript-eslint)                        |
+| `for-direction`                   | error                                                          |
+| `getter-return`                   | error (disabled by typescript-eslint)                        |
+| `no-async-promise-executor`       | error                                                          |
+| `no-case-declarations`            | error                                                          |
+| `no-class-assign`                 | error (disabled by typescript-eslint)                        |
+| `no-compare-neg-zero`             | error                                                          |
+| `no-cond-assign`                  | error                                                          |
+| `no-const-assign`                 | error (disabled by typescript-eslint)                        |
+| `no-constant-binary-expression`   | error                                                          |
+| `no-constant-condition`           | error                                                          |
+| `no-control-regex`                | error                                                          |
+| `no-debugger`                     | error                                                          |
+| `no-delete-var`                   | error                                                          |
+| `no-dupe-args`                    | error (disabled by typescript-eslint)                        |
+| `no-dupe-class-members`           | error (disabled by typescript-eslint)                        |
+| `no-dupe-else-if`                 | error                                                          |
+| `no-dupe-keys`                    | error (disabled by typescript-eslint)                        |
+| `no-duplicate-case`               | error                                                          |
+| `no-empty`                        | error                                                          |
+| `no-empty-character-class`        | error                                                          |
+| `no-empty-pattern`                | error                                                          |
+| `no-empty-static-block`           | error                                                          |
+| `no-ex-assign`                    | error                                                          |
+| `no-extra-boolean-cast`           | error                                                          |
+| `no-fallthrough`                  | error                                                          |
+| `no-func-assign`                  | error (disabled by typescript-eslint)                        |
+| `no-global-assign`                | error                                                          |
+| `no-import-assign`                | error (disabled by typescript-eslint)                        |
+| `no-invalid-regexp`               | error                                                          |
+| `no-irregular-whitespace`         | error                                                          |
+| `no-loss-of-precision`            | error                                                          |
+| `no-misleading-character-class`   | error                                                          |
+| `no-new-native-nonconstructor`    | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-nonoctal-decimal-escape`      | error                                                          |
+| `no-obj-calls`                    | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-octal`                        | error                                                          |
+| `no-prototype-builtins`           | error                                                          |
+| `no-redeclare`                    | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-regex-spaces`                 | error                                                          |
+| `no-self-assign`                  | error                                                          |
+| `no-setter-return`                | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-shadow-restricted-names`      | error                                                          |
+| `no-sparse-arrays`                | error                                                          |
+| `no-this-before-super`            | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-undef`                        | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-unexpected-multiline`         | error                                                          |
+| `no-unreachable`                  | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-unsafe-finally`               | error                                                          |
+| `no-unsafe-negation`              | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `no-unsafe-optional-chaining`     | error                                                          |
+| `no-unused-labels`                | error                                                          |
+| `no-unused-private-class-members` | error                                                          |
+| `no-unused-vars`                  | error (replaced by @typescript-eslint/no-unused-vars)         |
+| `no-useless-backreference`        | error                                                          |
+| `no-useless-catch`                | error                                                          |
+| `no-useless-escape`               | error                                                          |
+| `no-with`                         | error (disabled by typescript-eslint, re-enabled after ESLint v8) |
+| `require-yield`                   | error                                                          |
+| `use-isnan`                       | error                                                          |
+| `valid-typeof`                    | error                                                          |
 
 For more details on each rule, see the [ESLint documentation](https://eslint.org/docs/latest/rules/).
+
+### Notes on Disabled Rules
+
+Some rules from `eslint.configs.recommended` are disabled by `typescript-eslint` because:
+
+1. **Handled by TypeScript**: These rules check for issues that TypeScript's compiler already catches at compile time:
+   - `constructor-super`, `getter-return`, `no-class-assign`, `no-const-assign`, `no-dupe-args`, `no-dupe-class-members`, `no-dupe-keys`, `no-func-assign`, `no-import-assign`
+
+2. **Temporarily disabled for ESLint v8 compatibility**: These rules are currently disabled for compatibility with ESLint v8 and will be re-enabled once typescript-eslint drops ESLint v8 support:
+   - `no-new-native-nonconstructor`, `no-obj-calls`, `no-redeclare`, `no-setter-return`, `no-this-before-super`, `no-undef`, `no-unreachable`, `no-unsafe-negation`, `no-with`
+
+3. **Replaced by TypeScript ESLint equivalents**: These rules are disabled because TypeScript ESLint provides better type-aware alternatives:
+   - `no-unused-vars` → `@typescript-eslint/no-unused-vars`
+   - `no-array-constructor` → `@typescript-eslint/no-array-constructor`
+   - `no-implied-eval` → `@typescript-eslint/no-implied-eval`
+   - `no-unused-expressions` → `@typescript-eslint/no-unused-expressions`
+   - `no-throw-literal` → `@typescript-eslint/only-throw-error`
+   - `prefer-promise-reject-errors` → `@typescript-eslint/prefer-promise-reject-errors`
+   - `require-await` → `@typescript-eslint/require-await`
 
 ## Extension Rules
 
@@ -86,316 +121,3 @@ The following ESLint rules are added top of the recommended ones:
 | `space-in-parens`         | Enforces consistent spacing inside parentheses                                   | error    | `'never'`                                             |
 | `space-infix-ops`         | Requires spacing around infix operators                                          | error    | -                                                     |
 | `spaced-comment`          | Enforces consistent spacing after the `//` or `/*` in a comment                  | error    | `'always'`, `{ block: { balanced: true } }`           |
-
-## Rule Details
-
-### block-spacing
-
-Enforces spacing inside single-line blocks.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-if (condition) {
-	doSomething();
-}
-
-// ✅ Correct
-if (condition) {
-	doSomething();
-}
-```
-
-### capitalized-comments
-
-Requires the first letter of comments to be capitalized, but ignores consecutive comments.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-// this is a comment
-
-// ✅ Correct
-// This is a comment
-
-// ✅ Also correct (consecutive comments are ignored)
-// First comment
-// second comment
-// third comment
-```
-
-### comma-spacing
-
-Enforces no space before commas and one space after.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const arr = [1, 2, 3];
-const obj = { a: 1, b: 2 };
-
-// ✅ Correct
-const arr = [1, 2, 3];
-const obj = { a: 1, b: 2 };
-```
-
-### key-spacing
-
-Enforces consistent spacing between keys and values in object literals with strict mode.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const obj = {
-	key: value,
-	anotherKey: 'value',
-};
-
-// ✅ Correct
-const obj = {
-	key: value,
-	anotherKey: 'value',
-};
-```
-
-### keyword-spacing
-
-Enforces spacing before keywords.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-if (condition) {
-	return value;
-}
-
-// ✅ Correct
-if (condition) {
-	return value;
-}
-```
-
-### no-multi-spaces
-
-Disallows multiple consecutive spaces.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const x = 5;
-const y = 10;
-
-// ✅ Correct
-const x = 5;
-const y = 10;
-```
-
-### no-multiple-empty-lines
-
-Limits consecutive empty lines to a maximum of 1, including at the end of file.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const x = 1;
-
-const y = 2;
-
-// ✅ Correct
-const x = 1;
-
-const y = 2;
-```
-
-### no-unneeded-ternary
-
-Disallows ternary operators when simpler alternatives exist.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const value = condition ? true : false;
-const result = x ? x : y;
-
-// ✅ Correct
-const value = condition;
-const result = x || y;
-```
-
-### no-use-before-define
-
-Disallows using variables, functions, and classes before they are defined.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-console.log(x);
-const x = 1;
-
-// ✅ Correct
-const x = 1;
-console.log(x);
-```
-
-### no-restricted-globals
-
-Disallows the use of `Map` and `Set` as global constructors.
-
-**Configuration:**
-
-```ts
-'no-restricted-globals': [
-	'error',
-	{
-		name: 'Map',
-		message: 'Map is not allowed. Use an alternative data structure.',
-	},
-	{
-		name: 'Set',
-		message: 'Set is not allowed. Use an alternative data structure.',
-	},
-]
-```
-
-### object-curly-spacing
-
-Enforces spacing inside object braces.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const obj = { a: 1, b: 2 };
-
-// ✅ Correct
-const obj = { a: 1, b: 2 };
-```
-
-### quote-props
-
-Requires quotes around object property names only when needed.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const obj = {
-	'valid-key': 1,
-	normalKey: 2,
-};
-
-// ✅ Correct
-const obj = {
-	'valid-key': 1,
-	normalKey: 2,
-};
-```
-
-### quotes
-
-Enforces single quotes for strings, but allows double quotes to avoid escaping.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const str = 'Hello, world!';
-const str2 = "It's a test";
-
-// ✅ Correct
-const str = 'Hello, world!';
-const str2 = "It's a test"; // Double quotes allowed to avoid escaping
-```
-
-### semi
-
-Requires semicolons at the end of statements.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const x = 1;
-const y = 2;
-
-// ✅ Correct
-const x = 1;
-const y = 2;
-```
-
-### space-before-blocks
-
-Enforces spacing before blocks.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-if (condition) {
-	doSomething();
-}
-
-// ✅ Correct
-if (condition) {
-	doSomething();
-}
-```
-
-### space-in-parens
-
-Disallows spacing inside parentheses.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-if (condition) {
-	doSomething(x, y);
-}
-
-// ✅ Correct
-if (condition) {
-	doSomething(x, y);
-}
-```
-
-### space-infix-ops
-
-Requires spacing around infix operators.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-const sum = x + y;
-const product = x * y;
-
-// ✅ Correct
-const sum = x + y;
-const product = x * y;
-```
-
-### spaced-comment
-
-Enforces spacing after comment markers, with balanced spacing for block comments.
-
-**Example:**
-
-```ts
-// ❌ Incorrect
-//comment
-/*comment*/
-
-// ✅ Correct
-// comment
-/* comment */
-```
