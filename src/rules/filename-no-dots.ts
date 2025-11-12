@@ -1,3 +1,4 @@
+import { basename } from 'node:path';
 import type { TSESTree } from '@typescript-eslint/utils';
 import { createRule } from '../utils.js';
 
@@ -57,40 +58,24 @@ export const rule = createRule({
 		const optionsObject = getOptions([options]);
 		const ignorePatterns = optionsObject.ignorePattern ?? [];
 
-		const basename = context.filename.split('/').pop() ?? '';
+		const filename = basename(context.filename);
 
 		// Check if filename matches any ignore pattern
-		const matchesIgnorePattern = ignorePatterns.some((pattern: string) => {
-			const regex = new RegExp(pattern);
-			return regex.test(basename);
-		});
-
-		if (matchesIgnorePattern) {
+		if (ignorePatterns.some((pattern) => new RegExp(pattern).test(filename))) {
 			return {};
 		}
 
-		// Extract the base name without extension
-		// Match filename like: name.test.ts or name.ts
-		const testFileMatch = basename.match(/^(.+?)\.test\.([^.]+)$/);
-		const regularFileMatch = basename.match(/^(.+?)(\.[^.]+)$/);
+		// Remove file extension (everything after the last dot)
+		const lastDotIndex = filename.lastIndexOf('.');
+		const nameWithoutExt = lastDotIndex === -1 ? filename : filename.slice(0, lastDotIndex);
 
-		let shouldReport = false;
+		// For test files, remove .test suffix
+		const baseName = nameWithoutExt.endsWith('.test')
+			? nameWithoutExt.slice(0, -5) // Remove '.test'
+			: nameWithoutExt;
 
-		if (testFileMatch) {
-			// Test file: check that the part before .test. has no dots
-			const nameBeforeTest = testFileMatch[1];
-			if (nameBeforeTest.includes('.')) {
-				shouldReport = true;
-			}
-		} else if (regularFileMatch) {
-			// Regular file: no dots should be allowed (except extension)
-			const nameWithoutExt = regularFileMatch[1];
-			if (nameWithoutExt.includes('.')) {
-				shouldReport = true;
-			}
-		}
-
-		if (shouldReport) {
+		// Check if base name contains any dots
+		if (baseName.includes('.')) {
 			return {
 				Program(node: TSESTree.Program) {
 					context.report({

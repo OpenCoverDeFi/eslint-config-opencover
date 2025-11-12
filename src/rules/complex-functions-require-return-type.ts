@@ -4,296 +4,224 @@ import { createRule } from '../utils.js';
 
 type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
-function traverse(node: TSESTree.Node, state: { complexity: number }): void {
+function traverse(node: TSESTree.Node): number {
 	// Count decision points based on node type
 	switch (node.type) {
 		case AST_NODE_TYPES.IfStatement: {
-			state.complexity++;
-			traverse(node.test, state);
-			traverse(node.consequent, state);
+			let complexity = 1; // If statement adds complexity
+			complexity += traverse(node.test);
+			complexity += traverse(node.consequent);
 			if (node.alternate) {
-				traverse(node.alternate, state);
+				complexity += traverse(node.alternate);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.SwitchStatement: {
-			traverse(node.discriminant, state);
+			let complexity = traverse(node.discriminant);
 			for (const switchCase of node.cases) {
-				state.complexity++; // Each case adds complexity
+				complexity += 1; // Each case adds complexity
 				if (switchCase.test) {
-					traverse(switchCase.test, state);
+					complexity += traverse(switchCase.test);
 				}
 				for (const statement of switchCase.consequent) {
-					traverse(statement, state);
+					complexity += traverse(statement);
 				}
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.SwitchCase: {
 			// SwitchCase is already handled in SwitchStatement
 			// This case is here for completeness but shouldn't be hit in normal traversal
+			let complexity = 0;
 			if (node.test) {
-				traverse(node.test, state);
+				complexity += traverse(node.test);
 			}
 			for (const statement of node.consequent) {
-				traverse(statement, state);
+				complexity += traverse(statement);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ForStatement: {
-			state.complexity++;
+			let complexity = 1; // For loop adds complexity
 			if (node.init) {
-				traverse(node.init, state);
+				complexity += traverse(node.init);
 			}
 			if (node.test) {
-				traverse(node.test, state);
+				complexity += traverse(node.test);
 			}
 			if (node.update) {
-				traverse(node.update, state);
+				complexity += traverse(node.update);
 			}
-			traverse(node.body, state);
-			return;
+			complexity += traverse(node.body);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ForInStatement: {
-			state.complexity++;
-			traverse(node.left, state);
-			traverse(node.right, state);
-			traverse(node.body, state);
-			return;
+			let complexity = 1; // For-in loop adds complexity
+			complexity += traverse(node.left);
+			complexity += traverse(node.right);
+			complexity += traverse(node.body);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ForOfStatement: {
-			state.complexity++;
-			traverse(node.left, state);
-			traverse(node.right, state);
-			traverse(node.body, state);
-			return;
+			let complexity = 1; // For-of loop adds complexity
+			complexity += traverse(node.left);
+			complexity += traverse(node.right);
+			complexity += traverse(node.body);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.WhileStatement: {
-			state.complexity++;
-			traverse(node.test, state);
-			traverse(node.body, state);
-			return;
+			let complexity = 1; // While loop adds complexity
+			complexity += traverse(node.test);
+			complexity += traverse(node.body);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.DoWhileStatement: {
-			state.complexity++;
-			traverse(node.body, state);
-			traverse(node.test, state);
-			return;
+			let complexity = 1; // Do-while loop adds complexity
+			complexity += traverse(node.body);
+			complexity += traverse(node.test);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ConditionalExpression: {
-			state.complexity++;
-			traverse(node.test, state);
-			traverse(node.consequent, state);
-			traverse(node.alternate, state);
-			return;
+			let complexity = 1; // Ternary adds complexity
+			complexity += traverse(node.test);
+			complexity += traverse(node.consequent);
+			complexity += traverse(node.alternate);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.LogicalExpression: {
+			let complexity = 0;
 			if (node.operator === '||' || node.operator === '&&') {
-				state.complexity++;
+				complexity = 1; // Logical operators add complexity
 			}
-			traverse(node.left, state);
-			traverse(node.right, state);
-			return;
+			complexity += traverse(node.left);
+			complexity += traverse(node.right);
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.BlockStatement: {
+			let complexity = 0;
 			for (const statement of node.body) {
-				traverse(statement, state);
+				complexity += traverse(statement);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ExpressionStatement: {
-			traverse(node.expression, state);
-			return;
+			return traverse(node.expression);
 		}
 
 		case AST_NODE_TYPES.ReturnStatement: {
 			if (node.argument) {
-				traverse(node.argument, state);
+				return traverse(node.argument);
 			}
-			return;
+			return 0;
 		}
 
 		case AST_NODE_TYPES.VariableDeclaration: {
+			let complexity = 0;
 			for (const declarator of node.declarations) {
 				if (declarator.init) {
-					traverse(declarator.init, state);
+					complexity += traverse(declarator.init);
 				}
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.AssignmentExpression: {
-			traverse(node.left, state);
-			traverse(node.right, state);
-			return;
+			return traverse(node.left) + traverse(node.right);
 		}
 
 		case AST_NODE_TYPES.BinaryExpression: {
-			traverse(node.left, state);
-			traverse(node.right, state);
-			return;
+			return traverse(node.left) + traverse(node.right);
 		}
 
 		case AST_NODE_TYPES.UnaryExpression: {
-			traverse(node.argument, state);
-			return;
+			return traverse(node.argument);
 		}
 
 		case AST_NODE_TYPES.CallExpression: {
-			traverse(node.callee, state);
+			let complexity = traverse(node.callee);
 			for (const arg of node.arguments) {
-				traverse(arg, state);
+				complexity += traverse(arg);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.MemberExpression: {
-			traverse(node.object, state);
+			let complexity = traverse(node.object);
 			if (node.computed) {
-				traverse(node.property, state);
+				complexity += traverse(node.property);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ArrayExpression: {
+			let complexity = 0;
 			for (const element of node.elements) {
 				if (element) {
-					traverse(element, state);
+					complexity += traverse(element);
 				}
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.ObjectExpression: {
+			let complexity = 0;
 			for (const property of node.properties) {
 				if (property.type === AST_NODE_TYPES.Property) {
-					traverse(property.key, state);
-					traverse(property.value, state);
+					complexity += traverse(property.key);
+					complexity += traverse(property.value);
 				}
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.SequenceExpression: {
+			let complexity = 0;
 			for (const expression of node.expressions) {
-				traverse(expression, state);
+				complexity += traverse(expression);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.LabeledStatement: {
-			traverse(node.body, state);
-			return;
+			return traverse(node.body);
 		}
 
-		case AST_NODE_TYPES.BreakStatement:
-		case AST_NODE_TYPES.ContinueStatement:
 		case AST_NODE_TYPES.ThrowStatement: {
-			if ('argument' in node) {
-				traverse(node.argument, state);
-			}
-			return;
+			return traverse(node.argument);
 		}
 
 		case AST_NODE_TYPES.TryStatement: {
-			traverse(node.block, state);
+			let complexity = traverse(node.block);
 			if (node.handler) {
 				if (node.handler.param) {
-					traverse(node.handler.param, state);
+					complexity += traverse(node.handler.param);
 				}
-				traverse(node.handler.body, state);
+				complexity += traverse(node.handler.body);
 			}
 			if (node.finalizer) {
-				traverse(node.finalizer, state);
+				complexity += traverse(node.finalizer);
 			}
-			return;
+			return complexity;
 		}
 
 		case AST_NODE_TYPES.WithStatement: {
-			traverse(node.object, state);
-			traverse(node.body, state);
-			return;
+			return traverse(node.object) + traverse(node.body);
 		}
 
 		default:
-			// For other node types, recursively traverse children if they exist
-			// This handles any node types we might have missed
-			if ('body' in node && node.body) {
-				const body = node.body;
-				if (Array.isArray(body)) {
-					for (const child of body) {
-						traverse(child, state);
-					}
-				} else {
-					traverse(body, state);
-				}
-			}
-			if ('test' in node && node.test) {
-				traverse(node.test as TSESTree.Node, state);
-			}
-			if ('consequent' in node && node.consequent) {
-				const consequent = node.consequent as TSESTree.Statement[];
-				if (Array.isArray(consequent)) {
-					for (const stmt of consequent) {
-						traverse(stmt, state);
-					}
-				} else {
-					traverse(consequent, state);
-				}
-			}
-			if ('alternate' in node && node.alternate) {
-				traverse(node.alternate as TSESTree.Node, state);
-			}
-			if ('expressions' in node && Array.isArray(node.expressions)) {
-				for (const expr of node.expressions) {
-					traverse(expr, state);
-				}
-			}
-			if ('arguments' in node && Array.isArray(node.arguments)) {
-				for (const arg of node.arguments) {
-					traverse(arg, state);
-				}
-			}
-			if ('elements' in node && Array.isArray(node.elements)) {
-				for (const element of node.elements) {
-					if (element) {
-						traverse(element, state);
-					}
-				}
-			}
-			if ('properties' in node && Array.isArray(node.properties)) {
-				for (const prop of node.properties) {
-					if ('value' in prop) {
-						traverse(prop.value as TSESTree.Node, state);
-					}
-					if ('key' in prop) {
-						traverse(prop.key as TSESTree.Node, state);
-					}
-				}
-			}
+			return 0;
 	}
-}
-
-function calculateComplexity(node: FunctionNode): number {
-	const state = { complexity: 1 }; // Base complexity
-
-	// Get the function body
-	const body = node.body;
-	// Traverse the AST starting from the function body
-	traverse(body, state);
-
-	return state.complexity;
 }
 
 function checkFunction(
@@ -304,7 +232,7 @@ function checkFunction(
 	// Skip if already has return type
 	if (node.returnType) return;
 
-	const complexity = calculateComplexity(node);
+	const complexity = traverse(node.body) + 1;
 
 	if (complexity > options.maxComplexity) {
 		context.report({
