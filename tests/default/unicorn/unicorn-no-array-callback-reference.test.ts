@@ -6,15 +6,15 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = 'unicorn/no-array-callback-reference';
 
 describe(ruleName, () => {
-	it('should throw error for array callback reference', async () => {
-		const code = dedent`
+    it('should throw error for array callback reference', async () => {
+        const code = dedent`
 			const callback = (element) => element * 2;
 			const array = [1, 2, 3];
 			const foo = array.map(callback);
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 });

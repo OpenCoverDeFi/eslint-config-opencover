@@ -5,59 +5,59 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = 'unicorn/filename-case';
 
 describe(ruleName, () => {
-	it('should throw error for camelCase filename', async () => {
-		const filePath = createTempFile('camelCase.ts');
+    it('should throw error for camelCase filename', async () => {
+        const filePath = createTempFile('camelCase.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for PascalCase filename', async () => {
-		const filePath = createTempFile('PascalCase.ts');
+    it('should throw error for PascalCase filename', async () => {
+        const filePath = createTempFile('PascalCase.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for snake_case filename', async () => {
-		const filePath = createTempFile('snake_case.ts');
+    it('should throw error for snake_case filename', async () => {
+        const filePath = createTempFile('snake_case.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error for kebab-case filename', async () => {
-		const filePath = createTempFile('kebab-case.ts');
+    it('should not throw error for kebab-case filename', async () => {
+        const filePath = createTempFile('kebab-case.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for single word lowercase filename', async () => {
-		const filePath = createTempFile('file.ts');
+    it('should not throw error for single word lowercase filename', async () => {
+        const filePath = createTempFile('file.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should throw error for camelCase.test.ts filename', async () => {
-		const filePath = createTempFile('camelCase.test.ts');
+    it('should throw error for camelCase.test.ts filename', async () => {
+        const filePath = createTempFile('camelCase.test.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error for kebab-case.test.ts filename', async () => {
-		const filePath = createTempFile('kebab-case.test.ts');
+    it('should not throw error for kebab-case.test.ts filename', async () => {
+        const filePath = createTempFile('kebab-case.test.ts');
 
-		const [result] = await lintFile(defaultConfig, filePath);
+        const [result] = await lintFile(defaultConfig, filePath);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 });

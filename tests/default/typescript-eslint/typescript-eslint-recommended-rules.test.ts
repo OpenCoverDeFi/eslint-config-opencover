@@ -4,104 +4,104 @@ import { lintText, expectRuleError } from '@tests/test-utils.js';
 import defaultConfig from '@eslint-config-opencover/default.js';
 
 describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
-	it('should enforce @typescript-eslint/await-thenable', async () => {
-		const code = 'await 123;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/await-thenable');
-	});
+    it('should enforce @typescript-eslint/await-thenable', async () => {
+        const code = 'await 123;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/await-thenable');
+    });
 
-	it('should enforce @typescript-eslint/ban-ts-comment', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/ban-ts-comment', async () => {
+        const code = dedent`
 			// @ts-ignore
 			const x = 1;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/ban-ts-comment');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/ban-ts-comment');
+    });
 
-	it('should enforce @typescript-eslint/no-array-constructor', async () => {
-		const code = 'const arr = new Array(1, 2, 3);';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-array-constructor');
-	});
+    it('should enforce @typescript-eslint/no-array-constructor', async () => {
+        const code = 'const arr = new Array(1, 2, 3);';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-array-constructor');
+    });
 
-	it('should enforce @typescript-eslint/no-array-delete', async () => {
-		const code = 'const arr = [1, 2, 3]; delete arr[0];';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-array-delete');
-	});
+    it('should enforce @typescript-eslint/no-array-delete', async () => {
+        const code = 'const arr = [1, 2, 3]; delete arr[0];';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-array-delete');
+    });
 
-	it('should enforce @typescript-eslint/no-base-to-string', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-base-to-string', async () => {
+        const code = dedent`
 			const obj = {};
 			const str = String(obj);
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-base-to-string');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-base-to-string');
+    });
 
-	it('should enforce @typescript-eslint/no-duplicate-enum-values', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-duplicate-enum-values', async () => {
+        const code = dedent`
 			enum Test {
 				A = 1,
 				B = 1,
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-duplicate-enum-values');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-duplicate-enum-values');
+    });
 
-	it('should enforce @typescript-eslint/no-duplicate-type-constituents', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-duplicate-type-constituents', async () => {
+        const code = dedent`
 			type Test = string | number | string;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-duplicate-type-constituents');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-duplicate-type-constituents');
+    });
 
-	it('should enforce @typescript-eslint/no-empty-object-type', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-empty-object-type', async () => {
+        const code = dedent`
 			type Empty = {};
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-empty-object-type');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-empty-object-type');
+    });
 
-	it('should enforce @typescript-eslint/no-explicit-any', async () => {
-		const code = 'const x: any = 1;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-explicit-any');
-	});
+    it('should enforce @typescript-eslint/no-explicit-any', async () => {
+        const code = 'const x: any = 1;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-explicit-any');
+    });
 
-	it('should enforce @typescript-eslint/no-extra-non-null-assertion', async () => {
-		const code = 'const x = obj!!.prop;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-extra-non-null-assertion');
-	});
+    it('should enforce @typescript-eslint/no-extra-non-null-assertion', async () => {
+        const code = 'const x = obj!!.prop;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-extra-non-null-assertion');
+    });
 
-	it('should enforce @typescript-eslint/no-floating-promises', async () => {
-		const code = 'Promise.resolve();';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-floating-promises');
-	});
+    it('should enforce @typescript-eslint/no-floating-promises', async () => {
+        const code = 'Promise.resolve();';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-floating-promises');
+    });
 
-	it('should enforce @typescript-eslint/no-for-in-array', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-for-in-array', async () => {
+        const code = dedent`
 			const arr = [1, 2, 3];
 			for (const key in arr) {}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-for-in-array');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-for-in-array');
+    });
 
-	it('should enforce @typescript-eslint/no-implied-eval', async () => {
-		const code = 'setTimeout("console.log(1)", 100);';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-implied-eval');
-	});
+    it('should enforce @typescript-eslint/no-implied-eval', async () => {
+        const code = 'setTimeout("console.log(1)", 100);';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-implied-eval');
+    });
 
-	it('should enforce @typescript-eslint/no-misused-new', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-misused-new', async () => {
+        const code = dedent`
 			declare class C {
 			  new(): C;
 			}
@@ -111,37 +111,37 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			  constructor(): void;
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-misused-new');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-misused-new');
+    });
 
-	it('should enforce @typescript-eslint/no-misused-promises', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-misused-promises', async () => {
+        const code = dedent`
 			const promise = Promise.resolve();
 			if (promise) {}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-misused-promises');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-misused-promises');
+    });
 
-	it('should enforce @typescript-eslint/no-namespace', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-namespace', async () => {
+        const code = dedent`
 			namespace Test {
 				export const x = 1;
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-namespace');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-namespace');
+    });
 
-	it('should enforce @typescript-eslint/no-non-null-asserted-optional-chain', async () => {
-		const code = 'const x = obj?.prop!;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-non-null-asserted-optional-chain');
-	});
+    it('should enforce @typescript-eslint/no-non-null-asserted-optional-chain', async () => {
+        const code = 'const x = obj?.prop!;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-non-null-asserted-optional-chain');
+    });
 
-	it('should enforce @typescript-eslint/no-redundant-type-constituents', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-redundant-type-constituents', async () => {
+        const code = dedent`
 			type UnionAny = any | 'foo';
 			type UnionUnknown = unknown | 'foo';
 			type UnionNever = never | 'foo';
@@ -158,47 +158,47 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			type IntersectionNumberLiteral = number & 1;
 			type IntersectionStringLiteral = string & 'foo';
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-redundant-type-constituents');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-redundant-type-constituents');
+    });
 
-	it('should enforce @typescript-eslint/no-require-imports', async () => {
-		const code = 'const fs = require("fs");';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-require-imports');
-	});
+    it('should enforce @typescript-eslint/no-require-imports', async () => {
+        const code = 'const fs = require("fs");';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-require-imports');
+    });
 
-	it('should enforce @typescript-eslint/no-this-alias', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-this-alias', async () => {
+        const code = dedent`
 			class Test {
 				method() {
 					const self = this;
 				}
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-this-alias');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-this-alias');
+    });
 
-	it('should enforce @typescript-eslint/no-unnecessary-type-assertion', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unnecessary-type-assertion', async () => {
+        const code = dedent`
 			const x: number = 1;
 			const y = x as number;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unnecessary-type-assertion');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unnecessary-type-assertion');
+    });
 
-	it('should enforce @typescript-eslint/no-unnecessary-type-constraint', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unnecessary-type-constraint', async () => {
+        const code = dedent`
 			function test<T extends unknown>() {}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unnecessary-type-constraint');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unnecessary-type-constraint');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-argument', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-argument', async () => {
+        const code = dedent`
 			declare function foo(arg1: string, arg2: number, arg3: string): void;
 
 			const anyTyped = 1 as any;
@@ -222,12 +222,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			declare function baz(arg1: Set<string>, arg2: Map<string, string>): void;
 			baz(new Set<any>(), new Map<any, string>());
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-argument');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-argument');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-assignment', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-assignment', async () => {
+        const code = dedent`
 			const x = 1 as any,
 			  y = 1 as any;
 			const [x] = 1 as any;
@@ -249,12 +249,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			const x: Set<string[]> = new Set<any[]>();
 			const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-assignment');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-assignment');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-call', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-call', async () => {
+        const code = dedent`
 			declare const anyVar: any;
 			declare const nestedAny: { prop: any };
 
@@ -270,32 +270,32 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			anyVar\`foo\`;
 			nestedAny.prop\`foo\`;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-call');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-call');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-declaration-merging', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-declaration-merging', async () => {
+        const code = dedent`
 			interface Test {}
 			class Test {}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-declaration-merging');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-declaration-merging');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-enum-comparison', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-enum-comparison', async () => {
+        const code = dedent`
 			enum Test {
 				A = 1,
 			}
 			const x = Test.A === 1;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-enum-comparison');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-enum-comparison');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-function-type', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-function-type', async () => {
+        const code = dedent`
 			let noParametersOrReturn: Function;
 			noParametersOrReturn = () => {};
 
@@ -305,12 +305,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			let identity: Function;
 			identity = value => value;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-function-type');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-function-type');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-member-access', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-member-access', async () => {
+        const code = dedent`
 			declare const anyVar: any;
 			declare const nestedAny: { prop: any };
 
@@ -330,12 +330,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			arr[anyVar];
 			nestedAny[anyVar];
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-member-access');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-member-access');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-return', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-return', async () => {
+        const code = dedent`
 			function foo1() {
 			  return 1 as any;
 			}
@@ -377,114 +377,114 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
 			type TAssign = () => Set<string>;
 			const assignability2: TAssign = () => new Set<any>([true]);
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-return');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-return');
+    });
 
-	it('should enforce @typescript-eslint/no-unsafe-unary-minus', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/no-unsafe-unary-minus', async () => {
+        const code = dedent`
 			const value: unknown = 5;
 			const x = -value;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unsafe-unary-minus');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unsafe-unary-minus');
+    });
 
-	it('should enforce @typescript-eslint/no-unused-expressions', async () => {
-		const code = '1 + 1;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unused-expressions');
-	});
+    it('should enforce @typescript-eslint/no-unused-expressions', async () => {
+        const code = '1 + 1;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unused-expressions');
+    });
 
-	it('should enforce @typescript-eslint/no-unused-vars', async () => {
-		const code = 'const unused = 1;';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-unused-vars');
-	});
+    it('should enforce @typescript-eslint/no-unused-vars', async () => {
+        const code = 'const unused = 1;';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
 
-	it('should enforce @typescript-eslint/no-wrapper-object-types', async () => {
-		const code = 'const x: String = "test";';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/no-wrapper-object-types');
-	});
+    it('should enforce @typescript-eslint/no-wrapper-object-types', async () => {
+        const code = 'const x: String = "test";';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/no-wrapper-object-types');
+    });
 
-	it('should enforce @typescript-eslint/only-throw-error', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/only-throw-error', async () => {
+        const code = dedent`
 			throw "error";
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/only-throw-error');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/only-throw-error');
+    });
 
-	it('should enforce @typescript-eslint/prefer-as-const', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/prefer-as-const', async () => {
+        const code = dedent`
 			const x = "test" as "test";
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/prefer-as-const');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/prefer-as-const');
+    });
 
-	it('should enforce @typescript-eslint/prefer-namespace-keyword', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/prefer-namespace-keyword', async () => {
+        const code = dedent`
 			module Test {
 				export const x = 1;
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/prefer-namespace-keyword');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/prefer-namespace-keyword');
+    });
 
-	it('should enforce @typescript-eslint/prefer-promise-reject-errors', async () => {
-		const code = 'Promise.reject("error");';
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/prefer-promise-reject-errors');
-	});
+    it('should enforce @typescript-eslint/prefer-promise-reject-errors', async () => {
+        const code = 'Promise.reject("error");';
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/prefer-promise-reject-errors');
+    });
 
-	it('should enforce @typescript-eslint/require-await', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/require-await', async () => {
+        const code = dedent`
 			async function test() {
 				return 1;
 			}
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/require-await');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/require-await');
+    });
 
-	it('should enforce @typescript-eslint/restrict-plus-operands', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/restrict-plus-operands', async () => {
+        const code = dedent`
 			let foo = 1n + 1;
 			let fn = (a: string, b: never) => a + b;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/restrict-plus-operands');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/restrict-plus-operands');
+    });
 
-	it('should enforce @typescript-eslint/restrict-template-expressions', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/restrict-template-expressions', async () => {
+        const code = dedent`
 			const x: unknown = "test";
 			const y = \`value: \${x}\`;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/restrict-template-expressions');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/restrict-template-expressions');
+    });
 
-	it('should enforce @typescript-eslint/triple-slash-reference', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/triple-slash-reference', async () => {
+        const code = dedent`
 			/// <reference path="test.ts" />
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/triple-slash-reference');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/triple-slash-reference');
+    });
 
-	it('should enforce @typescript-eslint/unbound-method', async () => {
-		const code = dedent`
+    it('should enforce @typescript-eslint/unbound-method', async () => {
+        const code = dedent`
 			class A {
 				method() {}
 			}
 			const instance = new A();
 			const fn = instance.method;
 		`;
-		const [result] = await lintText(defaultConfig, code);
-		expectRuleError(result, '@typescript-eslint/unbound-method');
-	});
+        const [result] = await lintText(defaultConfig, code);
+        expectRuleError(result, '@typescript-eslint/unbound-method');
+    });
 });

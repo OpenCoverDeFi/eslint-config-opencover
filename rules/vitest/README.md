@@ -30,23 +30,23 @@ These rules require empty lines before and after test-related blocks (`beforeAll
 ```ts
 // ❌ Incorrect
 describe('My test suite', () => {
-	beforeAll(() => {
-		setup();
-	});
-	test('should do something', () => {
-		expect(true).toBe(true);
-	});
+    beforeAll(() => {
+        setup();
+    });
+    test('should do something', () => {
+        expect(true).toBe(true);
+    });
 });
 
 // ✅ Correct
 describe('My test suite', () => {
-	beforeAll(() => {
-		setup();
-	});
+    beforeAll(() => {
+        setup();
+    });
 
-	test('should do something', () => {
-		expect(true).toBe(true);
-	});
+    test('should do something', () => {
+        expect(true).toBe(true);
+    });
 });
 ```
 

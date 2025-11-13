@@ -17,16 +17,16 @@ import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 
 export default defineConfig([
-	{
-		// Add your ignores pattern
-		ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
-	},
-	...opencoverConfig,
-	{
-		rules: {
-			// your overrides
-		},
-	},
+    {
+        // Add your ignores pattern
+        ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
+    },
+    ...opencoverConfig,
+    {
+        rules: {
+            // your overrides
+        },
+    },
 ]);
 ```
 
@@ -39,12 +39,12 @@ import { defineConfig } from 'eslint/config';
 import opencoverReactConfig from '@opencover/eslint-config-opencover/with-react';
 
 export default defineConfig([
-	...opencoverReactConfig,
-	{
-		rules: {
-			// your overrides
-		},
-	},
+    ...opencoverReactConfig,
+    {
+        rules: {
+            // your overrides
+        },
+    },
 ]);
 ```
 
@@ -68,10 +68,10 @@ import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 
 export default defineConfig([
-	{
-		ignores: ['*.css', '*.svg'],
-	},
-	...opencoverConfig,
+    {
+        ignores: ['*.css', '*.svg'],
+    },
+    ...opencoverConfig,
 ]);
 ```
 

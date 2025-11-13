@@ -6,56 +6,56 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = '@opencover-eslint/complex-functions-require-return-type';
 
 describe(ruleName, () => {
-	it('should not throw error for function with explicit return type', async () => {
-		const code = dedent`
+    it('should not throw error for function with explicit return type', async () => {
+        const code = dedent`
 			function getValue(): string {
 				return 'hello';
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for arrow function with explicit return type', async () => {
-		const code = dedent`
+    it('should not throw error for arrow function with explicit return type', async () => {
+        const code = dedent`
 			const getValue = (): string => {
 				return 'hello';
 			};
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for function expression with explicit return type', async () => {
-		const code = dedent`
+    it('should not throw error for function expression with explicit return type', async () => {
+        const code = dedent`
 			const getValue = function(): string {
 				return 'hello';
 			};
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for simple function without return type (complexity <= maxComplexity)', async () => {
-		const code = dedent`
+    it('should not throw error for simple function without return type (complexity <= maxComplexity)', async () => {
+        const code = dedent`
 			function getValue() {
 				return 'hello';
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with multiple if statements without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with multiple if statements without return type', async () => {
+        const code = dedent`
 			function processData(data: unknown) {
 				if (typeof data === 'string') {
 					return data.toUpperCase();
@@ -88,13 +88,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with nested if statements without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with nested if statements without return type', async () => {
+        const code = dedent`
 			function validateUser(user: unknown) {
 				if (user && typeof user === 'object') {
 					if ('name' in user) {
@@ -119,13 +119,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with for loop without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with for loop without return type', async () => {
+        const code = dedent`
 			function sumArray(arr: number[]) {
 				let sum = 0;
 				for (let i = 0; i < arr.length && i >= 0; i++) {
@@ -153,13 +153,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with while loop without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with while loop without return type', async () => {
+        const code = dedent`
 			function findIndex(arr: number[], target: number) {
 				let i = 0;
 				while (i < arr.length && i >= 0) {
@@ -184,13 +184,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with switch statement without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with switch statement without return type', async () => {
+        const code = dedent`
 			function getStatus(code: number) {
 				switch (code) {
 					case 200:
@@ -219,13 +219,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex arrow function with multiple conditions without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex arrow function with multiple conditions without return type', async () => {
+        const code = dedent`
 			const processValue = (value: unknown) => {
 				if (value === null || value === undefined) {
 					return 'nullish';
@@ -254,13 +254,13 @@ describe(ruleName, () => {
 			};
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with ternary operators without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with ternary operators without return type', async () => {
+        const code = dedent`
 			function getResult(condition1: boolean, condition2: boolean, condition3: boolean, condition4: boolean, condition5: boolean) {
 				return condition1
 					? (condition2 ? (condition3 ? (condition4 ? (condition5 ? 'all-true' : 'first-four') : 'first-three') : 'first-two') : 'first-only')
@@ -268,13 +268,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with logical operators without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with logical operators without return type', async () => {
+        const code = dedent`
 			function checkConditions(a: boolean, b: boolean, c: boolean, d: boolean) {
 				if (a && b || c && d) {
 					return true;
@@ -292,13 +292,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with for-of loop without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with for-of loop without return type', async () => {
+        const code = dedent`
 			function processItems(items: string[]) {
 				const results: string[] = [];
 				for (const item of items) {
@@ -322,13 +322,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with for-in loop without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with for-in loop without return type', async () => {
+        const code = dedent`
 			function getKeys(obj: Record<string, unknown>) {
 				const keys: string[] = [];
 				for (const key in obj) {
@@ -352,13 +352,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for complex function with do-while loop without return type', async () => {
-		const code = dedent`
+    it('should throw error for complex function with do-while loop without return type', async () => {
+        const code = dedent`
 			function countDown(start: number) {
 				let count = start;
 				do {
@@ -387,13 +387,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error for complex function with explicit return type', async () => {
-		const code = dedent`
+    it('should not throw error for complex function with explicit return type', async () => {
+        const code = dedent`
 			function processData(data: unknown): string {
 				if (typeof data === 'string') {
 					return data.toUpperCase();
@@ -405,13 +405,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for complex arrow function with explicit return type', async () => {
-		const code = dedent`
+    it('should not throw error for complex arrow function with explicit return type', async () => {
+        const code = dedent`
 			const processValue = (value: unknown): string => {
 				if (value === null || value === undefined) {
 					return 'nullish';
@@ -420,8 +420,8 @@ describe(ruleName, () => {
 			};
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 });

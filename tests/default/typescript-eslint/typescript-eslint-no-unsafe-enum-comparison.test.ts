@@ -6,8 +6,8 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = '@typescript-eslint/no-unsafe-enum-comparison';
 
 describe(ruleName, () => {
-	it('should throw error for comparing enum with string literal', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with string literal', async () => {
+        const code = dedent`
 			enum Status {
 				Open = 'open',
 				Closed = 'closed',
@@ -18,13 +18,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for comparing enum with number literal', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with number literal', async () => {
+        const code = dedent`
 			enum Direction {
 				Up = 1,
 				Down = 2,
@@ -37,13 +37,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for comparing enum with numeric enum value', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with numeric enum value', async () => {
+        const code = dedent`
 			enum Direction {
 				Up,
 				Down,
@@ -56,13 +56,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for comparing enum with string in switch case', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with string in switch case', async () => {
+        const code = dedent`
 			enum Status {
 				Active = 'active',
 				Inactive = 'inactive',
@@ -75,13 +75,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for comparing enum with number in switch case', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with number in switch case', async () => {
+        const code = dedent`
 			enum Priority {
 				Low = 1,
 				Medium = 2,
@@ -95,13 +95,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for comparing enum with variable of different type', async () => {
-		const code = dedent`
+    it('should throw error for comparing enum with variable of different type', async () => {
+        const code = dedent`
 			enum Status {
 				Open = 'open',
 				Closed = 'closed',
@@ -113,13 +113,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error when comparing enum with enum member', async () => {
-		const code = dedent`
+    it('should not throw error when comparing enum with enum member', async () => {
+        const code = dedent`
 			enum Status {
 				Open = 'open',
 				Closed = 'closed',
@@ -130,13 +130,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error when comparing enum with enum member in switch case', async () => {
-		const code = dedent`
+    it('should not throw error when comparing enum with enum member in switch case', async () => {
+        const code = dedent`
 			enum Status {
 				Active = 'active',
 				Inactive = 'inactive',
@@ -152,13 +152,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error when comparing enum with numeric enum member', async () => {
-		const code = dedent`
+    it('should not throw error when comparing enum with numeric enum member', async () => {
+        const code = dedent`
 			enum Direction {
 				Up,
 				Down,
@@ -171,13 +171,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error when comparing enum with another enum of same type', async () => {
-		const code = dedent`
+    it('should not throw error when comparing enum with another enum of same type', async () => {
+        const code = dedent`
 			enum Status {
 				Open = 'open',
 				Closed = 'closed',
@@ -189,13 +189,13 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error when comparing enum with undefined or null', async () => {
-		const code = dedent`
+    it('should not throw error when comparing enum with undefined or null', async () => {
+        const code = dedent`
 			enum Status {
 				Open = 'open',
 				Closed = 'closed',
@@ -206,21 +206,21 @@ describe(ruleName, () => {
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for non-enum comparisons', async () => {
-		const code = dedent`
+    it('should not throw error for non-enum comparisons', async () => {
+        const code = dedent`
 			const value = 'test';
 			if (value === 'test') {
 				console.log('test');
 			}
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 });

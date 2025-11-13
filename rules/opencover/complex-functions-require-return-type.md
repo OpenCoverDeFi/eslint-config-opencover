@@ -20,14 +20,14 @@ Functions with complexity greater than the configured threshold (default: 10) mu
 
 ```json
 {
-	"rules": {
-		"@opencover/eslint-config-opencover/complex-functions-require-return-type": [
-			"error",
-			{
-				"maxComplexity": 10
-			}
-		]
-	}
+    "rules": {
+        "@opencover/eslint-config-opencover/complex-functions-require-return-type": [
+            "error",
+            {
+                "maxComplexity": 10
+            }
+        ]
+    }
 }
 ```
 
@@ -41,15 +41,15 @@ Functions with complexity greater than the configured threshold (default: 10) mu
 
 ```typescript
 function processData(data: Data[]) {
-	if (data.length === 0) return [];
-	return data
-		.map((item) => {
-			if (item.valid) {
-				return transform(item);
-			}
-			return null;
-		})
-		.filter(Boolean);
+    if (data.length === 0) return [];
+    return data
+        .map((item) => {
+            if (item.valid) {
+                return transform(item);
+            }
+            return null;
+        })
+        .filter(Boolean);
 }
 ```
 
@@ -57,14 +57,14 @@ function processData(data: Data[]) {
 
 ```typescript
 function processData(data: Data[]): TransformedData[] {
-	if (data.length === 0) return [];
-	return data
-		.map((item) => {
-			if (item.valid) {
-				return transform(item);
-			}
-			return null;
-		})
-		.filter(Boolean);
+    if (data.length === 0) return [];
+    return data
+        .map((item) => {
+            if (item.valid) {
+                return transform(item);
+            }
+            return null;
+        })
+        .filter(Boolean);
 }
 ```

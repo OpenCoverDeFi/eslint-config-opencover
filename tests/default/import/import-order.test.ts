@@ -6,14 +6,14 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = 'import/order';
 
 describe(ruleName, () => {
-	it('should enforce import order', async () => {
-		const code = dedent`
+    it('should enforce import order', async () => {
+        const code = dedent`
 			import { something } from './local';
 			import fs from 'fs';
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleWarning(result, ruleName);
-	});
+        expectRuleWarning(result, ruleName);
+    });
 });

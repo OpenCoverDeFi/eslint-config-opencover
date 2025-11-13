@@ -18,9 +18,9 @@ This rule has no configuration options.
 
 ```json
 {
-	"rules": {
-		"@opencover/eslint-config-opencover/no-enum": "error"
-	}
+    "rules": {
+        "@opencover/eslint-config-opencover/no-enum": "error"
+    }
 }
 ```
 
@@ -30,16 +30,16 @@ This rule has no configuration options.
 
 ```typescript
 enum Status {
-	Pending = 'pending',
-	Active = 'active',
-	Inactive = 'inactive',
+    Pending = 'pending',
+    Active = 'active',
+    Inactive = 'inactive',
 }
 
 enum Direction {
-	Up,
-	Down,
-	Left,
-	Right,
+    Up,
+    Down,
+    Left,
+    Right,
 }
 ```
 
@@ -49,9 +49,9 @@ enum Direction {
 type Status = 'pending' | 'active' | 'inactive';
 
 const Status = {
-	Pending: 'pending',
-	Active: 'active',
-	Inactive: 'inactive',
+    Pending: 'pending',
+    Active: 'active',
+    Inactive: 'inactive',
 } as const;
 
 type Direction = 'up' | 'down' | 'left' | 'right';

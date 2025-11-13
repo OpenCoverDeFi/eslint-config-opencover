@@ -1,17 +1,17 @@
 {
-	"compilerOptions": {
-		"target": "es2024",
-		"module": "nodenext",
-		"strict": true,
-		"preserveConstEnums": true,
-		"esModuleInterop": true,
-		"skipLibCheck": true,
-		"resolveJsonModule": true,
-		"outDir": "dist",
-		"paths": {
-			"@eslint-config-opencover/*": ["./src/*"],
-			"@tests/*": ["./tests/*"]
-		}
-	},
-	"include": ["src", "tests", "eslint.config.ts", "vitest.config.ts"]
+  "compilerOptions": {
+    "target": "es2024",
+    "module": "nodenext",
+    "strict": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "paths": {
+      "@eslint-config-opencover/*": ["./src/*"],
+      "@tests/*": ["./tests/*"]
+    }
+  },
+  "include": ["src", "tests", "eslint.config.ts", "vitest.config.ts"]
 }

@@ -8,14 +8,14 @@ import { rule as noUnnecessaryLogicalOrRule } from './rules/no-unnecessary-logic
 import { rule as complexFunctionsRequireReturnTypeRule } from './rules/complex-functions-require-return-type.js';
 
 export default {
-	rules: {
-		'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,
-		'filename-no-dots': filenameNoDotsRule,
-		'no-enum': noEnumRule,
-		'no-unnecessary-as-assertion': noUnnecessaryAsAssertionRule,
-		'no-unnecessary-typeof': noUnnecessaryTypeofRule,
-		'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
-		'complex-functions-require-return-type': complexFunctionsRequireReturnTypeRule,
-	},
-	// TODO: Figure out types
+    rules: {
+        'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,
+        'filename-no-dots': filenameNoDotsRule,
+        'no-enum': noEnumRule,
+        'no-unnecessary-as-assertion': noUnnecessaryAsAssertionRule,
+        'no-unnecessary-typeof': noUnnecessaryTypeofRule,
+        'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
+        'complex-functions-require-return-type': complexFunctionsRequireReturnTypeRule,
+    },
+    // TODO: Figure out types
 } as unknown as ESLint.Plugin;

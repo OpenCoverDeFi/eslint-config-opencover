@@ -5,76 +5,76 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = 'no-unneeded-ternary';
 
 describe(ruleName, () => {
-	it('should throw error for ternary with true/false', async () => {
-		const code = 'const value = x === 2 ? true : false;';
+    it('should throw error for ternary with true/false', async () => {
+        const code = 'const value = x === 2 ? true : false;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for ternary with false/true', async () => {
-		const code = 'const value = x === 2 ? false : true;';
+    it('should throw error for ternary with false/true', async () => {
+        const code = 'const value = x === 2 ? false : true;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for ternary with boolean condition returning true/false', async () => {
-		const code = 'const value = x ? true : false;';
+    it('should throw error for ternary with boolean condition returning true/false', async () => {
+        const code = 'const value = x ? true : false;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for ternary with boolean condition returning false/true', async () => {
-		const code = 'const value = x ? false : true;';
+    it('should throw error for ternary with boolean condition returning false/true', async () => {
+        const code = 'const value = x ? false : true;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for ternary with comparison returning true/false', async () => {
-		const code = `const value = a > b ? true : false;
+    it('should throw error for ternary with comparison returning true/false', async () => {
+        const code = `const value = a > b ? true : false;
 	`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error for ternary with different values', async () => {
-		const code = "const value = x === 2 ? 'yes' : 'no';";
+    it('should not throw error for ternary with different values', async () => {
+        const code = "const value = x === 2 ? 'yes' : 'no';";
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for ternary with numbers', async () => {
-		const code = 'const value = x === 2 ? 1 : 0;';
+    it('should not throw error for ternary with numbers', async () => {
+        const code = 'const value = x === 2 ? 1 : 0;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for ternary with expressions', async () => {
-		const code = 'const value = x === 2 ? getValue() : getOtherValue();';
+    it('should not throw error for ternary with expressions', async () => {
+        const code = 'const value = x === 2 ? getValue() : getOtherValue();';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for ternary with default assignment pattern', async () => {
-		const code = 'const value = x ? x : defaultValue;';
+    it('should not throw error for ternary with default assignment pattern', async () => {
+        const code = 'const value = x ? x : defaultValue;';
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 });

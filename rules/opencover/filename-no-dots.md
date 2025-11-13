@@ -17,14 +17,14 @@ You can configure ignore patterns to exclude certain files from this rule.
 
 ```json
 {
-	"rules": {
-		"@opencover/eslint-config-opencover/filename-no-dots": [
-			"error",
-			{
-				"ignorePattern": ["^legacy\\..*\\.ts$"]
-			}
-		]
-	}
+    "rules": {
+        "@opencover/eslint-config-opencover/filename-no-dots": [
+            "error",
+            {
+                "ignorePattern": ["^legacy\\..*\\.ts$"]
+            }
+        ]
+    }
 }
 ```
 

@@ -6,30 +6,30 @@ import defaultConfig from '@eslint-config-opencover/default.js';
 const ruleName = '@opencover-eslint/no-unnecessary-logical-or';
 
 describe(ruleName, () => {
-	it('should throw error for unnecessary || null with non-nullable value', async () => {
-		const code = dedent`
+    it('should throw error for unnecessary || null with non-nullable value', async () => {
+        const code = dedent`
 			const value: string = 'hello';
 			const result = value || null;
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should throw error for unnecessary || undefined with non-nullable value', async () => {
-		const code = dedent`
+    it('should throw error for unnecessary || undefined with non-nullable value', async () => {
+        const code = dedent`
 			const value: number = 42;
 			const result = value || undefined;
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectRuleError(result, ruleName);
-	});
+        expectRuleError(result, ruleName);
+    });
 
-	it('should not throw error for || null with nullable value', async () => {
-		const code = dedent`
+    it('should not throw error for || null with nullable value', async () => {
+        const code = dedent`
 			function getValue(): string | null {
 				return Math.random() > 0.5 ? 'hello' : null;
 			}
@@ -37,13 +37,13 @@ describe(ruleName, () => {
 			const result = value || null;
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 
-	it('should not throw error for || undefined with optional value', async () => {
-		const code = dedent`
+    it('should not throw error for || undefined with optional value', async () => {
+        const code = dedent`
 			function getValue(): string | undefined {
 				return Math.random() > 0.5 ? 'hello' : undefined;
 			}
@@ -51,8 +51,8 @@ describe(ruleName, () => {
 			const result = value || undefined;
 		`;
 
-		const [result] = await lintText(defaultConfig, code);
+        const [result] = await lintText(defaultConfig, code);
 
-		expectNoRuleError(result, ruleName);
-	});
+        expectNoRuleError(result, ruleName);
+    });
 });

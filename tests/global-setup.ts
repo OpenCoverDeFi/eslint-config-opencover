@@ -8,17 +8,17 @@ const __dirname = dirname(__filename);
 export const tempDir = resolve(__dirname, '../.temp');
 
 export function setup() {
-	try {
-		mkdirSync(tempDir, { recursive: true });
-	} catch {
-		// Ignore cleanup errors
-	}
+    try {
+        mkdirSync(tempDir, { recursive: true });
+    } catch {
+        // Ignore cleanup errors
+    }
 }
 
 export function teardown() {
-	try {
-		rmSync(tempDir, { recursive: true, force: true });
-	} catch {
-		// Ignore cleanup errors
-	}
+    try {
+        rmSync(tempDir, { recursive: true, force: true });
+    } catch {
+        // Ignore cleanup errors
+    }
 }
