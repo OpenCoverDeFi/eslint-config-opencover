@@ -34,7 +34,7 @@ export const createESLintInstance = (config: Config): ESLint => {
 				languageOptions: {
 					parserOptions: {
 						projectService: {
-							allowDefaultProject: ['.temp/*.ts', '.temp/*.test.ts'],
+							allowDefaultProject: ['.temp/*.ts', '.temp/*.tsx', '.temp/*.test.ts'],
 							maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
 						},
 					},

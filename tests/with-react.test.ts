@@ -1,10 +1,15 @@
-import { describe, it } from 'vitest';
+import { beforeAll, describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectRuleWarning } from './test-utils.js';
+import { lintFileWithName, expectRuleError, expectRuleWarning, createTempFile } from './test-utils.js';
 import withReactConfig from '@eslint-config-opencover/with-react.js';
 
-// TODO: Fix this test
-describe.skip('With React ESLint Rules', () => {
+let filePath: string;
+
+beforeAll(() => {
+	filePath = createTempFile('test.tsx');
+});
+
+describe('With React ESLint Rules', () => {
 	it('should enforce React ESLint rules', async () => {
 		const code = dedent`
 			import ReactDOM from "react-dom";
@@ -15,7 +20,7 @@ describe.skip('With React ESLint Rules', () => {
 			// this comment is ignored since it follows another comment,
 			// and this one as well because it follows yet another comment.
 		`;
-		const [result] = await lintText(withReactConfig, code);
+		const [result] = await lintFileWithName(withReactConfig, filePath, code);
 
 		expectRuleError(result, 'prettier/prettier');
 		expectRuleError(result, 'import/no-unresolved');
