@@ -36,6 +36,7 @@
 		"test:ui": "vitest --ui",
 		"test:coverage": "vitest run --coverage",
 		"build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+		"postinstall": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
 		"prepare": "husky",
 		"lint": "eslint --max-warnings=0 . && prettier --check .",
 		"format": "eslint --fix . && prettier --write ."
