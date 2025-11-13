@@ -3,28 +3,19 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-import { createRule } from '../utils.js';
+import { createRule, getTypeFromESTreeNode } from '../utils.js';
 
-function extractTypeofInfo(
-	node: TSESTree.BinaryExpression
+function checkTypeofPattern(
+	typeofSide: TSESTree.Node,
+	literalSide: TSESTree.Node
 ): { typeofNode: TSESTree.UnaryExpression; typeofString: string } | null {
-	// Pattern: typeof variable === 'string'
 	if (
-		node.left.type === AST_NODE_TYPES.UnaryExpression &&
-		node.left.operator === 'typeof' &&
-		node.right.type === AST_NODE_TYPES.Literal &&
-		typeof node.right.value === 'string'
+		typeofSide.type === AST_NODE_TYPES.UnaryExpression &&
+		typeofSide.operator === 'typeof' &&
+		literalSide.type === AST_NODE_TYPES.Literal &&
+		typeof literalSide.value === 'string'
 	) {
-		return { typeofNode: node.left, typeofString: node.right.value };
-	}
-	// Pattern: 'string' === typeof variable
-	if (
-		node.right.type === AST_NODE_TYPES.UnaryExpression &&
-		node.right.operator === 'typeof' &&
-		node.left.type === AST_NODE_TYPES.Literal &&
-		typeof node.left.value === 'string'
-	) {
-		return { typeofNode: node.right, typeofString: node.left.value };
+		return { typeofNode: typeofSide, typeofString: literalSide.value };
 	}
 	return null;
 }
@@ -46,43 +37,36 @@ function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecke
 		return false;
 	}
 
-	// For primitive types, check both flags and type string
-	if (typeofString === 'string') {
-		return (type.flags & ts.TypeFlags.String) !== 0 || typeString === 'string';
+	// Check type based on typeof string
+	switch (typeofString) {
+		case 'string':
+			return (type.flags & ts.TypeFlags.String) !== 0;
+		case 'number':
+			return (type.flags & ts.TypeFlags.Number) !== 0;
+		case 'bigint':
+			return (type.flags & ts.TypeFlags.BigInt) !== 0;
+		case 'symbol':
+			return (type.flags & ts.TypeFlags.ESSymbol) !== 0;
+		case 'undefined':
+			return (type.flags & ts.TypeFlags.Undefined) !== 0;
+		case 'object':
+			// Object type but not null, undefined, or a union
+			return (
+				(type.flags & ts.TypeFlags.Object) !== 0 &&
+				typeString !== 'null' &&
+				typeString !== 'undefined' &&
+				!typeString.includes('|')
+			);
+		case 'function':
+			// Function type
+			return (
+				(type.flags & ts.TypeFlags.Object) !== 0 &&
+				(typeString.includes('=>') || typeString === 'Function') &&
+				!typeString.includes('|')
+			);
+		default:
+			return false;
 	}
-	if (typeofString === 'number') {
-		return (type.flags & ts.TypeFlags.Number) !== 0 || typeString === 'number';
-	}
-	if (typeofString === 'bigint') {
-		return (type.flags & ts.TypeFlags.BigInt) !== 0 || typeString === 'bigint';
-	}
-	if (typeofString === 'symbol') {
-		return (type.flags & ts.TypeFlags.ESSymbol) !== 0 || typeString === 'symbol';
-	}
-	if (typeofString === 'undefined') {
-		return (type.flags & ts.TypeFlags.Undefined) !== 0 || typeString === 'undefined';
-	}
-
-	// For object and function, check the type string representation
-	if (typeofString === 'object') {
-		// Object type but not null, undefined, or a union
-		return (
-			(type.flags & ts.TypeFlags.Object) !== 0 &&
-			typeString !== 'null' &&
-			typeString !== 'undefined' &&
-			!typeString.includes('|')
-		);
-	}
-	if (typeofString === 'function') {
-		// Function type
-		return (
-			(type.flags & ts.TypeFlags.Object) !== 0 &&
-			(typeString.includes('=>') || typeString === 'Function') &&
-			!typeString.includes('|')
-		);
-	}
-
-	return false;
 }
 
 function handleBinaryExpression(
@@ -96,7 +80,7 @@ function handleBinaryExpression(
 		return;
 	}
 
-	const typeofInfo = extractTypeofInfo(node);
+	const typeofInfo = checkTypeofPattern(node.left, node.right) || checkTypeofPattern(node.right, node.left);
 	if (!typeofInfo) {
 		return;
 	}
@@ -109,11 +93,8 @@ function handleBinaryExpression(
 		return;
 	}
 
-	// Get the TypeScript node for the variable
-	const tsNode = services.esTreeNodeToTSNodeMap.get(argument);
-
 	// Get the type of the variable at the location of the typeof check
-	const variableType = checker.getTypeAtLocation(tsNode);
+	const variableType = getTypeFromESTreeNode(services, checker, argument);
 
 	// Check if the type is already exactly the type being checked (not a union)
 	if (isExactType(variableType, typeofString, checker)) {
@@ -138,11 +119,10 @@ export const rule = createRule({
 	},
 	defaultOptions: [],
 	create(context) {
-		const services = ESLintUtils.getParserServices(context);
-		const checker = services.program.getTypeChecker();
-
 		return {
 			BinaryExpression(node: TSESTree.BinaryExpression) {
+				const services = ESLintUtils.getParserServices(context);
+				const checker = services.program.getTypeChecker();
 				handleBinaryExpression(node, context, services, checker);
 			},
 		};

@@ -2,14 +2,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { ESLintUtils } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-import { createRule } from '../utils.js';
-
-function isFromAnyOrUnknown(expressionType: ts.Type): boolean {
-	const isFromAny = (expressionType.flags & ts.TypeFlags.Any) !== 0;
-	const isFromUnknown =
-		(expressionType.flags & ts.TypeFlags.Unknown) !== 0 || expressionType.getSymbol()?.getName() === 'unknown';
-	return isFromAny || isFromUnknown;
-}
+import { createRule, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
 
 function checkUnionNarrowing(
 	expressionType: ts.Type,
@@ -72,22 +65,24 @@ export const rule = createRule({
 					return;
 				}
 
-				const expression = tsAsExpression.expression;
-				const typeNode = tsAsExpression.type;
+				const expressionType = getTypeFromESTreeNode(services, checker, node.expression);
+				const assertedType = getTypeFromESTreeNode(services, checker, node.typeAnnotation);
 
-				const expressionType = checker.getTypeAtLocation(expression);
-				const assertedType = checker.getTypeAtLocation(typeNode);
-
-				if (isFromAnyOrUnknown(expressionType)) {
+				if (isAnyOrUnknown(expressionType)) {
 					return;
 				}
 
 				const isAssignable = checker.isTypeAssignableTo(expressionType, assertedType);
 				const isReverseAssignable = checker.isTypeAssignableTo(assertedType, expressionType);
+				const tsExpression = services.esTreeNodeToTSNodeMap.get(node.expression);
+				if (!ts.isExpression(tsExpression)) {
+					return;
+				}
+
 				const isUnnecessaryUnionNarrowing = checkUnionNarrowing(
 					expressionType,
 					assertedType,
-					expression,
+					tsExpression,
 					checker
 				);
 
