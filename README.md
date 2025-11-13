@@ -17,6 +17,10 @@ import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 
 export default defineConfig([
+	{
+		// Add your ignores pattern
+		ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
+	},
 	...opencoverConfig,
 	{
 		rules: {

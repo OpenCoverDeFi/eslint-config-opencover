@@ -54,14 +54,18 @@ export const rule = createRule({
 	},
 	defaultOptions: [],
 	create(context) {
-		const services = ESLintUtils.getParserServices(context);
-		const checker = services.program.getTypeChecker();
-
 		return {
-			TSAsExpression(node: TSESTree.TSAsExpression) {
+			TSAsExpression(node: TSESTree.TSAsExpression): void {
+				const services = ESLintUtils.getParserServices(context);
+				const checker = services.program.getTypeChecker();
 				const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
 
 				if (!ts.isAsExpression(tsAsExpression)) {
+					return;
+				}
+
+				// Skip "as const" assertions - they are not type assertions
+				if (tsAsExpression.type.getText() === 'const') {
 					return;
 				}
 

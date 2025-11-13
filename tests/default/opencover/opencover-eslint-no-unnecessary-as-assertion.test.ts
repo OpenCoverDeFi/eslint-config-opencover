@@ -162,4 +162,16 @@ describe(ruleName, () => {
 
 		expectRuleError(result, ruleName);
 	});
+
+	it('should not throw error for "as const" assertion', async () => {
+		const code = dedent`
+			const tuple = ['a', 'b'] as const;
+			const obj = { key: 'value' } as const;
+			const arr = [1, 2, 3] as const;
+		`;
+
+		const [result] = await lintText(defaultConfig, code);
+
+		expectNoRuleError(result, ruleName);
+	});
 });
