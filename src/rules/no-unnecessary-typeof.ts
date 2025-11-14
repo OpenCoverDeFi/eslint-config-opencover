@@ -10,7 +10,7 @@ import { getParserServices, getTypeFromESTreeNode } from '../utils.js';
 type RuleOptions = [];
 type MessageIds = 'unnecessaryTypeof';
 
-type NoUnnecessaryTypeofRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
@@ -18,7 +18,7 @@ type NoUnnecessaryTypeofRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & 
 function checkTypeofPattern(
     typeofSide: TSESTree.Node,
     literalSide: TSESTree.Node
-): { typeofNode: TSESTree.UnaryExpression; typeofString: string } | null {
+): { typeofNode: TSESTree.UnaryExpression; typeofString: string } | undefined {
     if (
         typeofSide.type === AST_NODE_TYPES.UnaryExpression &&
         typeofSide.operator === 'typeof' &&
@@ -27,7 +27,6 @@ function checkTypeofPattern(
     ) {
         return { typeofNode: typeofSide, typeofString: literalSide.value };
     }
-    return null;
 }
 
 // Check if a type matches a typeof string exactly (not a union)
@@ -81,7 +80,7 @@ function isExactType(type: Type, typeofString: string, checker: TypeChecker): bo
 
 function handleBinaryExpression(
     node: TSESTree.BinaryExpression,
-    context: RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>,
+    context: RuleContext<Options>,
     services: ParserServices,
     checker: TypeChecker
 ): void {
@@ -115,12 +114,10 @@ function handleBinaryExpression(
     }
 }
 
-function createRuleVisitor(context: RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>) {
+function createRuleVisitor(context: RuleContext<Options>) {
     return {
         BinaryExpression(node: TSESTree.BinaryExpression) {
-            const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryTypeofRuleDefinitionTypeOptions>(
-                context
-            );
+            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
             if (!services.program) {
                 return;
             }
@@ -130,8 +127,8 @@ function createRuleVisitor(context: RuleContext<NoUnnecessaryTypeofRuleDefinitio
     };
 }
 
-export const rule: RuleDefinition<NoUnnecessaryTypeofRuleDefinitionTypeOptions> = {
-    create(context: Readonly<RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>>) {
+export const rule: RuleDefinition<Options> = {
+    create(context: Readonly<RuleContext<Options>>) {
         return createRuleVisitor(context);
     },
     meta: {

@@ -7,8 +7,7 @@ import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '../uti
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryAsAssertion';
-
-type NoUnnecessaryAsAssertionRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
@@ -49,14 +48,10 @@ function checkUnionNarrowing(
     return false;
 }
 
-function createRuleVisitor(context: RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>) {
+function createRuleVisitor(context: RuleContext<Options>) {
     return {
         TSAsExpression(node: TSESTree.TSAsExpression): void {
-            const services = getParserServices<
-                MessageIds,
-                RuleOptions,
-                NoUnnecessaryAsAssertionRuleDefinitionTypeOptions
-            >(context);
+            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
             if (!services.program) {
                 return;
             }
@@ -118,8 +113,8 @@ function createRuleVisitor(context: RuleContext<NoUnnecessaryAsAssertionRuleDefi
     };
 }
 
-export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions> = {
-    create(context: Readonly<RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>>) {
+export const rule: RuleDefinition<Options> = {
+    create(context: Readonly<RuleContext<Options>>) {
         return createRuleVisitor(context);
     },
     meta: {

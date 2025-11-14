@@ -7,15 +7,13 @@ type RuleOptions = [
         ignorePattern?: string[];
     },
 ];
-
 type MessageIds = 'noDotsInFilename';
-
-type FilenameNoDotsRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 
-function createRuleVisitor(context: RuleContext<FilenameNoDotsRuleDefinitionTypeOptions>) {
+function createRuleVisitor(context: RuleContext<Options>) {
     const option = context.options[0];
     const ignorePatterns = option?.ignorePattern ?? [];
 
@@ -50,8 +48,8 @@ function createRuleVisitor(context: RuleContext<FilenameNoDotsRuleDefinitionType
     return {};
 }
 
-export const rule: RuleDefinition<FilenameNoDotsRuleDefinitionTypeOptions> = {
-    create(context: RuleContext<FilenameNoDotsRuleDefinitionTypeOptions>) {
+export const rule: RuleDefinition<Options> = {
+    create(context: RuleContext<Options>) {
         return createRuleVisitor(context);
     },
     meta: {

@@ -11,16 +11,13 @@ import {
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryLogicalOr';
-
-type NoUnnecessaryLogicalOrRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 
-function createRuleVisitor(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
-    const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>(
-        context
-    );
+function createRuleVisitor(context: RuleContext<Options>) {
+    const services = getParserServices<MessageIds, RuleOptions, Options>(context);
     if (!services.program) {
         return {};
     }
@@ -56,8 +53,8 @@ function createRuleVisitor(context: RuleContext<NoUnnecessaryLogicalOrRuleDefini
     };
 }
 
-export const rule: RuleDefinition<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions> = {
-    create(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
+export const rule: RuleDefinition<Options> = {
+    create(context: RuleContext<Options>) {
         return createRuleVisitor(context);
     },
     meta: {

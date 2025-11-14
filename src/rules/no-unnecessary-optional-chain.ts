@@ -6,24 +6,17 @@ import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '../uti
 type RuleOptions = [];
 type MessageIds = 'unnecessaryOptionalChain';
 
-type NoUnnecessaryOptionalChainRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 
-function createRuleVisitor(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
+function createRuleVisitor(context: RuleContext<Options>) {
     return {
         ChainExpression(node: TSESTree.ChainExpression) {
-            const services = getParserServices<
-                MessageIds,
-                RuleOptions,
-                NoUnnecessaryOptionalChainRuleDefinitionTypeOptions
-            >(context);
-            if (!services.program) {
-                return {};
-            }
-            const checker = services.program.getTypeChecker();
-            const type = getTypeFromESTreeNode(services, checker, node);
+            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+            if (!services.program) return;
+            const type = getTypeFromESTreeNode(services, services.program.getTypeChecker(), node);
 
             // Check if the type includes null or undefined
             if (!isTypeNullable(type)) {
@@ -36,8 +29,8 @@ function createRuleVisitor(context: RuleContext<NoUnnecessaryOptionalChainRuleDe
     };
 }
 
-export const rule: RuleDefinition<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions> = {
-    create(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
+export const rule: RuleDefinition<Options> = {
+    create(context: RuleContext<Options>) {
         return createRuleVisitor(context);
     },
     meta: {
