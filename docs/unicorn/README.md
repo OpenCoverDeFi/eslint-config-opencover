@@ -56,7 +56,7 @@ my_component.ts;
 myComponent.ts;
 
 // ✅ Correct filename
-my - component.ts;
+my-component.ts;
 ```
 
 **Exceptions:**
