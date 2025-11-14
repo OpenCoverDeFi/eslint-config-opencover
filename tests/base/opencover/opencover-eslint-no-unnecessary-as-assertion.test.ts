@@ -11,9 +11,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value as string;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -22,9 +20,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value as number;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -34,9 +30,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex as Example;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -45,9 +39,7 @@ describe(ruleName, () => {
             const arr: string[] = ['a', 'b'];
             const result = arr as string[];
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -57,9 +49,7 @@ describe(ruleName, () => {
             const value: A = 'test';
             const result = value as A;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -70,9 +60,7 @@ describe(ruleName, () => {
             }
             const result = getString() as string;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -84,9 +72,7 @@ describe(ruleName, () => {
             const person: Person = { name: 'John' };
             const result = person as Person;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -97,9 +83,7 @@ describe(ruleName, () => {
             }
             const result = getValue() as string;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -108,9 +92,7 @@ describe(ruleName, () => {
             const value: string | number = 'hello';
             const result = value as string;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -121,9 +103,7 @@ describe(ruleName, () => {
             const value: A | B = { type: 'a', value: 'test' };
             const result = value as A;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -134,9 +114,7 @@ describe(ruleName, () => {
             }
             const result = getValue() as string;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -145,9 +123,7 @@ describe(ruleName, () => {
             const arr: readonly string[] = ['a', 'b'];
             const result = arr as readonly string[];
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -157,9 +133,7 @@ describe(ruleName, () => {
             const id: Id = '123';
             const result = id as Id;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -169,9 +143,7 @@ describe(ruleName, () => {
             const obj = { key: 'value' } as const;
             const arr = [1, 2, 3] as const;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 });

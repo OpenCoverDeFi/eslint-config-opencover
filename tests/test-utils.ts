@@ -70,13 +70,7 @@ export const lintText = async (config: Config, code: string): Promise<ESLint.Lin
         tempFilePath = createTempFile(filename);
     }
 
-    const linter = createESLintInstance(config);
-
-    const results = await linter.lintText(code, {
-        filePath: tempFilePath, // We need to pass this for our opencover-eslint-no-unnecessary-optional-chain rule to work
-    });
-
-    return results[0];
+    return await lintFileWithName(config, tempFilePath, code);
 };
 
 export const expectRuleError = (result: ESLint.LintResult, ruleId: string) => {

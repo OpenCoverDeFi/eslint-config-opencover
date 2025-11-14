@@ -12,9 +12,7 @@ describe(ruleName, () => {
             const array = [1, 2, 3];
             const foo = array.map(callback);
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 });

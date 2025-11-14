@@ -11,9 +11,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value || null;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -22,9 +20,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value || undefined;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -36,9 +32,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || null;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -50,9 +44,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || undefined;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 });

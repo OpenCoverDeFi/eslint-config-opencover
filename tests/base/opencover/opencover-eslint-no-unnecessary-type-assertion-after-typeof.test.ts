@@ -12,9 +12,7 @@ describe(ruleName, () => {
                 return typeof value === 'string' && someCondition(value);
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -24,9 +22,7 @@ describe(ruleName, () => {
                 return typeof value === 'number' && value > 0;
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -38,9 +34,7 @@ describe(ruleName, () => {
                 }
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -54,9 +48,7 @@ describe(ruleName, () => {
                 return typeof request.id === 'string' && REQUEST_ID_PATTERN.test(request.id);
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -66,9 +58,7 @@ describe(ruleName, () => {
                 return typeof value === 'string' && value;
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -78,9 +68,7 @@ describe(ruleName, () => {
                 return typeof value === 'string' && value;
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 });

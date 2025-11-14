@@ -11,9 +11,7 @@ describe(ruleName, () => {
             import { something } from './local';
             import fs from 'fs';
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleWarning(result, ruleName);
     });
 });

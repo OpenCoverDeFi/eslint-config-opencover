@@ -13,9 +13,7 @@ describe(ruleName, () => {
                 Inactive,
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -27,9 +25,7 @@ describe(ruleName, () => {
                 Blue = 'blue',
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -42,9 +38,7 @@ describe(ruleName, () => {
                 Right,
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -55,9 +49,7 @@ describe(ruleName, () => {
                 Second = 'second',
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectRuleError(result, ruleName);
     });
 
@@ -65,9 +57,7 @@ describe(ruleName, () => {
         const code = dedent`
             type Status = 'active' | 'inactive';
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -78,9 +68,7 @@ describe(ruleName, () => {
                 Inactive: 'inactive',
             } as const;
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 
@@ -90,9 +78,7 @@ describe(ruleName, () => {
                 return 'active';
             }
         `;
-
         const result = await lintText(defaultConfig, code);
-
         expectNoRuleError(result, ruleName);
     });
 });
