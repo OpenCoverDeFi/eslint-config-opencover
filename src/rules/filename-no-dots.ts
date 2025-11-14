@@ -1,39 +1,26 @@
 import { basename } from 'node:path';
 import type { TSESTree } from '@typescript-eslint/utils';
-import { createRule } from '../utils.js';
+import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 
-type Options = [
+type RuleOptions = [
     {
         ignorePattern?: string[];
     },
 ];
 
-type OptionsObject = Options[0];
+type MessageIds = 'noDotsInFilename';
 
-function isOptionsObject(value: unknown): value is OptionsObject {
-    if (typeof value !== 'object' || value === null) {
-        return false;
-    }
-    if (!('ignorePattern' in value) || !Array.isArray(value.ignorePattern)) {
-        return false;
-    }
-    if (value.ignorePattern.some((pattern: unknown) => typeof pattern !== 'string')) {
-        return false;
-    }
-    return true;
-}
+type FilenameNoDotsRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+    MessageIds: MessageIds;
+    RuleOptions: RuleOptions;
+};
 
-function getOptions(options: Options): OptionsObject {
-    const firstOption: unknown = options[0];
-    return isOptionsObject(firstOption) ? firstOption : {};
-}
-
-export const rule = createRule({
-    name: 'filename-no-dots',
+export const rule: RuleDefinition<FilenameNoDotsRuleDefinitionTypeOptions> = {
     meta: {
-        type: 'problem',
+        type: 'problem' as const,
         docs: {
             description: 'Disallow dots in filenames (except .test. in test files)',
+            url: 'https://opencover.com/rules/filename-no-dots',
         },
         messages: {
             noDotsInFilename: 'Filename should not contain dots (except .test. in test files)',
@@ -53,10 +40,9 @@ export const rule = createRule({
             },
         ],
     },
-    defaultOptions: [{}],
-    create(context, [options]) {
-        const optionsObject = getOptions([options]);
-        const ignorePatterns = optionsObject.ignorePattern ?? [];
+    create(context: RuleContext<FilenameNoDotsRuleDefinitionTypeOptions>) {
+        const option = context.options[0];
+        const ignorePatterns = option?.ignorePattern ?? [];
 
         const filename = basename(context.filename);
 
@@ -88,4 +74,4 @@ export const rule = createRule({
 
         return {};
     },
-});
+};

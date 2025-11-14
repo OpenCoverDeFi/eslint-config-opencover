@@ -1,12 +1,12 @@
 root = true
 
 [*]
-indent_style = tab
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+end_of_line = lf
 insert_final_newline = true
-
-[*.yml]
+max_line_length = 120
 indent_style = space
-indent_size = 2
+indent_size = 2 # sql, sh, bash, json, yml, yaml, toml, prettierrc, eslintrc
+
+[*.{js,jsx,ts,tsx,mjs,cjs,css,html,hbs}]
+indent_size = 4

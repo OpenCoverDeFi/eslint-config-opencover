@@ -4,8 +4,8 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import prettierConfig from 'eslint-config-prettier';
-import type { ESLint } from 'eslint';
 import { defineConfig } from 'eslint/config';
+import type { ESLint } from 'eslint';
 
 const config = defineConfig([
     reactPlugin.configs.flat.recommended,

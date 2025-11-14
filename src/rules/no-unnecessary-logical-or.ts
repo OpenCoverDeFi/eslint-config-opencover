@@ -1,23 +1,31 @@
 // Plugin for the rule no-unnecessary-logical-or
 import type { TSESTree } from '@typescript-eslint/utils';
 import { ESLintUtils } from '@typescript-eslint/utils';
-import { createRule, getTypeFromESTreeNode, isAnyOrUnknown, isNullishLiteral, isTypeNullable } from '../utils.js';
+import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
+import { getTypeFromESTreeNode, isAnyOrUnknown, isNullishLiteral, isTypeNullable } from '../utils.js';
 
-export const rule = createRule({
-    name: 'no-unnecessary-logical-or',
+type RuleOptions = [];
+type MessageIds = 'unnecessaryLogicalOr';
+
+type NoUnnecessaryLogicalOrRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+    MessageIds: MessageIds;
+    RuleOptions: RuleOptions;
+};
+
+export const rule: RuleDefinition<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions> = {
     meta: {
-        type: 'problem',
+        type: 'problem' as const,
         docs: {
             description: 'Disallow unnecessary logical OR with null or undefined',
+            url: 'https://opencover.com/rules/no-unnecessary-logical-or',
         },
         messages: {
             unnecessaryLogicalOr: 'Unnecessary logical OR - the value is not nullable',
         },
         schema: [],
     },
-    defaultOptions: [],
-    create(context) {
-        const services = ESLintUtils.getParserServices(context);
+    create(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
+        const services = ESLintUtils.getParserServices<MessageIds, RuleOptions>(context);
         const checker = services.program.getTypeChecker();
 
         return {
@@ -49,4 +57,4 @@ export const rule = createRule({
             },
         };
     },
-});
+};

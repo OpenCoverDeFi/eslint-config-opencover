@@ -3,7 +3,16 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-import { createRule, getTypeFromESTreeNode } from '../utils.js';
+import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
+import { getTypeFromESTreeNode } from '../utils.js';
+
+type RuleOptions = [];
+type MessageIds = 'unnecessaryTypeof';
+
+type NoUnnecessaryTypeofRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+    MessageIds: MessageIds;
+    RuleOptions: RuleOptions;
+};
 
 function checkTypeofPattern(
     typeofSide: TSESTree.Node,
@@ -71,7 +80,7 @@ function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecke
 
 function handleBinaryExpression(
     node: TSESTree.BinaryExpression,
-    context: Parameters<Parameters<typeof createRule>[0]['create']>[0],
+    context: RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>,
     services: ParserServices,
     checker: ts.TypeChecker
 ): void {
@@ -105,26 +114,25 @@ function handleBinaryExpression(
     }
 }
 
-export const rule = createRule({
-    name: 'no-unnecessary-typeof',
+export const rule: RuleDefinition<NoUnnecessaryTypeofRuleDefinitionTypeOptions> = {
     meta: {
-        type: 'problem',
+        type: 'problem' as const,
         docs: {
             description: 'Disallow unnecessary typeof checks when TypeScript already knows the type',
+            url: 'https://opencover.com/rules/no-unnecessary-typeof',
         },
         messages: {
             unnecessaryTypeof: 'Unnecessary typeof check - TypeScript already knows this type',
         },
         schema: [],
     },
-    defaultOptions: [],
-    create(context) {
+    create(context: Readonly<RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>>) {
         return {
             BinaryExpression(node: TSESTree.BinaryExpression) {
-                const services = ESLintUtils.getParserServices(context);
+                const services = ESLintUtils.getParserServices<MessageIds, RuleOptions>(context);
                 const checker = services.program.getTypeChecker();
                 handleBinaryExpression(node, context, services, checker);
             },
         };
     },
-});
+};

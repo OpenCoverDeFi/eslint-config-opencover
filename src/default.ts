@@ -2,9 +2,9 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import { defineConfig } from 'eslint/config';
 import vitest from '@vitest/eslint-plugin';
-import customPlugin from './plugin.js';
+import { defineConfig } from 'eslint/config';
+import opencoverPlugin from './plugin.js';
 
 const config = defineConfig([
     eslint.configs.recommended,
@@ -13,7 +13,7 @@ const config = defineConfig([
         plugins: {
             import: importPlugin,
             unicorn: unicornPlugin,
-            '@opencover-eslint': customPlugin,
+            '@opencover-eslint': opencoverPlugin,
         },
         languageOptions: {
             parser: tseslint.parser,
@@ -56,7 +56,6 @@ const config = defineConfig([
             '@typescript-eslint/explicit-member-accessibility': 'error',
             '@typescript-eslint/member-ordering': 'error',
             '@typescript-eslint/no-non-null-assertion': 'error',
-            '@typescript-eslint/no-unnecessary-condition': ['error'],
             '@typescript-eslint/no-restricted-types': [
                 'error',
                 {

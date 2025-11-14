@@ -1,20 +1,10 @@
 {
-  "printWidth": 120,
   "trailingComma": "es5",
-  "tabWidth": 4,
-  "useTabs": false,
   "overrides": [
     {
-      "files": ["*.json", "*.yml", ".prettierrc"],
+      "files": [".eslint.config.ts"],
       "options": {
-        "tabWidth": 2
-      }
-    },
-    {
-      "files": [".eslintrc"],
-      "options": {
-        "parser": "json",
-        "tabWidth": 2
+        "parser": "typescript"
       }
     }
   ],

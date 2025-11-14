@@ -7,7 +7,11 @@ import { rule as noUnnecessaryTypeofRule } from './rules/no-unnecessary-typeof.j
 import { rule as noUnnecessaryLogicalOrRule } from './rules/no-unnecessary-logical-or.js';
 import { rule as complexFunctionsRequireReturnTypeRule } from './rules/complex-functions-require-return-type.js';
 
-export default {
+const config: ESLint.Plugin = {
+    meta: {
+        name: 'opencover-eslint',
+        version: '1.0.0',
+    },
     rules: {
         'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,
         'filename-no-dots': filenameNoDotsRule,
@@ -17,5 +21,6 @@ export default {
         'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
         'complex-functions-require-return-type': complexFunctionsRequireReturnTypeRule,
     },
-    // TODO: Figure out types
-} as unknown as ESLint.Plugin;
+};
+
+export default config;

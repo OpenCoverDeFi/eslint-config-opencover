@@ -1,7 +1,16 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
-import { createRule } from '../utils.js';
+import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 
+type RuleOptions = {
+    maxComplexity: number;
+};
+type MessageIds = 'missingReturnType';
+
+type MissingReturnTypeRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+    MessageIds: MessageIds;
+    RuleOptions: RuleOptions;
+};
 type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
 function traverse(node: TSESTree.Node): number {
@@ -226,8 +235,8 @@ function traverse(node: TSESTree.Node): number {
 
 function checkFunction(
     node: FunctionNode,
-    context: Parameters<Parameters<typeof createRule>[0]['create']>[0],
-    options: { maxComplexity: number }
+    context: RuleContext<MissingReturnTypeRuleDefinitionTypeOptions>,
+    options: RuleOptions
 ): void {
     // Skip if already has return type
     if (node.returnType) return;
@@ -243,12 +252,12 @@ function checkFunction(
     }
 }
 
-export const rule = createRule({
-    name: 'complex-functions-require-return-type',
+export const rule: RuleDefinition<MissingReturnTypeRuleDefinitionTypeOptions> = {
     meta: {
-        type: 'problem',
+        type: 'problem' as const,
         docs: {
             description: 'Require explicit return types for complex functions',
+            url: 'https://opencover.com/rules/complex-functions-require-return-type',
         },
         messages: {
             missingReturnType: 'Complex function (complexity: {{complexity}}) must have an explicit return type',
@@ -266,18 +275,19 @@ export const rule = createRule({
             },
         ],
     },
-    defaultOptions: [{ maxComplexity: 10 }],
-    create(context, [options]) {
+    create(context: RuleContext<MissingReturnTypeRuleDefinitionTypeOptions>) {
+        const rawOptions = (context.options[0] as { maxComplexity?: number } | undefined) ?? {};
+        const options: { maxComplexity: number } = { maxComplexity: rawOptions.maxComplexity ?? 10 };
         return {
-            FunctionDeclaration(node) {
+            FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
                 checkFunction(node, context, options);
             },
-            FunctionExpression(node) {
+            FunctionExpression(node: TSESTree.FunctionExpression) {
                 checkFunction(node, context, options);
             },
-            ArrowFunctionExpression(node) {
+            ArrowFunctionExpression(node: TSESTree.ArrowFunctionExpression) {
                 checkFunction(node, context, options);
             },
         };
     },
-});
+};

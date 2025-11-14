@@ -82,5 +82,4 @@ The following TypeScript ESLint rules are explicitly configured or overridden in
 | `@typescript-eslint/explicit-member-accessibility` | Requires explicit accessibility modifiers on class members                 | error    | -                                                        |
 | `@typescript-eslint/member-ordering`               | Enforces consistent member ordering in classes                             | error    | -                                                        |
 | `@typescript-eslint/no-non-null-assertion`         | Disallows non-null assertions using the `!` postfix operator               | error    | -                                                        |
-| `@typescript-eslint/no-unnecessary-condition`      | Disallows conditionals where the type assertion always (or never) succeeds | error    | -                                                        |
 | `@typescript-eslint/no-restricted-types`           | Disallows specific types (Map, Set)                                        | error    | `types: { Map: {...}, Set: {...} }`                      |

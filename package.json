@@ -1,6 +1,6 @@
 {
   "name": "@opencover/eslint-config-opencover",
-  "version": "2.0.5",
+  "version": "3.0.0",
   "description": "ESLint Typescript shareable config for OpenCover's coding style.",
   "keywords": [
     "eslint",
@@ -32,10 +32,6 @@
     "./with-react": {
       "types": "./dist/with-react.d.ts",
       "default": "./dist/with-react.js"
-    },
-    "./plugin": {
-      "types": "./dist/plugin.d.ts",
-      "default": "./dist/plugin.js"
     }
   },
   "files": [
@@ -57,7 +53,6 @@
     "@eslint/js": "^9.39.1",
     "@typescript-eslint/utils": "^8.46.4",
     "@vitest/eslint-plugin": "^1.4.2",
-    "eslint": "^9.39.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
@@ -65,13 +60,17 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
-    "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.4"
+  },
+  "peerDependencies": {
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
     "@types/node": "^24.10.0",
     "@vitest/coverage-v8": "^3.2.4",
     "@vitest/ui": "^3.2.4",
+    "eslint": "^9.39.1",
     "dedent": "^1.7.0",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
@@ -79,6 +78,7 @@
     "prettier": "^3.6.2",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
   "engines": {

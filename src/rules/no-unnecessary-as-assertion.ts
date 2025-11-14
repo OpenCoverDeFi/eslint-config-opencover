@@ -2,7 +2,16 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { ESLintUtils } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-import { createRule, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
+import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
+import { getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
+
+type RuleOptions = [];
+type MessageIds = 'unnecessaryAsAssertion';
+
+type NoUnnecessaryAsAssertionRuleDefinitionTypeOptions = RuleDefinitionTypeOptions & {
+    MessageIds: MessageIds;
+    RuleOptions: RuleOptions;
+};
 
 function checkUnionNarrowing(
     expressionType: ts.Type,
@@ -40,20 +49,19 @@ function checkUnionNarrowing(
     return false;
 }
 
-export const rule = createRule({
-    name: 'no-unnecessary-as-assertion',
+export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions> = {
     meta: {
-        type: 'problem',
+        type: 'problem' as const,
         docs: {
             description: 'Disallow unnecessary "as" type assertions',
+            url: 'https://opencover.com/rules/no-unnecessary-as-assertion',
         },
         messages: {
             unnecessaryAsAssertion: 'Unnecessary "as" type assertion - the expression is already of this type',
         },
         schema: [],
     },
-    defaultOptions: [],
-    create(context) {
+    create(context: RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>) {
         return {
             TSAsExpression(node: TSESTree.TSAsExpression): void {
                 const services = ESLintUtils.getParserServices(context);
@@ -114,4 +122,4 @@ export const rule = createRule({
             },
         };
     },
-});
+};

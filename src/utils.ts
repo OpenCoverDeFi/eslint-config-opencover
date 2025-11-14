@@ -1,9 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
 import * as ts from 'typescript';
-
-export const createRule = ESLintUtils.RuleCreator((name) => `https://opencover.com/rules/${name}`);
 
 export function getTypeFromESTreeNode(services: ParserServices, checker: ts.TypeChecker, node: TSESTree.Node): ts.Type {
     const tsNode = services.esTreeNodeToTSNodeMap.get(node);
