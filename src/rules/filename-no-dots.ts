@@ -7,39 +7,26 @@ type RuleOptions = [
         ignorePattern?: string[];
     },
 ];
-type MessageIds = 'noDotsInFilename';
+const MessageIds = 'noDotsInFilename';
+type MessageIds = typeof MessageIds;
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 
 function createRuleVisitor(context: RuleContext<Options>) {
-    const option = context.options[0];
-    const ignorePatterns = option?.ignorePattern ?? [];
-
+    const { ignorePattern = [] } = context.options[0] ?? {};
     const filename = basename(context.filename);
 
-    // Check if filename matches any ignore pattern
-    if (ignorePatterns.some((pattern) => new RegExp(pattern).test(filename))) {
-        return {};
-    }
-
-    // Remove file extension (everything after the last dot)
-    const lastDotIndex = filename.lastIndexOf('.');
-    const nameWithoutExt = lastDotIndex === -1 ? filename : filename.slice(0, lastDotIndex);
-
-    // For test files, remove .test suffix
-    const baseName = nameWithoutExt.endsWith('.test')
-        ? nameWithoutExt.slice(0, -5) // Remove '.test'
-        : nameWithoutExt;
-
-    // Check if base name contains any dots
-    if (baseName.includes('.')) {
+    if (
+        !ignorePattern.some((pattern) => new RegExp(pattern).test(filename)) &&
+        filename.replace(/(?:\.test)?(?:\.[^.]+)?$/, '').includes('.')
+    ) {
         return {
             Program(node: TSESTree.Program) {
                 context.report({
                     node,
-                    messageId: 'noDotsInFilename',
+                    messageId: MessageIds,
                 });
             },
         };

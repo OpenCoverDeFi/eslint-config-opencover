@@ -6,7 +6,8 @@ import { isAsExpression, isStringLiteral, isNumericLiteral, isExpression } from 
 import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
 
 type RuleOptions = [];
-type MessageIds = 'unnecessaryAsAssertion';
+const MessageIds = 'unnecessaryAsAssertion';
+type MessageIds = typeof MessageIds;
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
@@ -58,12 +59,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
             const checker = services.program.getTypeChecker();
             const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
 
-            if (!isAsExpression(tsAsExpression)) {
-                return;
-            }
-
-            // Skip "as const" assertions - they are not type assertions
-            if (tsAsExpression.type.getText() === 'const') {
+            if (!isAsExpression(tsAsExpression) || tsAsExpression.type.getText() === 'const') {
                 return;
             }
 
@@ -88,26 +84,15 @@ function createRuleVisitor(context: RuleContext<Options>) {
                 checker
             );
 
-            if (isAssignable && isReverseAssignable) {
+            if (
+                (isAssignable && isReverseAssignable) ||
+                isUnnecessaryUnionNarrowing ||
+                (isAssignable && checker.typeToString(expressionType) === checker.typeToString(assertedType))
+            ) {
                 context.report({
                     node,
-                    messageId: 'unnecessaryAsAssertion',
+                    messageId: MessageIds,
                 });
-            } else if (isUnnecessaryUnionNarrowing) {
-                context.report({
-                    node,
-                    messageId: 'unnecessaryAsAssertion',
-                });
-            } else if (isAssignable) {
-                const expressionTypeString = checker.typeToString(expressionType);
-                const assertedTypeString = checker.typeToString(assertedType);
-
-                if (expressionTypeString === assertedTypeString) {
-                    context.report({
-                        node,
-                        messageId: 'unnecessaryAsAssertion',
-                    });
-                }
             }
         },
     };

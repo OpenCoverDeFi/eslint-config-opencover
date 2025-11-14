@@ -4,7 +4,8 @@ import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@es
 import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '../utils.js';
 
 type RuleOptions = [];
-type MessageIds = 'unnecessaryOptionalChain';
+const MessageIds = 'unnecessaryOptionalChain';
+type MessageIds = typeof MessageIds;
 
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
@@ -16,13 +17,12 @@ function createRuleVisitor(context: RuleContext<Options>) {
         ChainExpression(node: TSESTree.ChainExpression) {
             const services = getParserServices<MessageIds, RuleOptions, Options>(context);
             if (!services.program) return;
-            const type = getTypeFromESTreeNode(services, services.program.getTypeChecker(), node);
 
             // Check if the type includes null or undefined
-            if (!isTypeNullable(type)) {
+            if (!isTypeNullable(getTypeFromESTreeNode(services, services.program.getTypeChecker(), node))) {
                 context.report({
                     node,
-                    messageId: 'unnecessaryOptionalChain',
+                    messageId: MessageIds,
                 });
             }
         },

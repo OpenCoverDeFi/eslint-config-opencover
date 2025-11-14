@@ -2,15 +2,20 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 
-type RuleOptions = {
-    maxComplexity: number;
-};
-type MessageIds = 'missingReturnType';
+type RuleOptions = [
+    {
+        maxComplexity: number;
+    },
+];
+const MessageIds = 'missingReturnType';
+type MessageIds = typeof MessageIds;
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
+
+const DEFAULT_MAX_COMPLEXITY = 10;
 
 function traverse(node: TSESTree.Node): number {
     function traverseAll(nodes: TSESTree.Node[]): number {
@@ -119,33 +124,32 @@ function traverse(node: TSESTree.Node): number {
     }
 }
 
-function calculateComplexity(node: FunctionNode, context: RuleContext<Options>, options: RuleOptions): void {
+function calculateComplexity(node: FunctionNode, context: RuleContext<Options>, maxComplexity: number): void {
     // Skip if already has return type
     if (node.returnType) return;
 
     const complexity = traverse(node.body) + 1;
 
-    if (complexity > options.maxComplexity) {
+    if (complexity > maxComplexity) {
         context.report({
             node,
-            messageId: 'missingReturnType',
+            messageId: MessageIds,
             data: { complexity: complexity.toString() },
         });
     }
 }
 
 function createRuleVisitor(context: RuleContext<Options>) {
-    const rawOptions = (context.options[0] as { maxComplexity?: number } | undefined) ?? {};
-    const options: { maxComplexity: number } = { maxComplexity: rawOptions.maxComplexity ?? 10 };
+    const { maxComplexity = DEFAULT_MAX_COMPLEXITY } = context.options[0] ?? {};
     return {
         FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
-            calculateComplexity(node, context, options);
+            calculateComplexity(node, context, maxComplexity);
         },
         FunctionExpression(node: TSESTree.FunctionExpression) {
-            calculateComplexity(node, context, options);
+            calculateComplexity(node, context, maxComplexity);
         },
         ArrowFunctionExpression(node: TSESTree.ArrowFunctionExpression) {
-            calculateComplexity(node, context, options);
+            calculateComplexity(node, context, maxComplexity);
         },
     };
 }

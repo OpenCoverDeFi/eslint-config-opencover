@@ -10,43 +10,28 @@ import {
 } from '../utils.js';
 
 type RuleOptions = [];
-type MessageIds = 'unnecessaryLogicalOr';
+const MessageIds = 'unnecessaryLogicalOr';
+type MessageIds = typeof MessageIds;
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
     RuleOptions: RuleOptions;
 };
 
 function createRuleVisitor(context: RuleContext<Options>) {
-    const services = getParserServices<MessageIds, RuleOptions, Options>(context);
-    if (!services.program) {
-        return {};
-    }
-    const checker = services.program.getTypeChecker();
-
     return {
         LogicalExpression(node: TSESTree.LogicalExpression) {
-            if (node.operator !== '||') {
+            if (node.operator !== '||' || !isNullishLiteral(node.right)) {
                 return;
             }
-
-            // Check if the right side is null or undefined
-            if (!isNullishLiteral(node.right)) {
-                return;
-            }
-
-            // Get the type of the left side
+            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+            if (!services.program) return;
+            const checker = services.program.getTypeChecker();
             const leftType = getTypeFromESTreeNode(services, checker, node.left);
 
-            // Skip if the type is any or unknown
-            if (isAnyOrUnknown(leftType)) {
-                return;
-            }
-
-            // Check if the left side is nullable
-            if (!isTypeNullable(leftType)) {
+            if (!isAnyOrUnknown(leftType) && !isTypeNullable(leftType)) {
                 context.report({
                     node,
-                    messageId: 'unnecessaryLogicalOr',
+                    messageId: MessageIds,
                 });
             }
         },
