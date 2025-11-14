@@ -83,3 +83,4 @@ The following TypeScript ESLint rules are explicitly configured or overridden in
 | `@typescript-eslint/member-ordering`               | Enforces consistent member ordering in classes               | error    | -                                                        |
 | `@typescript-eslint/no-non-null-assertion`         | Disallows non-null assertions using the `!` postfix operator | error    | -                                                        |
 | `@typescript-eslint/no-restricted-types`           | Disallows specific types (Map, Set)                          | error    | `types: { Map: {...}, Set: {...} }`                      |
+| `@typescript-eslint/no-unused-vars`                | Disallows unused variables (replaces `no-unused-vars`)       | error    | `argsIgnorePattern: '^_', varsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_'` |

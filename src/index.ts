@@ -52,6 +52,15 @@ const config = defineConfig([
             '@typescript-eslint/explicit-member-accessibility': 'error',
             '@typescript-eslint/member-ordering': 'error',
             '@typescript-eslint/no-non-null-assertion': 'error',
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    argsIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                    destructuredArrayIgnorePattern: '^_',
+                    caughtErrorsIgnorePattern: '^_',
+                },
+            ],
             '@typescript-eslint/no-restricted-types': [
                 'error',
                 {

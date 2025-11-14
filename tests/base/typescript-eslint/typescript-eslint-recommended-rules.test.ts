@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError } from '@tests/test-utils.js';
+import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 import defaultConfig from '@eslint-config-opencover/index.js';
 
 describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
@@ -400,6 +400,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = 'const unused = 1;';
         const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    it('should ignore unused vars starting with underscore in @typescript-eslint/no-unused-vars', async () => {
+        const code = 'const _unused = 1;';
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
     it('should enforce @typescript-eslint/no-wrapper-object-types', async () => {

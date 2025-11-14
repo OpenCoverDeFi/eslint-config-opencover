@@ -1,6 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError } from '@tests/test-utils.js';
+import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 import defaultConfig from '@eslint-config-opencover/index.js';
 
 describe('typescript-eslint extended rules', () => {
@@ -81,5 +81,42 @@ describe('typescript-eslint extended rules', () => {
         `;
         const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    it('should ignore unused vars starting with underscore', async () => {
+        const code = dedent`
+            const _unusedVar = 42;
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    it('should ignore unused function args starting with underscore', async () => {
+        const code = dedent`
+            function test(_unusedArg: number): void {
+            }
+            test(1);
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    it('should ignore unused destructured array elements starting with underscore', async () => {
+        const code = dedent`
+            const [_first, _second] = [1, 2];
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    it('should ignore unused caught errors starting with underscore', async () => {
+        const code = dedent`
+            try {
+                throw new Error('test');
+            } catch (_error) {
+            }
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 });
