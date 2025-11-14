@@ -16,6 +16,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
     return {
         ChainExpression(node: TSESTree.ChainExpression) {
             const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+
             if (!services.program) return;
 
             // Check if the type includes null or undefined

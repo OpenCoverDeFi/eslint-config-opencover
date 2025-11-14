@@ -3,6 +3,7 @@ import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import vitest from '@vitest/eslint-plugin';
+import stylisticPlugin from '@stylistic/eslint-plugin';
 import { defineConfig } from 'eslint/config';
 import opencoverPlugin from './opencover-eslint-config.js';
 
@@ -14,6 +15,7 @@ const config = defineConfig([
             import: importPlugin,
             unicorn: unicornPlugin,
             '@opencover-eslint': opencoverPlugin,
+            '@stylistic': stylisticPlugin,
         },
         languageOptions: {
             parser: tseslint.parser,
@@ -21,11 +23,6 @@ const config = defineConfig([
                 ecmaVersion: 2024,
                 sourceType: 'module',
                 projectService: true,
-            },
-        },
-        settings: {
-            'import/resolver': {
-                typescript: {},
             },
         },
         rules: {
@@ -120,6 +117,41 @@ const config = defineConfig([
                     },
                 },
             ],
+            'lines-between-class-members': [
+                'error',
+                'always',
+                {
+                    exceptAfterSingleLine: true,
+                },
+            ],
+            '@stylistic/padding-line-between-statements': [
+                'error',
+                {
+                    blankLine: 'always',
+                    prev: '*',
+                    next: ['function', 'class', 'export'],
+                },
+                {
+                    blankLine: 'always',
+                    prev: ['function', 'class', 'export'],
+                    next: '*',
+                },
+                {
+                    blankLine: 'always',
+                    prev: '*',
+                    next: 'if',
+                },
+                {
+                    blankLine: 'always',
+                    prev: 'block-like',
+                    next: 'if',
+                },
+                {
+                    blankLine: 'always',
+                    prev: 'if',
+                    next: '*',
+                },
+            ],
             'unicorn/no-array-callback-reference': 'error',
             'unicorn/filename-case': [
                 'error',
@@ -130,7 +162,7 @@ const config = defineConfig([
         },
     },
     {
-        files: ['**/*.test.ts'],
+        files: ['**/*.test.ts', '**/*.test.tsx'],
         plugins: {
             '@vitest': vitest,
         },

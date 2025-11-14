@@ -43,7 +43,7 @@ You can configure ignore patterns to exclude certain files from this rule.
 
 ## Options
 
-* `ignorePattern` (string[], optional): Array of regex patterns for filenames to ignore.
+- `ignorePattern` (string[], optional): Array of regex patterns for filenames to ignore.
 
 ### ignorePattern
 

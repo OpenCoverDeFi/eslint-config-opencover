@@ -28,9 +28,11 @@ function extractTypeofPattern(
     if (isTypeofExpr(left) && isStringLiteral(right)) {
         return { typeofNode: left, typeofString: right.value?.toString() ?? '' };
     }
+
     if (isTypeofExpr(right) && isStringLiteral(left)) {
         return { typeofNode: right, typeofString: left.value?.toString() ?? '' };
     }
+
     return undefined;
 }
 
@@ -80,6 +82,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
             if (node.operator !== '===' && node.operator !== '!==') return;
 
             const typeofInfo = extractTypeofPattern(node.left, node.right);
+
             if (!typeofInfo) return;
 
             const { typeofNode, typeofString } = typeofInfo;
@@ -91,7 +94,9 @@ function createRuleVisitor(context: RuleContext<Options>) {
             }
 
             const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+
             if (!services.program) return;
+
             const checker = services.program.getTypeChecker();
             const variableType = getTypeFromESTreeNode(services, checker, argument);
 

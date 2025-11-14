@@ -70,7 +70,7 @@ const numResult = num;
 // Valid narrowing from union
 const union: string | number = 'test';
 if (typeof union === 'string') {
-    const str = union; // Type narrowed, no assertion needed
+  const str = union; // Type narrowed, no assertion needed
 }
 
 // Valid when source is any/unknown

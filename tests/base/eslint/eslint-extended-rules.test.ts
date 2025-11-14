@@ -250,4 +250,65 @@ describe('extended ESLint rules', () => {
             expectNoRuleError(result, 'no-restricted-syntax');
         });
     });
+
+    describe('lines-between-class-members', () => {
+        it('should enforce blank lines between class members', async () => {
+            const code = dedent`
+                class MyClass {
+                    public methodOne() {
+                        return 1;
+                    }
+                    public methodTwo() {
+                        return 2;
+                    }
+                }
+            `;
+            const result = await lintText(defaultConfig, code);
+            expectRuleError(result, 'lines-between-class-members');
+        });
+
+        it('should allow single-line members without blank line after', async () => {
+            const code = dedent`
+                class MyClass {
+                    public prop = 1;
+                    public method() {}
+                }
+            `;
+            const result = await lintText(defaultConfig, code);
+            expectNoRuleError(result, 'lines-between-class-members');
+        });
+
+        it('should enforce blank line between multi-line members', async () => {
+            const code = dedent`
+                class MyClass {
+                    public methodOne() {
+                        return 1;
+                    }
+                    public methodTwo() {
+                        return 2;
+                    }
+                }
+            `;
+            const result = await lintText(defaultConfig, code);
+            expectRuleError(result, 'lines-between-class-members');
+        });
+
+        it('should not throw error when blank lines are present', async () => {
+            const code = dedent`
+                class MyClass {
+                    public prop = 1;
+
+                    public methodOne() {
+                        return 1;
+                    }
+
+                    public methodTwo() {
+                        return 2;
+                    }
+                }
+            `;
+            const result = await lintText(defaultConfig, code);
+            expectNoRuleError(result, 'lines-between-class-members');
+        });
+    });
 });

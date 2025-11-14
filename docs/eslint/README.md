@@ -83,42 +83,43 @@ For more details on each rule, see the [ESLint documentation](https://eslint.org
 Some rules from `eslint.configs.recommended` are disabled by `typescript-eslint` because:
 
 1. **Handled by TypeScript**: These rules check for issues that TypeScript's compiler already catches at compile time:
-    - `constructor-super`, `getter-return`, `no-class-assign`, `no-const-assign`, `no-dupe-args`, `no-dupe-class-members`, `no-dupe-keys`, `no-func-assign`, `no-import-assign`
+   - `constructor-super`, `getter-return`, `no-class-assign`, `no-const-assign`, `no-dupe-args`, `no-dupe-class-members`, `no-dupe-keys`, `no-func-assign`, `no-import-assign`
 
 2. **Temporarily disabled for ESLint v8 compatibility**: These rules are currently disabled for compatibility with ESLint v8 and will be re-enabled once typescript-eslint drops ESLint v8 support:
-    - `no-new-native-nonconstructor`, `no-obj-calls`, `no-redeclare`, `no-setter-return`, `no-this-before-super`, `no-undef`, `no-unreachable`, `no-unsafe-negation`, `no-with`
+   - `no-new-native-nonconstructor`, `no-obj-calls`, `no-redeclare`, `no-setter-return`, `no-this-before-super`, `no-undef`, `no-unreachable`, `no-unsafe-negation`, `no-with`
 
 3. **Replaced by TypeScript ESLint equivalents**: These rules are disabled because TypeScript ESLint provides better type-aware alternatives:
-    - `no-unused-vars` → `@typescript-eslint/no-unused-vars`
-    - `no-array-constructor` → `@typescript-eslint/no-array-constructor`
-    - `no-implied-eval` → `@typescript-eslint/no-implied-eval`
-    - `no-unused-expressions` → `@typescript-eslint/no-unused-expressions`
-    - `no-throw-literal` → `@typescript-eslint/only-throw-error`
-    - `prefer-promise-reject-errors` → `@typescript-eslint/prefer-promise-reject-errors`
-    - `require-await` → `@typescript-eslint/require-await`
+   - `no-unused-vars` → `@typescript-eslint/no-unused-vars`
+   - `no-array-constructor` → `@typescript-eslint/no-array-constructor`
+   - `no-implied-eval` → `@typescript-eslint/no-implied-eval`
+   - `no-unused-expressions` → `@typescript-eslint/no-unused-expressions`
+   - `no-throw-literal` → `@typescript-eslint/only-throw-error`
+   - `prefer-promise-reject-errors` → `@typescript-eslint/prefer-promise-reject-errors`
+   - `require-await` → `@typescript-eslint/require-await`
 
 ## Extension Rules
 
 The following ESLint rules are added top of the recommended ones:
 
-| Rule Name                 | Description                                                                      | Severity | Configuration                                         |
-| ------------------------- | -------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- |
-| `block-spacing`           | Enforces consistent spacing inside single-line blocks                            | error    | `'always'`                                            |
-| `capitalized-comments`    | Enforces or disallows capitalization of the first letter of a comment            | warn     | `'always'`, `ignoreConsecutiveComments: true`         |
-| `comma-spacing`           | Enforces consistent spacing before and after commas                              | error    | `{ before: false, after: true }`                      |
-| `key-spacing`             | Enforces consistent spacing between keys and values in object literal properties | warn     | `{ mode: 'strict' }`                                  |
-| `keyword-spacing`         | Enforces consistent spacing before and after keywords                            | error    | `{ before: true }`                                    |
-| `no-multi-spaces`         | Disallows multiple spaces                                                        | error    | -                                                     |
-| `no-multiple-empty-lines` | Disallows multiple empty lines                                                   | warn     | `{ max: 1, maxEOF: 1 }`                               |
-| `no-unneeded-ternary`     | Disallows ternary operators when simpler alternatives exist                      | error    | -                                                     |
-| `no-use-before-define`    | Disallows the use of variables before they are defined                           | error    | `{ variables: true, functions: true, classes: true }` |
-| `no-restricted-globals`   | Disallows specified global variables (Map, Set)                                  | error    | `Map`, `Set` with custom messages                     |
-| `no-restricted-syntax`   | Disallows specific syntax patterns (TypeScript enums)                            | error    | `TSEnumDeclaration` selector with custom message     |
-| `object-curly-spacing`    | Enforces consistent spacing inside braces                                        | warn     | `'always'`                                            |
-| `quote-props`             | Requires quotes around object literal property names when needed                 | warn     | `'as-needed'`                                         |
-| `quotes`                  | Enforces the consistent use of single quotes                                     | error    | `'single'`, `{ avoidEscape: true }`                   |
-| `semi`                    | Requires or disallows semicolons                                                 | error    | `'always'`                                            |
-| `space-before-blocks`     | Enforces consistent spacing before blocks                                        | error    | `'always'`                                            |
-| `space-in-parens`         | Enforces consistent spacing inside parentheses                                   | error    | `'never'`                                             |
-| `space-infix-ops`         | Requires spacing around infix operators                                          | error    | -                                                     |
-| `spaced-comment`          | Enforces consistent spacing after the `//` or `/*` in a comment                  | error    | `'always'`, `{ block: { balanced: true } }`           |
+| Rule Name                     | Description                                                                      | Severity | Configuration                                         |
+| ----------------------------- | -------------------------------------------------------------------------------- | -------- | ----------------------------------------------------- |
+| `block-spacing`               | Enforces consistent spacing inside single-line blocks                            | error    | `'always'`                                            |
+| `capitalized-comments`        | Enforces or disallows capitalization of the first letter of a comment            | warn     | `'always'`, `ignoreConsecutiveComments: true`         |
+| `comma-spacing`               | Enforces consistent spacing before and after commas                              | error    | `{ before: false, after: true }`                      |
+| `key-spacing`                 | Enforces consistent spacing between keys and values in object literal properties | warn     | `{ mode: 'strict' }`                                  |
+| `keyword-spacing`             | Enforces consistent spacing before and after keywords                            | error    | `{ before: true }`                                    |
+| `no-multi-spaces`             | Disallows multiple spaces                                                        | error    | -                                                     |
+| `no-multiple-empty-lines`     | Disallows multiple empty lines                                                   | warn     | `{ max: 1, maxEOF: 1 }`                               |
+| `no-unneeded-ternary`         | Disallows ternary operators when simpler alternatives exist                      | error    | -                                                     |
+| `no-use-before-define`        | Disallows the use of variables before they are defined                           | error    | `{ variables: true, functions: true, classes: true }` |
+| `no-restricted-globals`       | Disallows specified global variables (Map, Set)                                  | error    | `Map`, `Set` with custom messages                     |
+| `no-restricted-syntax`        | Disallows specific syntax patterns (TypeScript enums)                            | error    | `TSEnumDeclaration` selector with custom message      |
+| `object-curly-spacing`        | Enforces consistent spacing inside braces                                        | warn     | `'always'`                                            |
+| `quote-props`                 | Requires quotes around object literal property names when needed                 | warn     | `'as-needed'`                                         |
+| `quotes`                      | Enforces the consistent use of single quotes                                     | error    | `'single'`, `{ avoidEscape: true }`                   |
+| `semi`                        | Requires or disallows semicolons                                                 | error    | `'always'`                                            |
+| `space-before-blocks`         | Enforces consistent spacing before blocks                                        | error    | `'always'`                                            |
+| `space-in-parens`             | Enforces consistent spacing inside parentheses                                   | error    | `'never'`                                             |
+| `space-infix-ops`             | Requires spacing around infix operators                                          | error    | -                                                     |
+| `spaced-comment`              | Enforces consistent spacing after the `//` or `/*` in a comment                  | error    | `'always'`, `{ block: { balanced: true } }`           |
+| `lines-between-class-members` | Requires blank lines between class members                                       | error    | `'always'`, `{ exceptAfterSingleLine: true }`         |

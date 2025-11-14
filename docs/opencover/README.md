@@ -20,16 +20,16 @@ import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 
 export default defineConfig([
-    ...opencoverConfig,
-    {
-        rules: {
-            '@opencover-eslint/complexity-requires-return-type': [
-                'error',
-                {
-                    maxComplexity: 15, // Override default complexity threshold
-                },
-            ],
+  ...opencoverConfig,
+  {
+    rules: {
+      '@opencover-eslint/complexity-requires-return-type': [
+        'error',
+        {
+          maxComplexity: 15, // Override default complexity threshold
         },
+      ],
     },
+  },
 ]);
 ```

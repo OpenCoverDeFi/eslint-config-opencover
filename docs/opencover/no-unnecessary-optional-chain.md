@@ -48,7 +48,7 @@ const value: string = 'hello';
 const length = value?.length; // value is never null/undefined
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName()?.toUpperCase(); // getName() always returns string
 ```
@@ -69,13 +69,13 @@ const value: string = 'hello';
 const length = value.length;
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName().toUpperCase();
 
 // Valid when value can be null/undefined
 function getUser(): { name: string } | null {
-    return Math.random() > 0.5 ? { name: 'John' } : null;
+  return Math.random() > 0.5 ? { name: 'John' } : null;
 }
 const name = getUser()?.name; // getUser() can return null
 ```

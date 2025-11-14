@@ -21,6 +21,7 @@ function traverse(node: TSESTree.Node): number {
     function traverseAll(nodes: TSESTree.Node[]): number {
         return nodes.reduce((sum, n) => sum + traverse(n), 0);
     }
+
     switch (node.type) {
         // Complexity-adding control flow (each adds 1 + children)
         case AST_NODE_TYPES.IfStatement:
@@ -78,11 +79,15 @@ function traverse(node: TSESTree.Node): number {
 
         case AST_NODE_TYPES.TryStatement: {
             let complexity = traverse(node.block);
+
             if (node.handler) {
                 if (node.handler.param) complexity += traverse(node.handler.param);
+
                 complexity += traverse(node.handler.body);
             }
+
             if (node.finalizer) complexity += traverse(node.finalizer);
+
             return complexity;
         }
         // Expression nodes (traverse operands)

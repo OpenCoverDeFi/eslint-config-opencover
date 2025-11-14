@@ -22,6 +22,7 @@ export const createTempFile = (filename: string): string => {
     writeFileSync(filePath, '', 'utf8');
     return filePath;
 };
+
 export const createESLintInstance = (config: Config): ESLint => {
     const configArray = Array.isArray(config) ? config : [config];
     const rootDir = resolve(__dirname, '..');

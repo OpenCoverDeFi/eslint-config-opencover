@@ -14,28 +14,28 @@ Here are some examples:
 ```typescript
 // Bad
 function processData(data: Data[]) {
-    if (data.length === 0) return [];
-    return data
-        .map((item) => {
-            if (item.valid) {
-                return transform(item);
-            }
-            return null;
-        })
-        .filter(Boolean);
+  if (data.length === 0) return [];
+  return data
+    .map((item) => {
+      if (item.valid) {
+        return transform(item);
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 
 // Good
 function processData(data: Data[]): TransformedData[] {
-    if (data.length === 0) return [];
-    return data
-        .map((item) => {
-            if (item.valid) {
-                return transform(item);
-            }
-            return null;
-        })
-        .filter(Boolean);
+  if (data.length === 0) return [];
+  return data
+    .map((item) => {
+      if (item.valid) {
+        return transform(item);
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 ```
 
@@ -52,13 +52,14 @@ This rule calculates function complexity by counting decision points in the code
 Functions with complexity greater than the configured threshold (default: 10) must have an explicit return type annotation.
 
 This rule applies to:
+
 - Function declarations
 - Function expressions
 - Arrow function expressions
 
 ## Options
 
-* `maxComplexity` (number, default: 10): The maximum complexity allowed before requiring an explicit return type.
+- `maxComplexity` (number, default: 10): The maximum complexity allowed before requiring an explicit return type.
 
 ### maxComplexity
 
@@ -70,24 +71,24 @@ Examples of **incorrect** code for the default `{ "maxComplexity": 10 }` option:
 /*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
 
 function processData(data: Data[]) {
-    if (data.length === 0) return [];
-    return data
-        .map((item) => {
-            if (item.valid) {
-                return transform(item);
-            }
-            return null;
-        })
-        .filter(Boolean);
+  if (data.length === 0) return [];
+  return data
+    .map((item) => {
+      if (item.valid) {
+        return transform(item);
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 
 const handler = (event: Event) => {
-    if (event.type === 'click') {
-        if (event.target) {
-            return handleClick(event.target);
-        }
+  if (event.type === 'click') {
+    if (event.target) {
+      return handleClick(event.target);
     }
-    return null;
+  }
+  return null;
 };
 ```
 
@@ -101,23 +102,23 @@ Examples of **correct** code for the default `{ "maxComplexity": 10 }` option:
 /*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
 
 function processData(data: Data[]): TransformedData[] {
-    if (data.length === 0) return [];
-    return data
-        .map((item) => {
-            if (item.valid) {
-                return transform(item);
-            }
-            return null;
-        })
-        .filter(Boolean);
+  if (data.length === 0) return [];
+  return data
+    .map((item) => {
+      if (item.valid) {
+        return transform(item);
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 
 const handler = (event: Event): void => {
-    if (event.type === 'click') {
-        if (event.target) {
-            handleClick(event.target);
-        }
+  if (event.type === 'click') {
+    if (event.target) {
+      handleClick(event.target);
     }
+  }
 };
 ```
 
@@ -132,15 +133,15 @@ Examples of **correct** code with `{ "maxComplexity": 15 }` option:
 
 // This function has complexity 12, which is below the threshold of 15
 function processData(data: Data[]) {
-    if (data.length === 0) return [];
-    return data
-        .map((item) => {
-            if (item.valid) {
-                return transform(item);
-            }
-            return null;
-        })
-        .filter(Boolean);
+  if (data.length === 0) return [];
+  return data
+    .map((item) => {
+      if (item.valid) {
+        return transform(item);
+      }
+      return null;
+    })
+    .filter(Boolean);
 }
 ```
 

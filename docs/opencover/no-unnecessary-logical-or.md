@@ -49,7 +49,7 @@ const num: number = 42;
 const numResult = num || 0; // num is never null/undefined
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName() || 'Unknown'; // getName() always returns string
 ```
@@ -70,13 +70,13 @@ const num: number = 42;
 const numResult = num;
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName();
 
 // Valid when value can be null/undefined
 function getValue(): string | null {
-    return Math.random() > 0.5 ? 'value' : null;
+  return Math.random() > 0.5 ? 'value' : null;
 }
 const result = getValue() || 'default'; // getValue() can return null
 ```

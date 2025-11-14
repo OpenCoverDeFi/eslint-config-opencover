@@ -15,7 +15,7 @@ Here are some examples:
 // Bad
 const value: string = 'hello';
 if (typeof value === 'string') {
-    // TypeScript already knows value is string
+  // TypeScript already knows value is string
 }
 
 // Good
@@ -50,20 +50,20 @@ Examples of **incorrect** code for this rule:
 
 const value: string = 'hello';
 if (typeof value === 'string') {
-    // TypeScript already knows value is string
+  // TypeScript already knows value is string
 }
 
 const num: number = 42;
 if (typeof num === 'number') {
-    // TypeScript already knows num is number
+  // TypeScript already knows num is number
 }
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName();
 if (typeof name === 'string') {
-    // getName() always returns string
+  // getName() always returns string
 }
 ```
 
@@ -83,19 +83,19 @@ const num: number = 42;
 // No typeof check needed, use num directly
 
 function getName(): string {
-    return 'John';
+  return 'John';
 }
 const name = getName();
 // No typeof check needed
 
 // Valid when type is a union (typeof is necessary for narrowing)
 function getValue(): string | number {
-    return Math.random() > 0.5 ? 'hello' : 42;
+  return Math.random() > 0.5 ? 'hello' : 42;
 }
 const value = getValue();
 if (typeof value === 'string') {
-    // typeof check is necessary to narrow the union type
-    console.log(value.toUpperCase());
+  // typeof check is necessary to narrow the union type
+  console.log(value.toUpperCase());
 }
 ```
 

@@ -9,6 +9,7 @@ export default defineConfig([
         if (config.files) {
             return config;
         }
+
         return {
             ...config,
             files: ['**/*.ts', 'eslint.config.ts'],

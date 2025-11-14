@@ -53,9 +53,11 @@ function createRuleVisitor(context: RuleContext<Options>) {
     return {
         TSAsExpression(node: TSESTree.TSAsExpression): void {
             const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+
             if (!services.program) {
                 return;
             }
+
             const checker = services.program.getTypeChecker();
             const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
 
@@ -73,6 +75,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
             const isAssignable = checker.isTypeAssignableTo(expressionType, assertedType);
             const isReverseAssignable = checker.isTypeAssignableTo(assertedType, expressionType);
             const tsExpression = services.esTreeNodeToTSNodeMap.get(node.expression);
+
             if (!isExpression(tsExpression)) {
                 return;
             }

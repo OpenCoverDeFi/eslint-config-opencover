@@ -23,8 +23,11 @@ function createRuleVisitor(context: RuleContext<Options>) {
             if (node.operator !== '||' || !isNullishLiteral(node.right)) {
                 return;
             }
+
             const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+
             if (!services.program) return;
+
             const checker = services.program.getTypeChecker();
             const leftType = getTypeFromESTreeNode(services, checker, node.left);
 
