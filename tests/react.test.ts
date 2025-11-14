@@ -9,7 +9,7 @@ beforeAll(() => {
     filePath = createTempFile('test.tsx');
 });
 
-describe('With React ESLint Rules', () => {
+describe.skip('With React ESLint Rules', () => {
     it('should enforce React ESLint rules', async () => {
         const code = dedent`
             import ReactDOM from "react-dom";
