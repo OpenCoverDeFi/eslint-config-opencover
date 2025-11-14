@@ -14,7 +14,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -28,7 +28,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -43,7 +43,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -56,7 +56,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -66,7 +66,7 @@ describe(ruleName, () => {
             type Status = 'active' | 'inactive';
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -79,7 +79,7 @@ describe(ruleName, () => {
             } as const;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -91,7 +91,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });

@@ -11,7 +11,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             const map: Map<string, number> = new Map();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -21,7 +21,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             const set: Set<string> = new Set();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -32,7 +32,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -43,7 +43,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -55,7 +55,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -67,7 +67,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -77,7 +77,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             type MyMap = Map<string, number>;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -87,7 +87,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             type MySet = Set<string>;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -99,7 +99,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -111,7 +111,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -122,7 +122,7 @@ describe(`${ruleName} (Map and Set)`, () => {
             const obj: Record<string, number> = {};
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });

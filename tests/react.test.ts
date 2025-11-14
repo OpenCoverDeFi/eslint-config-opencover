@@ -20,7 +20,7 @@ describe('With React ESLint Rules', () => {
             // this comment is ignored since it follows another comment,
             // and this one as well because it follows yet another comment.
         `;
-        const [result] = await lintFileWithName(withReactConfig, filePath, code);
+        const result = await lintFileWithName(withReactConfig, filePath, code);
 
         expectRuleError(result, 'react/react-in-jsx-scope');
         expectRuleWarning(result, 'react/no-deprecated');

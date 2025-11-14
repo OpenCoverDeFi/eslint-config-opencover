@@ -13,7 +13,7 @@ describe(ruleName, () => {
             const result = ex!.optional;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -25,7 +25,7 @@ describe(ruleName, () => {
             const result = ex.optional!;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -36,7 +36,7 @@ describe(ruleName, () => {
             const result = value!.toString();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });

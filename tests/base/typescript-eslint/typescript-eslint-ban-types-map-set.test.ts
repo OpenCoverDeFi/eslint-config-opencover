@@ -8,7 +8,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     it('should throw error for Map type annotation', async () => {
         const code = 'const map: Map<string, number> = new Map();';
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -16,7 +16,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     it('should throw error for Set type annotation', async () => {
         const code = 'const set: Set<string> = new Set();';
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -24,7 +24,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     it('should throw error for Map in function parameter', async () => {
         const code = 'function processMap(map: Map<string, boolean>): void {}';
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -32,7 +32,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     it('should throw error for Set in function parameter', async () => {
         const code = 'function processSet(set: Set<number>): void {}';
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -43,7 +43,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     }
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -54,7 +54,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     }
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -63,7 +63,7 @@ describe(`${ruleName} (Map and Set)`, () => {
         const code = `type MyMap = Map<string, number>;
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -72,7 +72,7 @@ describe(`${ruleName} (Map and Set)`, () => {
         const code = `type MySet = Set<string>;
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -83,7 +83,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     }
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -94,7 +94,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     }
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -104,7 +104,7 @@ describe(`${ruleName} (Map and Set)`, () => {
     const obj: Record<string, number> = {};
     `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });

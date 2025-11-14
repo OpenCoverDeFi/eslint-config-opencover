@@ -8,7 +8,7 @@ describe('extended ESLint rules', () => {
         it('should enforce block spacing', async () => {
             const code = 'function test(){return true;}';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'block-spacing');
         });
@@ -23,7 +23,7 @@ describe('extended ESLint rules', () => {
                 // and this one as well because it follows yet another comment.
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleWarning(result, 'capitalized-comments');
         });
@@ -36,7 +36,7 @@ describe('extended ESLint rules', () => {
                 const obj = {a:1,b:2};
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'comma-spacing');
         });
@@ -49,7 +49,7 @@ describe('extended ESLint rules', () => {
                 fn({a:1});
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleWarning(result, 'key-spacing');
         });
@@ -59,7 +59,7 @@ describe('extended ESLint rules', () => {
         it('should enforce keyword spacing', async () => {
             const code = 'if(true){return;}';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'keyword-spacing');
         });
@@ -69,7 +69,7 @@ describe('extended ESLint rules', () => {
         it('should enforce no multiple spaces', async () => {
             const code = 'const x = 1;  const y = 2;';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'no-multi-spaces');
         });
@@ -83,7 +83,7 @@ describe('extended ESLint rules', () => {
 
             const y = 2;`;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleWarning(result, 'no-multiple-empty-lines');
         });
@@ -96,7 +96,7 @@ describe('extended ESLint rules', () => {
                 fn({a:1});
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleWarning(result, 'object-curly-spacing');
         });
@@ -106,7 +106,7 @@ describe('extended ESLint rules', () => {
         it('should enforce quote props as needed', async () => {
             const code = "const obj = {'prop': 1, 'valid-prop': 2};";
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleWarning(result, 'quote-props');
         });
@@ -116,7 +116,7 @@ describe('extended ESLint rules', () => {
         it('should enforce single quotes', async () => {
             const code = 'const notUsed = "5";';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'quotes');
         });
@@ -129,7 +129,7 @@ describe('extended ESLint rules', () => {
                 const y = 2
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'semi');
         });
@@ -139,7 +139,7 @@ describe('extended ESLint rules', () => {
         it('should enforce space before blocks', async () => {
             const code = 'function test(){return true;}';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'space-before-blocks');
         });
@@ -152,7 +152,7 @@ describe('extended ESLint rules', () => {
                 function test( x ) { return x; }
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'space-in-parens');
         });
@@ -165,7 +165,7 @@ describe('extended ESLint rules', () => {
                 const y = 3*4;
             `;
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'space-infix-ops');
         });
@@ -175,7 +175,7 @@ describe('extended ESLint rules', () => {
         it('should enforce spaced comments', async () => {
             const code = 'const fn = (x) => x; //an uncapitalized comment without a space before it';
 
-            const [result] = await lintText(defaultConfig, code);
+            const result = await lintText(defaultConfig, code);
 
             expectRuleError(result, 'spaced-comment');
         });

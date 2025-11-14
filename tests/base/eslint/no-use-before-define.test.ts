@@ -12,7 +12,7 @@ describe(ruleName, () => {
             const x = 5;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -23,7 +23,7 @@ describe(ruleName, () => {
             console.log(x);
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -36,7 +36,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -49,7 +49,7 @@ describe(ruleName, () => {
             foo();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -60,7 +60,7 @@ describe(ruleName, () => {
             class MyClass {}
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -71,7 +71,7 @@ describe(ruleName, () => {
             const instance = new MyClass();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });

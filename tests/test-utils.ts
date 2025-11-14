@@ -46,24 +46,23 @@ export const createESLintInstance = (config: Config): ESLint => {
     });
 };
 
-export const lintFile = async (config: Config, filePath: string): Promise<ESLint.LintResult[]> => {
+export const lintFile = async (config: Config, filePath: string): Promise<ESLint.LintResult> => {
     const linter = createESLintInstance(config);
-    return await linter.lintFiles([filePath]);
+    const results = await linter.lintFiles([filePath]);
+    return results[0];
 };
 
-export const lintFileWithName = async (
-    config: Config,
-    filePath: string,
-    code: string
-): Promise<ESLint.LintResult[]> => {
+export const lintFileWithName = async (config: Config, filePath: string, code: string): Promise<ESLint.LintResult> => {
     const linter = createESLintInstance(config);
 
-    return await linter.lintText(code, {
+    const results = await linter.lintText(code, {
         filePath, // We need to pass this for test rules to work
     });
+
+    return results[0];
 };
 
-export const lintText = async (config: Config, code: string) => {
+export const lintText = async (config: Config, code: string): Promise<ESLint.LintResult> => {
     if (!tempFilePath) {
         const timestamp = Date.now();
         const randomId = Math.random().toString(36).substring(7);
@@ -73,9 +72,11 @@ export const lintText = async (config: Config, code: string) => {
 
     const linter = createESLintInstance(config);
 
-    return await linter.lintText(code, {
+    const results = await linter.lintText(code, {
         filePath: tempFilePath, // We need to pass this for our opencover-eslint-no-unnecessary-optional-chain rule to work
     });
+
+    return results[0];
 };
 
 export const expectRuleError = (result: ESLint.LintResult, ruleId: string) => {

@@ -8,7 +8,7 @@ describe(ruleName, () => {
     it('should throw error for camelCase filename', async () => {
         const filePath = createTempFile('camelCase.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectRuleError(result, ruleName);
     });
@@ -16,7 +16,7 @@ describe(ruleName, () => {
     it('should throw error for PascalCase filename', async () => {
         const filePath = createTempFile('PascalCase.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectRuleError(result, ruleName);
     });
@@ -24,7 +24,7 @@ describe(ruleName, () => {
     it('should throw error for snake_case filename', async () => {
         const filePath = createTempFile('snake_case.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectRuleError(result, ruleName);
     });
@@ -32,7 +32,7 @@ describe(ruleName, () => {
     it('should not throw error for kebab-case filename', async () => {
         const filePath = createTempFile('kebab-case.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectNoRuleError(result, ruleName);
     });
@@ -40,7 +40,7 @@ describe(ruleName, () => {
     it('should not throw error for single word lowercase filename', async () => {
         const filePath = createTempFile('file.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectNoRuleError(result, ruleName);
     });
@@ -48,7 +48,7 @@ describe(ruleName, () => {
     it('should throw error for camelCase.test.ts filename', async () => {
         const filePath = createTempFile('camelCase.test.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectRuleError(result, ruleName);
     });
@@ -56,7 +56,7 @@ describe(ruleName, () => {
     it('should not throw error for kebab-case.test.ts filename', async () => {
         const filePath = createTempFile('kebab-case.test.ts');
 
-        const [result] = await lintFile(defaultConfig, filePath);
+        const result = await lintFile(defaultConfig, filePath);
 
         expectNoRuleError(result, ruleName);
     });

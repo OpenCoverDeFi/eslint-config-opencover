@@ -12,7 +12,7 @@ describe(ruleName, () => {
             import fs from 'fs';
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleWarning(result, ruleName);
     });

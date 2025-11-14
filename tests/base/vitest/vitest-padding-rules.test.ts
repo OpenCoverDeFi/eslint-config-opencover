@@ -25,7 +25,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -41,7 +41,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -59,7 +59,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });
@@ -76,7 +76,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -92,7 +92,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -110,7 +110,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });
@@ -131,7 +131,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -147,7 +147,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -165,7 +165,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });
@@ -186,7 +186,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -202,7 +202,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -220,7 +220,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });
@@ -241,7 +241,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -257,7 +257,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -275,7 +275,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });
@@ -294,7 +294,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -308,7 +308,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectRuleError(result, ruleName);
         });
@@ -325,7 +325,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            const [result] = await lintFileWithName(defaultConfig, filePath, code);
+            const result = await lintFileWithName(defaultConfig, filePath, code);
 
             expectNoRuleError(result, ruleName);
         });

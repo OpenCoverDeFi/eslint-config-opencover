@@ -12,7 +12,7 @@ describe(ruleName, () => {
             type Test = Example;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -23,7 +23,7 @@ describe(ruleName, () => {
             const obj: MyInterface = {};
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -34,7 +34,7 @@ describe(ruleName, () => {
             const value: MyType = 'test';
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -45,7 +45,7 @@ describe(ruleName, () => {
             type Test = Example;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -56,7 +56,7 @@ describe(ruleName, () => {
             const result = myFunction();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
@@ -68,7 +68,7 @@ describe(ruleName, () => {
             const result = myFunction();
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });

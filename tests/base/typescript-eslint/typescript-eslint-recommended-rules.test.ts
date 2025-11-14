@@ -6,7 +6,7 @@ import defaultConfig from '@eslint-config-opencover/index.js';
 describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
     it('should enforce @typescript-eslint/await-thenable', async () => {
         const code = 'await 123;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/await-thenable');
     });
 
@@ -15,19 +15,19 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             // @ts-ignore
             const x = 1;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/ban-ts-comment');
     });
 
     it('should enforce @typescript-eslint/no-array-constructor', async () => {
         const code = 'const arr = new Array(1, 2, 3);';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-array-constructor');
     });
 
     it('should enforce @typescript-eslint/no-array-delete', async () => {
         const code = 'const arr = [1, 2, 3]; delete arr[0];';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-array-delete');
     });
 
@@ -36,7 +36,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const obj = {};
             const str = String(obj);
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-base-to-string');
     });
 
@@ -47,7 +47,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 B = 1,
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-duplicate-enum-values');
     });
 
@@ -55,7 +55,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             type Test = string | number | string;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-duplicate-type-constituents');
     });
 
@@ -63,25 +63,25 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             type Empty = {};
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-empty-object-type');
     });
 
     it('should enforce @typescript-eslint/no-explicit-any', async () => {
         const code = 'const x: any = 1;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-explicit-any');
     });
 
     it('should enforce @typescript-eslint/no-extra-non-null-assertion', async () => {
         const code = 'const x = obj!!.prop;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-extra-non-null-assertion');
     });
 
     it('should enforce @typescript-eslint/no-floating-promises', async () => {
         const code = 'Promise.resolve();';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-floating-promises');
     });
 
@@ -90,13 +90,13 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const arr = [1, 2, 3];
             for (const key in arr) {}
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-for-in-array');
     });
 
     it('should enforce @typescript-eslint/no-implied-eval', async () => {
         const code = 'setTimeout("console.log(1)", 100);';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-implied-eval');
     });
 
@@ -111,7 +111,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
               constructor(): void;
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-misused-new');
     });
 
@@ -120,7 +120,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const promise = Promise.resolve();
             if (promise) {}
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-misused-promises');
     });
 
@@ -130,13 +130,13 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 export const x = 1;
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-namespace');
     });
 
     it('should enforce @typescript-eslint/no-non-null-asserted-optional-chain', async () => {
         const code = 'const x = obj?.prop!;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-non-null-asserted-optional-chain');
     });
 
@@ -158,13 +158,13 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             type IntersectionNumberLiteral = number & 1;
             type IntersectionStringLiteral = string & 'foo';
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-redundant-type-constituents');
     });
 
     it('should enforce @typescript-eslint/no-require-imports', async () => {
         const code = 'const fs = require("fs");';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-require-imports');
     });
 
@@ -176,7 +176,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 }
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-this-alias');
     });
 
@@ -185,7 +185,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: number = 1;
             const y = x as number;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unnecessary-type-assertion');
     });
 
@@ -193,7 +193,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             function test<T extends unknown>() {}
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unnecessary-type-constraint');
     });
 
@@ -222,7 +222,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             declare function baz(arg1: Set<string>, arg2: Map<string, string>): void;
             baz(new Set<any>(), new Map<any, string>());
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-argument');
     });
 
@@ -249,7 +249,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: Set<string[]> = new Set<any[]>();
             const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-assignment');
     });
 
@@ -270,7 +270,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             anyVar\`foo\`;
             nestedAny.prop\`foo\`;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-call');
     });
 
@@ -279,7 +279,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             interface Test {}
             class Test {}
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-declaration-merging');
     });
 
@@ -290,7 +290,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             }
             const x = Test.A === 1;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-enum-comparison');
     });
 
@@ -305,7 +305,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             let identity: Function;
             identity = value => value;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-function-type');
     });
 
@@ -330,7 +330,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             arr[anyVar];
             nestedAny[anyVar];
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-member-access');
     });
 
@@ -377,7 +377,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             type TAssign = () => Set<string>;
             const assignability2: TAssign = () => new Set<any>([true]);
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-return');
     });
 
@@ -386,25 +386,25 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const value: unknown = 5;
             const x = -value;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-unary-minus');
     });
 
     it('should enforce @typescript-eslint/no-unused-expressions', async () => {
         const code = '1 + 1;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unused-expressions');
     });
 
     it('should enforce @typescript-eslint/no-unused-vars', async () => {
         const code = 'const unused = 1;';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
     it('should enforce @typescript-eslint/no-wrapper-object-types', async () => {
         const code = 'const x: String = "test";';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/no-wrapper-object-types');
     });
 
@@ -412,7 +412,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             throw "error";
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/only-throw-error');
     });
 
@@ -420,7 +420,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             const x = "test" as "test";
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/prefer-as-const');
     });
 
@@ -430,13 +430,13 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 export const x = 1;
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/prefer-namespace-keyword');
     });
 
     it('should enforce @typescript-eslint/prefer-promise-reject-errors', async () => {
         const code = 'Promise.reject("error");';
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/prefer-promise-reject-errors');
     });
 
@@ -446,7 +446,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 return 1;
             }
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/require-await');
     });
 
@@ -455,7 +455,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             let foo = 1n + 1;
             let fn = (a: string, b: never) => a + b;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/restrict-plus-operands');
     });
 
@@ -464,7 +464,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: unknown = "test";
             const y = \`value: \${x}\`;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/restrict-template-expressions');
     });
 
@@ -472,7 +472,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         const code = dedent`
             /// <reference path="test.ts" />
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/triple-slash-reference');
     });
 
@@ -484,7 +484,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const instance = new A();
             const fn = instance.method;
         `;
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
         expectRuleError(result, '@typescript-eslint/unbound-method');
     });
 });

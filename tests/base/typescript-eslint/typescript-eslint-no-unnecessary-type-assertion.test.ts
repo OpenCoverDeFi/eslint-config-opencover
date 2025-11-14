@@ -12,7 +12,7 @@ describe(ruleName, () => {
             const result = value as string;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -24,7 +24,7 @@ describe(ruleName, () => {
             const result = ex as Example;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -35,7 +35,7 @@ describe(ruleName, () => {
             const result = value as string;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -48,7 +48,7 @@ describe(ruleName, () => {
             const result = value as A;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectRuleError(result, ruleName);
     });
@@ -61,7 +61,7 @@ describe(ruleName, () => {
             const result = getValue() as string;
         `;
 
-        const [result] = await lintText(defaultConfig, code);
+        const result = await lintText(defaultConfig, code);
 
         expectNoRuleError(result, ruleName);
     });
