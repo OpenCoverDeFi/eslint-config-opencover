@@ -1,7 +1,7 @@
-import { describe, it } from 'vitest';
+import { describe, it, beforeAll } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@eslint-config-opencover/index.js';
+import { lintText, lintFileWithName, expectRuleError, expectNoRuleError, createTempFile } from '@tests/test-utils.js';
+import defaultConfig from '@/index.js';
 
 describe('typescript-eslint extended rules', () => {
     it('should enforce consistent-type-imports', async () => {
@@ -118,5 +118,76 @@ describe('typescript-eslint extended rules', () => {
         `;
         const result = await lintText(defaultConfig, code);
         expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
+    });
+
+    describe('@typescript-eslint/no-unsafe-assignment', () => {
+        const ruleName = '@typescript-eslint/no-unsafe-assignment';
+        let testFilePath: string;
+        let regularFilePath: string;
+
+        beforeAll(() => {
+            testFilePath = createTempFile('test.test.ts');
+            regularFilePath = createTempFile('regular.ts');
+        });
+
+        it('should NOT throw error for unsafe assignment in test files (expect.any)', async () => {
+            const code = dedent`
+                import { expect, it } from 'vitest';
+
+                it('should work', () => {
+                    const value: string = expect.any(String);
+                });
+            `;
+            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            expectNoRuleError(result, ruleName);
+        });
+
+        it('should NOT throw error for unsafe assignment in test files (any type)', async () => {
+            const code = dedent`
+                import { it } from 'vitest';
+
+                it('should work', () => {
+                    const value: string = 1 as any;
+                });
+            `;
+            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            expectNoRuleError(result, ruleName);
+        });
+
+        it('should NOT throw error for unsafe assignment in test files (function returning any)', async () => {
+            const code = dedent`
+                import { it } from 'vitest';
+
+                function getAny(): any {
+                    return 'test';
+                }
+
+                it('should work', () => {
+                    const value: string = getAny();
+                });
+            `;
+            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            expectNoRuleError(result, ruleName);
+        });
+
+        it('should throw error for unsafe assignment in regular files (any type)', async () => {
+            const code = dedent`
+                const value: string = 1 as any;
+            `;
+            const result = await lintFileWithName(defaultConfig, regularFilePath, code);
+            expectRuleError(result, ruleName);
+        });
+
+        it('should throw error for unsafe assignment in regular files (function returning any)', async () => {
+            const code = dedent`
+                function getAny(): any {
+                    return 'test';
+                }
+
+                const value: string = getAny();
+            `;
+            const result = await lintFileWithName(defaultConfig, regularFilePath, code);
+            expectRuleError(result, ruleName);
+        });
     });
 });

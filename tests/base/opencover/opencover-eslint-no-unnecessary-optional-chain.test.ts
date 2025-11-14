@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
 import { lintText, expectRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@eslint-config-opencover/index.js';
+import defaultConfig from '@/index.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-optional-chain';
 

@@ -11,6 +11,7 @@ const config = defineConfig([
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
     {
+        files: ['**/*.ts', '**/*.tsx'],
         plugins: {
             import: importPlugin,
             unicorn: unicornPlugin,
@@ -175,7 +176,19 @@ const config = defineConfig([
         plugins: {
             '@vitest': vitest,
         },
+        languageOptions: {
+            parser: tseslint.parser,
+            parserOptions: {
+                ecmaVersion: 2024,
+                sourceType: 'module',
+                projectService: true,
+            },
+            globals: {
+                ...vitest.environments.env.globals,
+            },
+        },
         rules: {
+            '@typescript-eslint/no-unsafe-assignment': 'off', // We want expect.any and similar in tests
             '@vitest/padding-around-before-all-blocks': 'error',
             '@vitest/padding-around-describe-blocks': 'error',
             '@vitest/padding-around-before-each-blocks': 'error',
@@ -186,11 +199,6 @@ const config = defineConfig([
         settings: {
             vitest: {
                 typecheck: true,
-            },
-        },
-        languageOptions: {
-            globals: {
-                ...vitest.environments.env.globals,
             },
         },
     },

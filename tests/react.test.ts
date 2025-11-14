@@ -1,7 +1,7 @@
 import { beforeAll, describe, it } from 'vitest';
 import dedent from 'dedent';
-import withReactConfig from '@eslint-config-opencover/react.js';
 import { lintFileWithName, expectRuleError, expectRuleWarning, createTempFile } from './test-utils.js';
+import withReactConfig from '@/react.js';
 
 let filePath: string;
 

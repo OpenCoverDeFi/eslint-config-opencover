@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
 import { lintText, expectRuleError, expectRuleWarning, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@eslint-config-opencover/index.js';
+import defaultConfig from '@/index.js';
 
 describe('extended ESLint rules', () => {
     describe('block-spacing', () => {

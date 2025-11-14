@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "outDir": "dist",
     "paths": {
-      "@eslint-config-opencover/*": ["./src/*"],
+      "@/*": ["./src/*"],
       "@tests/*": ["./tests/*"]
     }
   },

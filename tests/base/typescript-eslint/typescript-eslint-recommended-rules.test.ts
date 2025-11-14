@@ -1,7 +1,7 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
 import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@eslint-config-opencover/index.js';
+import defaultConfig from '@/index.js';
 
 describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
     it('should enforce @typescript-eslint/await-thenable', async () => {

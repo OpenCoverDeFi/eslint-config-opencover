@@ -76,11 +76,11 @@ For more details on each rule, see the [typescript-eslint documentation](https:/
 
 The following TypeScript ESLint rules are explicitly configured or overridden in this config:
 
-| Rule Name                                          | Description                                                  | Severity | Configuration                                            |
-| -------------------------------------------------- | ------------------------------------------------------------ | -------- | -------------------------------------------------------- |
-| `@typescript-eslint/consistent-type-imports`       | Enforces consistent use of type imports                      | error    | `prefer: 'type-imports', disallowTypeAnnotations: false` |
-| `@typescript-eslint/explicit-member-accessibility` | Requires explicit accessibility modifiers on class members   | error    | -                                                        |
-| `@typescript-eslint/member-ordering`               | Enforces consistent member ordering in classes               | error    | -                                                        |
-| `@typescript-eslint/no-non-null-assertion`         | Disallows non-null assertions using the `!` postfix operator | error    | -                                                        |
-| `@typescript-eslint/no-restricted-types`           | Disallows specific types (Map, Set)                          | error    | `types: { Map: {...}, Set: {...} }`                      |
+| Rule Name                                          | Description                                                  | Severity | Configuration                                                                                                             |
+| -------------------------------------------------- | ------------------------------------------------------------ | -------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `@typescript-eslint/consistent-type-imports`       | Enforces consistent use of type imports                      | error    | `prefer: 'type-imports', disallowTypeAnnotations: false`                                                                  |
+| `@typescript-eslint/explicit-member-accessibility` | Requires explicit accessibility modifiers on class members   | error    | -                                                                                                                         |
+| `@typescript-eslint/member-ordering`               | Enforces consistent member ordering in classes               | error    | -                                                                                                                         |
+| `@typescript-eslint/no-non-null-assertion`         | Disallows non-null assertions using the `!` postfix operator | error    | -                                                                                                                         |
+| `@typescript-eslint/no-restricted-types`           | Disallows specific types (Map, Set)                          | error    | `types: { Map: {...}, Set: {...} }`                                                                                       |
 | `@typescript-eslint/no-unused-vars`                | Disallows unused variables (replaces `no-unused-vars`)       | error    | `argsIgnorePattern: '^_', varsIgnorePattern: '^_', destructuredArrayIgnorePattern: '^_', caughtErrorsIgnorePattern: '^_'` |
