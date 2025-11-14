@@ -39,7 +39,7 @@ const config = defineConfig([
             '@opencover-eslint/no-unnecessary-as-assertion': 'error',
             '@opencover-eslint/no-unnecessary-typeof': 'error',
             '@opencover-eslint/no-unnecessary-logical-or': 'error',
-            '@opencover-eslint/complex-functions-require-return-type': [
+            '@opencover-eslint/complexity-requires-return-type': [
                 'error',
                 {
                     maxComplexity: 10,

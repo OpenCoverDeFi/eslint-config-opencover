@@ -1,10 +1,29 @@
-# no-unnecessary-typeof
-
-## Description
+---
+title: no-unnecessary-typeof
+rule_type: problem
+related_rules: []
+further_reading:
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
+  - https://www.typescriptlang.org/docs/handbook/2/narrowing.html#typeof-type-guards
+---
 
 Disallows unnecessary `typeof` checks when TypeScript already knows the exact type of the variable. This rule helps eliminate redundant runtime type checks that are unnecessary due to TypeScript's compile-time type system.
 
-## How It Works
+Here are some examples:
+
+```typescript
+// Bad
+const value: string = 'hello';
+if (typeof value === 'string') {
+    // TypeScript already knows value is string
+}
+
+// Good
+const value: string = 'hello';
+// No typeof check needed, use value directly
+```
+
+## Rule Details
 
 The rule detects `typeof` comparisons (e.g., `typeof x === 'string'`) and uses TypeScript's type checker to determine if the check is necessary. It reports an error when:
 
@@ -18,23 +37,17 @@ The rule handles special cases:
 - Primitive types (`string`, `number`, `bigint`, `symbol`, `undefined`)
 - Object and function types
 
-## Configuration
+## Options
 
 This rule has no configuration options.
 
-```json
-{
-    "rules": {
-        "@opencover/eslint-config-opencover/no-unnecessary-typeof": "error"
-    }
-}
-```
+Examples of **incorrect** code for this rule:
 
-## Examples
-
-### ❌ Incorrect
+:::incorrect
 
 ```typescript
+/*eslint @opencover-eslint/no-unnecessary-typeof: "error"*/
+
 const value: string = 'hello';
 if (typeof value === 'string') {
     // TypeScript already knows value is string
@@ -54,9 +67,15 @@ if (typeof name === 'string') {
 }
 ```
 
-### ✅ Correct
+:::
+
+Examples of **correct** code for this rule:
+
+:::correct
 
 ```typescript
+/*eslint @opencover-eslint/no-unnecessary-typeof: "error"*/
+
 const value: string = 'hello';
 // No typeof check needed, use value directly
 
@@ -79,3 +98,18 @@ if (typeof value === 'string') {
     console.log(value.toUpperCase());
 }
 ```
+
+:::
+
+## Known Limitations
+
+Due to the limits of static analysis, this rule:
+
+- May not detect all cases where `typeof` checks are unnecessary, especially with complex generic types
+- Does not account for cases where `typeof` checks are used for runtime validation or documentation purposes
+- Relies on TypeScript's type checker, which may have limitations in certain edge cases
+- Does not consider cases where `typeof` is used for other purposes (e.g., checking for `undefined` in optional properties)
+
+## When Not To Use It
+
+You can turn this rule off if you prefer to use `typeof` checks for runtime validation or documentation purposes even when they're technically unnecessary, or if you want to maintain consistency with code that may be used in JavaScript contexts where type information is not available.

@@ -74,14 +74,14 @@ export default defineConfig([
 
 ## Rules
 
-This package configures ESLint with a comprehensive set of rules for TypeScript projects. Detailed documentation for each section is available in the [`rules/`](./rules/) directory:
+This package configures ESLint with a comprehensive set of rules for TypeScript projects. Detailed documentation for each section is available in the [`docs/`](./docs/) directory:
 
-- **[OpenCover Custom Rules](./rules/opencover/README.md)** - Rules specific to OpenCover's coding standards
-- **[TypeScript ESLint Rules](./rules/typescript-eslint/README.md)** - TypeScript-specific linting rules with all recommended and overridden settings
-- **[ESLint Rules](./rules/eslint/README.md)** - Core JavaScript/TypeScript formatting and best practices
-- **[Import Plugin Rules](./rules/import/README.md)** - Import/export statement linting
-- **[Unicorn Plugin Rules](./rules/unicorn/README.md)** - Additional best practices
-- **[Vitest Plugin Rules](./rules/vitest/README.md)** - Test file specific rules (applied to `*.test.ts` files)
+- **[OpenCover Custom Rules](./docs/opencover/README.md)** - Rules specific to OpenCover's coding standards
+- **[TypeScript ESLint Rules](./docs/typescript-eslint/README.md)** - TypeScript-specific linting rules with all recommended and overridden settings
+- **[ESLint Rules](./docs/eslint/README.md)** - Core JavaScript/TypeScript formatting and best practices
+- **[Import Plugin Rules](./docs/import/README.md)** - Import/export statement linting
+- **[Unicorn Plugin Rules](./docs/unicorn/README.md)** - Additional best practices
+- **[Vitest Plugin Rules](./docs/vitest/README.md)** - Test file specific rules (applied to `*.test.ts` files)
 
 ### Ignore certain files
 

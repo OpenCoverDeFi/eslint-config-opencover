@@ -162,7 +162,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'problem' as const,
         docs: {
             description: 'Require explicit return types for complex functions',
-            url: 'https://opencover.com/rules/complex-functions-require-return-type',
+            url: 'https://opencover.com/rules/complexity-requires-return-type',
         },
         messages: {
             missingReturnType: 'Complex function (complexity: {{complexity}}) must have an explicit return type',

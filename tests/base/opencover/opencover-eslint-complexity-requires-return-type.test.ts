@@ -3,7 +3,7 @@ import dedent from 'dedent';
 import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 import defaultConfig from '@eslint-config-opencover/index.js';
 
-const ruleName = '@opencover-eslint/complex-functions-require-return-type';
+const ruleName = '@opencover-eslint/complexity-requires-return-type';
 
 describe(ruleName, () => {
     it('should not throw error for function with explicit return type', async () => {
