@@ -1,9 +1,9 @@
 // Plugin for the rule no-unnecessary-as-assertion
 import type { TSESTree } from '@typescript-eslint/utils';
-import { ESLintUtils } from '@typescript-eslint/utils';
-import * as ts from 'typescript';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
+import type { TypeChecker, Type, Expression } from 'typescript';
+import { isAsExpression, isStringLiteral, isNumericLiteral, isExpression } from 'typescript';
+import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryAsAssertion';
@@ -14,10 +14,10 @@ type NoUnnecessaryAsAssertionRuleDefinitionTypeOptions = RuleDefinitionTypeOptio
 };
 
 function checkUnionNarrowing(
-    expressionType: ts.Type,
-    assertedType: ts.Type,
-    expression: ts.Expression,
-    checker: ts.TypeChecker
+    expressionType: Type,
+    assertedType: Type,
+    expression: Expression,
+    checker: TypeChecker
 ): boolean {
     if (!expressionType.isUnion()) {
         return false;
@@ -41,7 +41,7 @@ function checkUnionNarrowing(
         return true;
     }
 
-    if (ts.isStringLiteral(expression) || ts.isNumericLiteral(expression)) {
+    if (isStringLiteral(expression) || isNumericLiteral(expression)) {
         const literalType = checker.getTypeAtLocation(expression);
         return checker.isTypeAssignableTo(literalType, assertedType);
     }
@@ -61,14 +61,21 @@ export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOpti
         },
         schema: [],
     },
-    create(context: RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>) {
+    create(context: Readonly<RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>>) {
         return {
             TSAsExpression(node: TSESTree.TSAsExpression): void {
-                const services = ESLintUtils.getParserServices(context);
+                const services = getParserServices<
+                    MessageIds,
+                    RuleOptions,
+                    NoUnnecessaryAsAssertionRuleDefinitionTypeOptions
+                >(context);
+                if (!services.program) {
+                    return;
+                }
                 const checker = services.program.getTypeChecker();
                 const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
 
-                if (!ts.isAsExpression(tsAsExpression)) {
+                if (!isAsExpression(tsAsExpression)) {
                     return;
                 }
 
@@ -87,7 +94,7 @@ export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOpti
                 const isAssignable = checker.isTypeAssignableTo(expressionType, assertedType);
                 const isReverseAssignable = checker.isTypeAssignableTo(assertedType, expressionType);
                 const tsExpression = services.esTreeNodeToTSNodeMap.get(node.expression);
-                if (!ts.isExpression(tsExpression)) {
+                if (!isExpression(tsExpression)) {
                     return;
                 }
 

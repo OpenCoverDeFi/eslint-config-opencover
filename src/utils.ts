@@ -1,9 +1,12 @@
 import type { TSESTree } from '@typescript-eslint/utils';
-import { AST_NODE_TYPES } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
-import * as ts from 'typescript';
+import type { RuleContext, RuleContextTypeOptions } from '@eslint/core';
+import type { RuleContext as TSESLintRuleContext } from '@typescript-eslint/utils/ts-eslint';
+import type { TypeChecker, Type } from 'typescript';
+import { TypeFlags } from 'typescript';
 
-export function getTypeFromESTreeNode(services: ParserServices, checker: ts.TypeChecker, node: TSESTree.Node): ts.Type {
+export function getTypeFromESTreeNode(services: ParserServices, checker: TypeChecker, node: TSESTree.Node): Type {
     const tsNode = services.esTreeNodeToTSNodeMap.get(node);
     return checker.getTypeAtLocation(tsNode);
 }
@@ -15,16 +18,26 @@ export function isNullishLiteral(node: TSESTree.Node): boolean {
     );
 }
 
-export function isTypeNullable(type: ts.Type): boolean {
+export function isTypeNullable(type: Type): boolean {
     // Check if the type includes null or undefined
-    const hasNullOrUndefined = (type.flags & (ts.TypeFlags.Null | ts.TypeFlags.Undefined)) !== 0;
+    const hasNullOrUndefined = (type.flags & (TypeFlags.Null | TypeFlags.Undefined)) !== 0;
     const isUnionWithNullable =
-        type.isUnion() && type.types.some((t) => (t.flags & (ts.TypeFlags.Null | ts.TypeFlags.Undefined)) !== 0);
+        type.isUnion() && type.types.some((t) => (t.flags & (TypeFlags.Null | TypeFlags.Undefined)) !== 0);
     return hasNullOrUndefined || isUnionWithNullable;
 }
 
-export function isAnyOrUnknown(type: ts.Type): boolean {
-    const isAny = (type.flags & ts.TypeFlags.Any) !== 0;
-    const isUnknown = (type.flags & ts.TypeFlags.Unknown) !== 0 || type.getSymbol()?.getName() === 'unknown';
+export function isAnyOrUnknown(type: Type): boolean {
+    const isAny = (type.flags & TypeFlags.Any) !== 0;
+    const isUnknown = (type.flags & TypeFlags.Unknown) !== 0;
     return isAny || isUnknown;
+}
+
+// UGLY HACK: This is a hack to adapt the context to the type expected by the ESLintUtils.getParserServices function
+// I don't know why they defined their own types, when eslint already has a type for the context
+export function getParserServices<
+    MessageIds extends string,
+    Options extends readonly unknown[],
+    T extends RuleContextTypeOptions,
+>(context: RuleContext<T>): ParserServices {
+    return ESLintUtils.getParserServices(context as unknown as Readonly<TSESLintRuleContext<MessageIds, Options>>);
 }

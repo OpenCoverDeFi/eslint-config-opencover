@@ -1,8 +1,7 @@
 // Plugin for the rule no-unnecessary-optional-chain
 import type { TSESTree } from '@typescript-eslint/utils';
-import { ESLintUtils } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getTypeFromESTreeNode, isTypeNullable } from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '../utils.js';
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryOptionalChain';
@@ -25,7 +24,14 @@ export const rule: RuleDefinition<NoUnnecessaryOptionalChainRuleDefinitionTypeOp
         schema: [],
     },
     create(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
-        const services = ESLintUtils.getParserServices<MessageIds, RuleOptions>(context);
+        const services = getParserServices<
+            MessageIds,
+            RuleOptions,
+            NoUnnecessaryOptionalChainRuleDefinitionTypeOptions
+        >(context);
+        if (!services.program) {
+            return {};
+        }
         const checker = services.program.getTypeChecker();
 
         return {

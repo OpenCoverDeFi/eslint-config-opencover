@@ -1,10 +1,11 @@
 // Plugin for the rule no-unnecessary-typeof
 import type { TSESTree } from '@typescript-eslint/utils';
-import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
+import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { ParserServices } from '@typescript-eslint/utils';
-import * as ts from 'typescript';
+import type { TypeChecker, Type } from 'typescript';
+import { TypeFlags } from 'typescript';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getTypeFromESTreeNode } from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode } from '../utils.js';
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryTypeof';
@@ -30,7 +31,7 @@ function checkTypeofPattern(
 }
 
 // Check if a type matches a typeof string exactly (not a union)
-function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecker): boolean {
+function isExactType(type: Type, typeofString: string, checker: TypeChecker): boolean {
     const typeString = checker.typeToString(type);
 
     // Special case for boolean - TypeScript represents boolean as true | false union
@@ -49,19 +50,19 @@ function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecke
     // Check type based on typeof string
     switch (typeofString) {
         case 'string':
-            return (type.flags & ts.TypeFlags.String) !== 0;
+            return (type.flags & TypeFlags.String) !== 0;
         case 'number':
-            return (type.flags & ts.TypeFlags.Number) !== 0;
+            return (type.flags & TypeFlags.Number) !== 0;
         case 'bigint':
-            return (type.flags & ts.TypeFlags.BigInt) !== 0;
+            return (type.flags & TypeFlags.BigInt) !== 0;
         case 'symbol':
-            return (type.flags & ts.TypeFlags.ESSymbol) !== 0;
+            return (type.flags & TypeFlags.ESSymbol) !== 0;
         case 'undefined':
-            return (type.flags & ts.TypeFlags.Undefined) !== 0;
+            return (type.flags & TypeFlags.Undefined) !== 0;
         case 'object':
             // Object type but not null, undefined, or a union
             return (
-                (type.flags & ts.TypeFlags.Object) !== 0 &&
+                (type.flags & TypeFlags.Object) !== 0 &&
                 typeString !== 'null' &&
                 typeString !== 'undefined' &&
                 !typeString.includes('|')
@@ -69,7 +70,7 @@ function isExactType(type: ts.Type, typeofString: string, checker: ts.TypeChecke
         case 'function':
             // Function type
             return (
-                (type.flags & ts.TypeFlags.Object) !== 0 &&
+                (type.flags & TypeFlags.Object) !== 0 &&
                 (typeString.includes('=>') || typeString === 'Function') &&
                 !typeString.includes('|')
             );
@@ -82,7 +83,7 @@ function handleBinaryExpression(
     node: TSESTree.BinaryExpression,
     context: RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>,
     services: ParserServices,
-    checker: ts.TypeChecker
+    checker: TypeChecker
 ): void {
     // Only check === and !== operators
     if (node.operator !== '===' && node.operator !== '!==') {
@@ -129,7 +130,14 @@ export const rule: RuleDefinition<NoUnnecessaryTypeofRuleDefinitionTypeOptions> 
     create(context: Readonly<RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>>) {
         return {
             BinaryExpression(node: TSESTree.BinaryExpression) {
-                const services = ESLintUtils.getParserServices<MessageIds, RuleOptions>(context);
+                const services = getParserServices<
+                    MessageIds,
+                    RuleOptions,
+                    NoUnnecessaryTypeofRuleDefinitionTypeOptions
+                >(context);
+                if (!services.program) {
+                    return;
+                }
                 const checker = services.program.getTypeChecker();
                 handleBinaryExpression(node, context, services, checker);
             },

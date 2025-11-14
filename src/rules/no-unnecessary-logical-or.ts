@@ -1,8 +1,13 @@
 // Plugin for the rule no-unnecessary-logical-or
 import type { TSESTree } from '@typescript-eslint/utils';
-import { ESLintUtils } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getTypeFromESTreeNode, isAnyOrUnknown, isNullishLiteral, isTypeNullable } from '../utils.js';
+import {
+    getParserServices,
+    getTypeFromESTreeNode,
+    isAnyOrUnknown,
+    isNullishLiteral,
+    isTypeNullable,
+} from '../utils.js';
 
 type RuleOptions = [];
 type MessageIds = 'unnecessaryLogicalOr';
@@ -25,7 +30,12 @@ export const rule: RuleDefinition<NoUnnecessaryLogicalOrRuleDefinitionTypeOption
         schema: [],
     },
     create(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
-        const services = ESLintUtils.getParserServices<MessageIds, RuleOptions>(context);
+        const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>(
+            context
+        );
+        if (!services.program) {
+            return {};
+        }
         const checker = services.program.getTypeChecker();
 
         return {
