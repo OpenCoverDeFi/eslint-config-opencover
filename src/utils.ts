@@ -1,10 +1,9 @@
-import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES, ESLintUtils } from '@typescript-eslint/utils';
-import type { ParserServices } from '@typescript-eslint/utils';
-import type { RuleContext, RuleContextTypeOptions } from '@eslint/core';
+import type { ParserServices, TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext as TSESLintRuleContext } from '@typescript-eslint/utils/ts-eslint';
-import type { TypeChecker, Type } from 'typescript';
+import type { RuleContext, RuleContextTypeOptions } from '@eslint/core';
 import { TypeFlags } from 'typescript';
+import type { Type, TypeChecker } from 'typescript';
 
 export function getTypeFromESTreeNode(services: ParserServices, checker: TypeChecker, node: TSESTree.Node): Type {
     const tsNode = services.esTreeNodeToTSNodeMap.get(node);
@@ -18,18 +17,17 @@ export function isNullishLiteral(node: TSESTree.Node): boolean {
     );
 }
 
+export function isNullOrUndefined(type: Type): boolean {
+    return (type.flags & (TypeFlags.Null | TypeFlags.Undefined)) !== 0;
+}
+
 export function isTypeNullable(type: Type): boolean {
-    // Check if the type includes null or undefined
-    const hasNullOrUndefined = (type.flags & (TypeFlags.Null | TypeFlags.Undefined)) !== 0;
-    const isUnionWithNullable =
-        type.isUnion() && type.types.some((t) => (t.flags & (TypeFlags.Null | TypeFlags.Undefined)) !== 0);
-    return hasNullOrUndefined || isUnionWithNullable;
+    const isUnionWithNullable = type.isUnion() && type.types.some((t) => isNullOrUndefined(t));
+    return isNullOrUndefined(type) || isUnionWithNullable;
 }
 
 export function isAnyOrUnknown(type: Type): boolean {
-    const isAny = (type.flags & TypeFlags.Any) !== 0;
-    const isUnknown = (type.flags & TypeFlags.Unknown) !== 0;
-    return isAny || isUnknown;
+    return (type.flags & TypeFlags.Any) !== 0 || (type.flags & TypeFlags.Unknown) !== 0;
 }
 
 // UGLY HACK: This is a hack to adapt the context to the type expected by the ESLintUtils.getParserServices function

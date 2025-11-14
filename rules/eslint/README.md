@@ -113,6 +113,7 @@ The following ESLint rules are added top of the recommended ones:
 | `no-unneeded-ternary`     | Disallows ternary operators when simpler alternatives exist                      | error    | -                                                     |
 | `no-use-before-define`    | Disallows the use of variables before they are defined                           | error    | `{ variables: true, functions: true, classes: true }` |
 | `no-restricted-globals`   | Disallows specified global variables (Map, Set)                                  | error    | `Map`, `Set` with custom messages                     |
+| `no-restricted-syntax`   | Disallows specific syntax patterns (TypeScript enums)                            | error    | `TSEnumDeclaration` selector with custom message     |
 | `object-curly-spacing`    | Enforces consistent spacing inside braces                                        | warn     | `'always'`                                            |
 | `quote-props`             | Requires quotes around object literal property names when needed                 | warn     | `'as-needed'`                                         |
 | `quotes`                  | Enforces the consistent use of single quotes                                     | error    | `'single'`, `{ avoidEscape: true }`                   |

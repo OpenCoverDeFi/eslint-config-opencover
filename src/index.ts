@@ -36,7 +36,6 @@ const config = defineConfig([
                     ignorePattern: ['^.+\\.config\\.[^.]+$'],
                 },
             ],
-            '@opencover-eslint/no-enum': 'error',
             '@opencover-eslint/no-unnecessary-as-assertion': 'error',
             '@opencover-eslint/no-unnecessary-typeof': 'error',
             '@opencover-eslint/no-unnecessary-logical-or': 'error',
@@ -67,6 +66,13 @@ const config = defineConfig([
                             message: 'Set is not allowed. Use Object instead.',
                         },
                     },
+                },
+            ],
+            'no-restricted-syntax': [
+                'error',
+                {
+                    selector: 'TSEnumDeclaration',
+                    message: 'Enums are not allowed.',
                 },
             ],
             'block-spacing': ['error', 'always'],
