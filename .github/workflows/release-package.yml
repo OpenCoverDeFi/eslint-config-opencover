@@ -28,6 +28,7 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > ~/.npmrc
 
       - run: yarn install --frozen-lockfile --non-interactive
+      - run: yarn build
       - run: yarn publish --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
