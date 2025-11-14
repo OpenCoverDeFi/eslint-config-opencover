@@ -49,7 +49,79 @@ function checkUnionNarrowing(
     return false;
 }
 
+function createRuleVisitor(context: RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>) {
+    return {
+        TSAsExpression(node: TSESTree.TSAsExpression): void {
+            const services = getParserServices<
+                MessageIds,
+                RuleOptions,
+                NoUnnecessaryAsAssertionRuleDefinitionTypeOptions
+            >(context);
+            if (!services.program) {
+                return;
+            }
+            const checker = services.program.getTypeChecker();
+            const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
+
+            if (!isAsExpression(tsAsExpression)) {
+                return;
+            }
+
+            // Skip "as const" assertions - they are not type assertions
+            if (tsAsExpression.type.getText() === 'const') {
+                return;
+            }
+
+            const expressionType = getTypeFromESTreeNode(services, checker, node.expression);
+            const assertedType = getTypeFromESTreeNode(services, checker, node.typeAnnotation);
+
+            if (isAnyOrUnknown(expressionType)) {
+                return;
+            }
+
+            const isAssignable = checker.isTypeAssignableTo(expressionType, assertedType);
+            const isReverseAssignable = checker.isTypeAssignableTo(assertedType, expressionType);
+            const tsExpression = services.esTreeNodeToTSNodeMap.get(node.expression);
+            if (!isExpression(tsExpression)) {
+                return;
+            }
+
+            const isUnnecessaryUnionNarrowing = checkUnionNarrowing(
+                expressionType,
+                assertedType,
+                tsExpression,
+                checker
+            );
+
+            if (isAssignable && isReverseAssignable) {
+                context.report({
+                    node,
+                    messageId: 'unnecessaryAsAssertion',
+                });
+            } else if (isUnnecessaryUnionNarrowing) {
+                context.report({
+                    node,
+                    messageId: 'unnecessaryAsAssertion',
+                });
+            } else if (isAssignable) {
+                const expressionTypeString = checker.typeToString(expressionType);
+                const assertedTypeString = checker.typeToString(assertedType);
+
+                if (expressionTypeString === assertedTypeString) {
+                    context.report({
+                        node,
+                        messageId: 'unnecessaryAsAssertion',
+                    });
+                }
+            }
+        },
+    };
+}
+
 export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions> = {
+    create(context: Readonly<RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>>) {
+        return createRuleVisitor(context);
+    },
     meta: {
         type: 'problem' as const,
         docs: {
@@ -60,73 +132,5 @@ export const rule: RuleDefinition<NoUnnecessaryAsAssertionRuleDefinitionTypeOpti
             unnecessaryAsAssertion: 'Unnecessary "as" type assertion - the expression is already of this type',
         },
         schema: [],
-    },
-    create(context: Readonly<RuleContext<NoUnnecessaryAsAssertionRuleDefinitionTypeOptions>>) {
-        return {
-            TSAsExpression(node: TSESTree.TSAsExpression): void {
-                const services = getParserServices<
-                    MessageIds,
-                    RuleOptions,
-                    NoUnnecessaryAsAssertionRuleDefinitionTypeOptions
-                >(context);
-                if (!services.program) {
-                    return;
-                }
-                const checker = services.program.getTypeChecker();
-                const tsAsExpression = services.esTreeNodeToTSNodeMap.get(node);
-
-                if (!isAsExpression(tsAsExpression)) {
-                    return;
-                }
-
-                // Skip "as const" assertions - they are not type assertions
-                if (tsAsExpression.type.getText() === 'const') {
-                    return;
-                }
-
-                const expressionType = getTypeFromESTreeNode(services, checker, node.expression);
-                const assertedType = getTypeFromESTreeNode(services, checker, node.typeAnnotation);
-
-                if (isAnyOrUnknown(expressionType)) {
-                    return;
-                }
-
-                const isAssignable = checker.isTypeAssignableTo(expressionType, assertedType);
-                const isReverseAssignable = checker.isTypeAssignableTo(assertedType, expressionType);
-                const tsExpression = services.esTreeNodeToTSNodeMap.get(node.expression);
-                if (!isExpression(tsExpression)) {
-                    return;
-                }
-
-                const isUnnecessaryUnionNarrowing = checkUnionNarrowing(
-                    expressionType,
-                    assertedType,
-                    tsExpression,
-                    checker
-                );
-
-                if (isAssignable && isReverseAssignable) {
-                    context.report({
-                        node,
-                        messageId: 'unnecessaryAsAssertion',
-                    });
-                } else if (isUnnecessaryUnionNarrowing) {
-                    context.report({
-                        node,
-                        messageId: 'unnecessaryAsAssertion',
-                    });
-                } else if (isAssignable) {
-                    const expressionTypeString = checker.typeToString(expressionType);
-                    const assertedTypeString = checker.typeToString(assertedType);
-
-                    if (expressionTypeString === assertedTypeString) {
-                        context.report({
-                            node,
-                            messageId: 'unnecessaryAsAssertion',
-                        });
-                    }
-                }
-            },
-        };
     },
 };

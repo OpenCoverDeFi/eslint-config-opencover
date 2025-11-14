@@ -17,7 +17,49 @@ type NoUnnecessaryLogicalOrRuleDefinitionTypeOptions = RuleDefinitionTypeOptions
     RuleOptions: RuleOptions;
 };
 
+function createRuleVisitor(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
+    const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>(
+        context
+    );
+    if (!services.program) {
+        return {};
+    }
+    const checker = services.program.getTypeChecker();
+
+    return {
+        LogicalExpression(node: TSESTree.LogicalExpression) {
+            if (node.operator !== '||') {
+                return;
+            }
+
+            // Check if the right side is null or undefined
+            if (!isNullishLiteral(node.right)) {
+                return;
+            }
+
+            // Get the type of the left side
+            const leftType = getTypeFromESTreeNode(services, checker, node.left);
+
+            // Skip if the type is any or unknown
+            if (isAnyOrUnknown(leftType)) {
+                return;
+            }
+
+            // Check if the left side is nullable
+            if (!isTypeNullable(leftType)) {
+                context.report({
+                    node,
+                    messageId: 'unnecessaryLogicalOr',
+                });
+            }
+        },
+    };
+}
+
 export const rule: RuleDefinition<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions> = {
+    create(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
+        return createRuleVisitor(context);
+    },
     meta: {
         type: 'problem' as const,
         docs: {
@@ -28,43 +70,5 @@ export const rule: RuleDefinition<NoUnnecessaryLogicalOrRuleDefinitionTypeOption
             unnecessaryLogicalOr: 'Unnecessary logical OR - the value is not nullable',
         },
         schema: [],
-    },
-    create(context: RuleContext<NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>) {
-        const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryLogicalOrRuleDefinitionTypeOptions>(
-            context
-        );
-        if (!services.program) {
-            return {};
-        }
-        const checker = services.program.getTypeChecker();
-
-        return {
-            LogicalExpression(node: TSESTree.LogicalExpression) {
-                if (node.operator !== '||') {
-                    return;
-                }
-
-                // Check if the right side is null or undefined
-                if (!isNullishLiteral(node.right)) {
-                    return;
-                }
-
-                // Get the type of the left side
-                const leftType = getTypeFromESTreeNode(services, checker, node.left);
-
-                // Skip if the type is any or unknown
-                if (isAnyOrUnknown(leftType)) {
-                    return;
-                }
-
-                // Check if the left side is nullable
-                if (!isTypeNullable(leftType)) {
-                    context.report({
-                        node,
-                        messageId: 'unnecessaryLogicalOr',
-                    });
-                }
-            },
-        };
     },
 };

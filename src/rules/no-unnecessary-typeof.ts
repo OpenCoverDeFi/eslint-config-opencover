@@ -115,7 +115,25 @@ function handleBinaryExpression(
     }
 }
 
+function createRuleVisitor(context: RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>) {
+    return {
+        BinaryExpression(node: TSESTree.BinaryExpression) {
+            const services = getParserServices<MessageIds, RuleOptions, NoUnnecessaryTypeofRuleDefinitionTypeOptions>(
+                context
+            );
+            if (!services.program) {
+                return;
+            }
+            const checker = services.program.getTypeChecker();
+            handleBinaryExpression(node, context, services, checker);
+        },
+    };
+}
+
 export const rule: RuleDefinition<NoUnnecessaryTypeofRuleDefinitionTypeOptions> = {
+    create(context: Readonly<RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>>) {
+        return createRuleVisitor(context);
+    },
     meta: {
         type: 'problem' as const,
         docs: {
@@ -126,21 +144,5 @@ export const rule: RuleDefinition<NoUnnecessaryTypeofRuleDefinitionTypeOptions> 
             unnecessaryTypeof: 'Unnecessary typeof check - TypeScript already knows this type',
         },
         schema: [],
-    },
-    create(context: Readonly<RuleContext<NoUnnecessaryTypeofRuleDefinitionTypeOptions>>) {
-        return {
-            BinaryExpression(node: TSESTree.BinaryExpression) {
-                const services = getParserServices<
-                    MessageIds,
-                    RuleOptions,
-                    NoUnnecessaryTypeofRuleDefinitionTypeOptions
-                >(context);
-                if (!services.program) {
-                    return;
-                }
-                const checker = services.program.getTypeChecker();
-                handleBinaryExpression(node, context, services, checker);
-            },
-        };
     },
 };

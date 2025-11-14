@@ -11,7 +11,35 @@ type NoUnnecessaryOptionalChainRuleDefinitionTypeOptions = RuleDefinitionTypeOpt
     RuleOptions: RuleOptions;
 };
 
+function createRuleVisitor(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
+    return {
+        ChainExpression(node: TSESTree.ChainExpression) {
+            const services = getParserServices<
+                MessageIds,
+                RuleOptions,
+                NoUnnecessaryOptionalChainRuleDefinitionTypeOptions
+            >(context);
+            if (!services.program) {
+                return {};
+            }
+            const checker = services.program.getTypeChecker();
+            const type = getTypeFromESTreeNode(services, checker, node);
+
+            // Check if the type includes null or undefined
+            if (!isTypeNullable(type)) {
+                context.report({
+                    node,
+                    messageId: 'unnecessaryOptionalChain',
+                });
+            }
+        },
+    };
+}
+
 export const rule: RuleDefinition<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions> = {
+    create(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
+        return createRuleVisitor(context);
+    },
     meta: {
         type: 'problem' as const,
         docs: {
@@ -22,30 +50,5 @@ export const rule: RuleDefinition<NoUnnecessaryOptionalChainRuleDefinitionTypeOp
             unnecessaryOptionalChain: 'Unnecessary optional chain - the value is not nullable',
         },
         schema: [],
-    },
-    create(context: RuleContext<NoUnnecessaryOptionalChainRuleDefinitionTypeOptions>) {
-        const services = getParserServices<
-            MessageIds,
-            RuleOptions,
-            NoUnnecessaryOptionalChainRuleDefinitionTypeOptions
-        >(context);
-        if (!services.program) {
-            return {};
-        }
-        const checker = services.program.getTypeChecker();
-
-        return {
-            ChainExpression(node: TSESTree.ChainExpression) {
-                const type = getTypeFromESTreeNode(services, checker, node);
-
-                // Check if the type includes null or undefined
-                if (!isTypeNullable(type)) {
-                    context.report({
-                        node,
-                        messageId: 'unnecessaryOptionalChain',
-                    });
-                }
-            },
-        };
     },
 };

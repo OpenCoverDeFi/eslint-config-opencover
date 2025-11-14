@@ -27,30 +27,31 @@ function traverse(node: TSESTree.Node): number {
         }
 
         case AST_NODE_TYPES.SwitchStatement: {
-            let complexity = traverse(node.discriminant);
-            for (const switchCase of node.cases) {
-                complexity += 1; // Each case adds complexity
-                if (switchCase.test) {
-                    complexity += traverse(switchCase.test);
-                }
-                for (const statement of switchCase.consequent) {
-                    complexity += traverse(statement);
-                }
-            }
-            return complexity;
+            return (
+                traverse(node.discriminant) +
+                node.cases.reduce((complexity, switchCase) => {
+                    complexity += 1; // Each case adds complexity
+                    if (switchCase.test) {
+                        complexity += traverse(switchCase.test);
+                    }
+                    return (
+                        complexity +
+                        switchCase.consequent.reduce(
+                            (caseComplexity, statement) => caseComplexity + traverse(statement),
+                            0
+                        )
+                    );
+                }, 0)
+            );
         }
 
         case AST_NODE_TYPES.SwitchCase: {
             // SwitchCase is already handled in SwitchStatement
             // This case is here for completeness but shouldn't be hit in normal traversal
-            let complexity = 0;
-            if (node.test) {
-                complexity += traverse(node.test);
-            }
-            for (const statement of node.consequent) {
-                complexity += traverse(statement);
-            }
-            return complexity;
+            return (
+                (node.test ? traverse(node.test) : 0) +
+                node.consequent.reduce((complexity, statement) => complexity + traverse(statement), 0)
+            );
         }
 
         case AST_NODE_TYPES.ForStatement: {
@@ -117,11 +118,7 @@ function traverse(node: TSESTree.Node): number {
         }
 
         case AST_NODE_TYPES.BlockStatement: {
-            let complexity = 0;
-            for (const statement of node.body) {
-                complexity += traverse(statement);
-            }
-            return complexity;
+            return node.body.reduce((complexity, statement) => complexity + traverse(statement), 0);
         }
 
         case AST_NODE_TYPES.ExpressionStatement: {
@@ -129,20 +126,14 @@ function traverse(node: TSESTree.Node): number {
         }
 
         case AST_NODE_TYPES.ReturnStatement: {
-            if (node.argument) {
-                return traverse(node.argument);
-            }
-            return 0;
+            return node.argument ? traverse(node.argument) : 0;
         }
 
         case AST_NODE_TYPES.VariableDeclaration: {
-            let complexity = 0;
-            for (const declarator of node.declarations) {
-                if (declarator.init) {
-                    complexity += traverse(declarator.init);
-                }
-            }
-            return complexity;
+            return node.declarations.reduce(
+                (complexity, declarator) => complexity + (declarator.init ? traverse(declarator.init) : 0),
+                0
+            );
         }
 
         case AST_NODE_TYPES.AssignmentExpression: {
@@ -158,11 +149,7 @@ function traverse(node: TSESTree.Node): number {
         }
 
         case AST_NODE_TYPES.CallExpression: {
-            let complexity = traverse(node.callee);
-            for (const arg of node.arguments) {
-                complexity += traverse(arg);
-            }
-            return complexity;
+            return traverse(node.callee) + node.arguments.reduce((complexity, arg) => complexity + traverse(arg), 0);
         }
 
         case AST_NODE_TYPES.MemberExpression: {
@@ -174,32 +161,20 @@ function traverse(node: TSESTree.Node): number {
         }
 
         case AST_NODE_TYPES.ArrayExpression: {
-            let complexity = 0;
-            for (const element of node.elements) {
-                if (element) {
-                    complexity += traverse(element);
-                }
-            }
-            return complexity;
+            return node.elements.reduce((complexity, element) => complexity + (element ? traverse(element) : 0), 0);
         }
 
         case AST_NODE_TYPES.ObjectExpression: {
-            let complexity = 0;
-            for (const property of node.properties) {
+            return node.properties.reduce((complexity, property) => {
                 if (property.type === AST_NODE_TYPES.Property) {
-                    complexity += traverse(property.key);
-                    complexity += traverse(property.value);
+                    return complexity + traverse(property.key) + traverse(property.value);
                 }
-            }
-            return complexity;
+                return complexity;
+            }, 0);
         }
 
         case AST_NODE_TYPES.SequenceExpression: {
-            let complexity = 0;
-            for (const expression of node.expressions) {
-                complexity += traverse(expression);
-            }
-            return complexity;
+            return node.expressions.reduce((complexity, expression) => complexity + traverse(expression), 0);
         }
 
         case AST_NODE_TYPES.LabeledStatement: {
@@ -252,7 +227,26 @@ function checkFunction(
     }
 }
 
+function createRuleVisitor(context: RuleContext<MissingReturnTypeRuleDefinitionTypeOptions>) {
+    const rawOptions = (context.options[0] as { maxComplexity?: number } | undefined) ?? {};
+    const options: { maxComplexity: number } = { maxComplexity: rawOptions.maxComplexity ?? 10 };
+    return {
+        FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
+            checkFunction(node, context, options);
+        },
+        FunctionExpression(node: TSESTree.FunctionExpression) {
+            checkFunction(node, context, options);
+        },
+        ArrowFunctionExpression(node: TSESTree.ArrowFunctionExpression) {
+            checkFunction(node, context, options);
+        },
+    };
+}
+
 export const rule: RuleDefinition<MissingReturnTypeRuleDefinitionTypeOptions> = {
+    create(context: RuleContext<MissingReturnTypeRuleDefinitionTypeOptions>) {
+        return createRuleVisitor(context);
+    },
     meta: {
         type: 'problem' as const,
         docs: {
@@ -274,20 +268,5 @@ export const rule: RuleDefinition<MissingReturnTypeRuleDefinitionTypeOptions> = 
                 additionalProperties: false,
             },
         ],
-    },
-    create(context: RuleContext<MissingReturnTypeRuleDefinitionTypeOptions>) {
-        const rawOptions = (context.options[0] as { maxComplexity?: number } | undefined) ?? {};
-        const options: { maxComplexity: number } = { maxComplexity: rawOptions.maxComplexity ?? 10 };
-        return {
-            FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
-                checkFunction(node, context, options);
-            },
-            FunctionExpression(node: TSESTree.FunctionExpression) {
-                checkFunction(node, context, options);
-            },
-            ArrowFunctionExpression(node: TSESTree.ArrowFunctionExpression) {
-                checkFunction(node, context, options);
-            },
-        };
     },
 };
