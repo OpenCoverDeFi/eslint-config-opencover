@@ -32,17 +32,41 @@ export default defineConfig([
 
 ### Usage for React
 
-Adjust your `eslint.config.ts` like this:
+You can use the React config standalone:
 
 ```ts
 import { defineConfig } from 'eslint/config';
-import opencoverReactConfig from '@opencover/eslint-config-opencover/with-react';
+import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
 
 export default defineConfig([
+    {
+        ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
+    },
     ...opencoverReactConfig,
     {
         rules: {
             // your overrides
+        },
+    },
+]);
+```
+
+Or combine both the default and React configs together:
+
+```ts
+import { defineConfig } from 'eslint/config';
+import opencoverConfig from '@opencover/eslint-config-opencover';
+import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
+
+export default defineConfig([
+    {
+        ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
+    },
+    ...opencoverConfig,
+    ...opencoverReactConfig,
+    {
+        rules: {
+            // your overrides (React config rules will override default config rules if there are conflicts)
         },
     },
 ]);
