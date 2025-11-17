@@ -49,14 +49,14 @@ Enforces that all filenames use kebab-case (lowercase with hyphens).
 
 **Example:**
 
-```ts
+```bash
 // ❌ Incorrect filenames
 MyComponent.ts;
 my_component.ts;
 myComponent.ts;
 
 // ✅ Correct filename
-my - component.ts;
+my-component.ts;
 ```
 
 **Exceptions:**
