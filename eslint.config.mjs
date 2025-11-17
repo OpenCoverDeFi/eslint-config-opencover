@@ -4,11 +4,19 @@ import opencoverConfig from './src/index.js';
 
 export default defineConfig([
     {
-        ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
+        ignores: [
+            '**/node_modules/**',
+            '**/dist/**',
+            '**/coverage/**',
+            '**/.temp/**',
+            '**/.git/**',
+            '**/yarn.lock',
+            'eslint.config.mjs',
+        ],
     },
     ...opencoverConfig,
     {
-        files: ['src/**/*.ts', 'tests/**/*.ts', 'vitest.config.ts', 'eslint.config.ts'],
+        files: ['src/**/*.ts', 'tests/**/*.ts', 'vitest.config.ts'],
         languageOptions: {
             parser: tseslint.parser,
             parserOptions: {

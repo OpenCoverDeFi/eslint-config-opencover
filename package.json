@@ -45,19 +45,19 @@
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "prepublishOnly": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "prepare": "husky",
-    "lint": "eslint --max-warnings=0 . && prettier --check .",
-    "format": "eslint --fix . && prettier --write ."
+    "lint": "node --loader ts-node/esm --no-warnings ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
+    "format": "node --loader ts-node/esm --no-warnings ./node_modules/.bin/eslint --fix . && prettier --write ."
   },
   "dependencies": {
     "@eslint/js": "^9.39.1",
-    "@typescript-eslint/utils": "^8.46.4",
+    "@typescript-eslint/utils": "^8.47.0",
     "@vitest/eslint-plugin": "^1.4.2",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "tsutils": "^3.21.0",
-    "typescript-eslint": "^8.46.4"
+    "typescript-eslint": "^8.47.0"
   },
   "peerDependencies": {
     "eslint": "^9.39.1",
@@ -72,9 +72,9 @@
     "eslint": "^9.39.1",
     "eslint-import-resolver-typescript": "^4.4.4",
     "husky": "^9.1.7",
-    "jiti": "^2.6.1",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
     "tsc-alias": "^1.8.16",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
@@ -85,7 +85,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx}": [
-      "eslint --cache --max-warnings=0 --fix",
+      "node --loader ts-node/esm --no-warnings ./node_modules/.bin/eslint --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],
     "*.{json,yml}": "prettier --cache --write",

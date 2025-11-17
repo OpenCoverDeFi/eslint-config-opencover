@@ -97,6 +97,8 @@ function traverse(node: TSESTree.Node): number {
 
         case AST_NODE_TYPES.UnaryExpression:
         case AST_NODE_TYPES.ThrowStatement:
+            if (!node.argument) return 0;
+
             return traverse(node.argument);
 
         case AST_NODE_TYPES.CallExpression:
