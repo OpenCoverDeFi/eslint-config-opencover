@@ -4,12 +4,13 @@ import importPlugin from 'eslint-plugin-import';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import vitest from '@vitest/eslint-plugin';
 import stylisticPlugin from '@stylistic/eslint-plugin';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import opencoverPlugin from './opencover-eslint-config.js';
 
 const config = defineConfig([
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
+    globalIgnores(['node_modules', 'dist', 'coverage', '.temp', '.git', 'yarn.lock', 'eslint.config.mjs']),
     {
         files: ['**/*.ts', '**/*.tsx'],
         plugins: {
@@ -172,7 +173,7 @@ const config = defineConfig([
         },
     },
     {
-        files: ['**/*.test.ts', '**/*.test.tsx'],
+        files: ['tests/**/*.ts', 'tests/**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],
         plugins: {
             '@vitest': vitest,
         },

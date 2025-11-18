@@ -124,4 +124,4 @@ export default defineConfig([
   },
   ...opencoverConfig,
 ]);
-``
+```
