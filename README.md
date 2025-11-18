@@ -99,30 +99,29 @@ export default defineConfig([
 ]);
 ```
 
-### (Optional) Add .prettierc.json with this preferred configuration
+## Troubleshooting
 
-```
-{
-    "printWidth": 100,
-    "trailingComma": "es5",
-    "tabWidth": 4,
-    "semi": true,
-    "singleQuote": true
-}
-```
+### Error: "You have used a rule which requires type information, but don't have parserOptions set to generate type information for this file"
 
-### (Optional) Linting with vscode
+If you encounter this error, it typically means ESLint is trying to lint a non-TypeScript file (e.g., `.js`, `.json`, `.md`, `.css`, etc.) with TypeScript-specific rules that require type information.
 
-If you are using vscode this `.vscode/settings.json` file may come in handy:
+**Solution:** Check your ignore patterns. The error message will show the filename that's causing the issue. Add that file or file pattern to your `ignores` array in `eslint.config.ts`.
 
-```
-{
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": true,
-    "eslint.alwaysShowStatus": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
-    "editor.rulers": [100]
-}
-```
+For example, if you see this error for a `.js` file:
+
+```ts
+export default defineConfig([
+  {
+    ignores: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/coverage/**',
+      '**/.temp/**',
+      '**/.git/**',
+      '**/yarn.lock',
+      '*.js', // Add this if you have .js files that shouldn't be linted
+    ],
+  },
+  ...opencoverConfig,
+]);
+``
