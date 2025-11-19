@@ -2,6 +2,8 @@ import { basename } from 'node:path';
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 
+const FILENAME_EXTENSION_PATTERN = /(?:\.test)?(?:\.[^.]+)?$/;
+
 type RuleOptions = [
     {
         ignorePattern?: string[];
@@ -20,7 +22,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
 
     if (
         !ignorePattern.some((pattern) => new RegExp(pattern).test(filename)) &&
-        filename.replace(/(?:\.test)?(?:\.[^.]+)?$/, '').includes('.')
+        filename.replace(FILENAME_EXTENSION_PATTERN, '').includes('.')
     ) {
         return {
             Program(node: TSESTree.Program) {

@@ -1,7 +1,15 @@
 {
   "name": "@opencover/eslint-config-opencover",
   "version": "3.0.0",
+  "type": "module",
+  "private": "true",
+  "main": "dist/index.js",
   "description": "ESLint Typescript shareable config for OpenCover's coding style.",
+  "author": {
+    "name": "OpenCover",
+    "email": "team@opencover.com",
+    "url": "https://opencover.com"
+  },
   "keywords": [
     "eslint",
     "eslintconfig",
@@ -11,17 +19,10 @@
     "node"
   ],
   "license": "MIT",
-  "author": {
-    "name": "OpenCover",
-    "email": "team@opencover.com",
-    "url": "https://opencover.com"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GeltFinance/eslint-config-opencover.git"
+    "url": "https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
   },
-  "type": "module",
-  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -39,15 +40,14 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "test": "vitest run",
-    "test:ui": "vitest --ui",
-    "test:coverage": "vitest run --coverage",
-    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "postinstall": "yarn build",
     "prepare": "husky",
-    "eslint": "tsx ./node_modules/.bin/eslint --max-warnings=0 .",
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "lint": "tsx ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
-    "format": "tsx ./node_modules/.bin/eslint --fix . && prettier --write ."
+    "format": "tsx ./node_modules/.bin/eslint --fix . && prettier --write .",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "postinstall": "yarn build",
+    "eslint": "tsx ./node_modules/.bin/eslint --max-warnings=0 ."
   },
   "dependencies": {
     "@eslint/js": "^9.39.1",
@@ -70,7 +70,6 @@
   "devDependencies": {
     "@types/node": "^24.10.0",
     "@vitest/coverage-v8": "^3.2.4",
-    "@vitest/ui": "^3.2.4",
     "dedent": "^1.7.0",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",

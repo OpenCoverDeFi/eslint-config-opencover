@@ -184,7 +184,7 @@ describe('eslint.configs.recommended rules', () => {
         expectRuleError(result, 'no-misleading-character-class');
     });
 
-    // NOTE: this is a bug, even if you reenable it, it will still fail.
+    // NOTE (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
     // code is copied from eslint website
     it.skip('should enforce no-octal', async () => {
         const code = dedent`
@@ -348,7 +348,7 @@ describe('eslint.configs.recommended rules', () => {
         expectRuleError(result, 'for-direction');
     });
 
-    // NOTE: this is a bug, even if you reenable it, it will still fail.
+    // TODO (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
     // code is copied from eslint website
     it.skip('should enforce no-nonoctal-decimal-escape', async () => {
         const code = dedent`

@@ -8,5 +8,3 @@ This section documents the ESLint Import plugin rules that are enabled and confi
 | ------------------------------ | ------------------------------------------------------- | -------- | ------------------------------- |
 | `import/order`                 | Enforces a convention in the order of import statements | warn     | Custom path groups for `@dc/**` |
 | `import/prefer-default-export` | Prefer default export over named export (disabled)      | off      | -                               |
-
-

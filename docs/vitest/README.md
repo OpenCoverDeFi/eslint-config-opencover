@@ -16,4 +16,3 @@ These rules apply only to files matching the pattern `**/*.test.ts`.
 | `@vitest/padding-around-after-all-blocks`   | Enforces padding around `afterAll` blocks   | error    |
 | `@vitest/padding-around-after-each-blocks`  | Enforces padding around `afterEach` blocks  | error    |
 | `@vitest/padding-around-test-blocks`        | Enforces padding around `test` blocks       | error    |
-

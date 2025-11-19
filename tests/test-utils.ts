@@ -35,6 +35,8 @@ export const createESLintInstance = (config: Config): ESLint => {
                 languageOptions: {
                     parserOptions: {
                         projectService: {
+                            // NOTE (@eniko1556, 2025-11-19): we need this as we need to create files
+                            // For typescript with projectService: true requires files to be created
                             allowDefaultProject: ['.temp/*.ts', '.temp/*.tsx', '.temp/*.test.ts'],
                             maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
                         },
@@ -54,13 +56,11 @@ export const lintFile = async (config: Config, filePath: string): Promise<ESLint
 };
 
 export const lintFileWithName = async (config: Config, filePath: string, code: string): Promise<ESLint.LintResult> => {
-    const linter = createESLintInstance(config);
-
-    const results = await linter.lintText(code, {
-        filePath, // We need to pass this for test rules to work
-    });
-
-    return results[0];
+    return (
+        await createESLintInstance(config).lintText(code, {
+            filePath, // We need to pass this for test rules to work
+        })
+    )[0];
 };
 
 export const lintText = async (config: Config, code: string): Promise<ESLint.LintResult> => {

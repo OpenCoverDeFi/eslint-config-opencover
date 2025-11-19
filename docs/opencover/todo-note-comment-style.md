@@ -11,6 +11,7 @@ Enforces a consistent format for TODO and NOTE comments to improve code maintain
 ## Rule Details
 
 This rule requires that all TODO and NOTE comments follow a specific format that includes:
+
 - The comment type (TODO or NOTE)
 - The author's username (with or without @)
 - The date in YYYY-MM-DD format
@@ -86,11 +87,13 @@ const v = 5;
 ## Format Requirements
 
 The required format is:
+
 ```
 // [TODO|NOTE] ([username], YYYY-MM-DD):
 ```
 
 Where:
+
 - `TODO` or `NOTE` must be in capital case (TODO or NOTE only)
 - `username` can include letters, numbers, dots, and underscores (with or without @ prefix)
 - Date must be in `YYYY-MM-DD` format (e.g., `2024-01-01`)
@@ -107,4 +110,3 @@ Where:
 ## When Not To Use It
 
 You can turn this rule off if you prefer a different format for TODO and NOTE comments, or if you want to allow informal TODO/NOTE comments without the structured format.
-

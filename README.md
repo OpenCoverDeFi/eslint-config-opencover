@@ -10,65 +10,35 @@
 yarn add -D eslint-config-opencover
 ```
 
-Then, create an `eslint.config.ts` file:
+Then, create an `eslint.config.mjs` file:
 
-```ts
-import { defineConfig } from 'eslint/config';
-import opencoverConfig from '@opencover/eslint-config-opencover';
-
-export default defineConfig([
-  {
-    // Add your ignores pattern
-    ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
-  },
-  ...opencoverConfig,
-  {
-    rules: {
-      // your overrides
-    },
-  },
-]);
+```mjs
+export { default } from './src/index.js';
 ```
 
 ### Usage for React
 
 You can use the React config standalone:
 
-```ts
+```mjs
 import { defineConfig } from 'eslint/config';
 import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
 
 export default defineConfig([
-  {
-    ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
-  },
-  ...opencoverReactConfig,
-  {
-    rules: {
-      // your overrides
-    },
-  },
+  ...openCoverReactConfig
 ]);
 ```
 
 Or combine both the default and React configs together:
 
-```ts
+```mjs
 import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
 
 export default defineConfig([
-  {
-    ignores: ['**/node_modules/**', '**/dist/**', '**/coverage/**', '**/.temp/**', '**/.git/**', '**/yarn.lock'],
-  },
   ...opencoverConfig,
   ...opencoverReactConfig,
-  {
-    rules: {
-      // your overrides (React config rules will override default config rules if there are conflicts)
-    },
-  },
 ]);
 ```
 

@@ -98,4 +98,3 @@ Due to the limits of static analysis, this rule:
 ## When Not To Use It
 
 You can turn this rule off if you prefer to use nullish coalescing operators defensively even when TypeScript's type system indicates it's unnecessary, or if you want to maintain consistency with code that may be used in JavaScript contexts where type information is not available.
-
