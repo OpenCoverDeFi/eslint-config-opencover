@@ -81,4 +81,17 @@ describe(ruleName, () => {
         const result = await lintText(defaultConfig, code);
         expectNoRuleError(result, ruleName);
     });
+
+    it('should throw error for nested optional chain when inner property is not nullable', async () => {
+        const code = dedent`
+            type Inner = { value: string };
+            type Middle = { inner: Inner };
+            type Outer = { middle?: Middle };
+            function getValue(obj: Outer) {
+                return obj?.middle?.inner?.value;
+            }
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectRuleError(result, ruleName);
+    });
 });

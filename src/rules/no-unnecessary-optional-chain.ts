@@ -12,24 +12,43 @@ type Options = RuleDefinitionTypeOptions & {
     RuleOptions: RuleOptions;
 };
 
-function getExpressionWithOptionalChain(
-    expression: TSESTree.Expression | TSESTree.Super
-): TSESTree.Expression | TSESTree.Super {
-    if (expression.type === AST_NODE_TYPES.ChainExpression) {
-        return getExpressionWithOptionalChain(expression.expression);
+function getOptionalChainMembers(
+    expression: TSESTree.Expression | TSESTree.Super,
+    members: Array<{
+        node: TSESTree.MemberExpression | TSESTree.CallExpression;
+        object: TSESTree.Expression | TSESTree.Super;
+    }> = []
+): Array<{
+    node: TSESTree.MemberExpression | TSESTree.CallExpression;
+    object: TSESTree.Expression | TSESTree.Super;
+}> {
+    if (expression.type === AST_NODE_TYPES.MemberExpression && expression.optional) {
+        // For optional member expressions, the object being accessed is nullable
+        members.push({
+            node: expression,
+            object: expression.object,
+        });
+        return getOptionalChainMembers(expression.object, members);
     }
 
-    if (expression.type === AST_NODE_TYPES.CallExpression) {
-        return getExpressionWithOptionalChain(expression.callee);
+    if (expression.type === AST_NODE_TYPES.CallExpression && expression.optional) {
+        // For optional call expressions, the callee is nullable
+        members.push({
+            node: expression,
+            object: expression.callee,
+        });
+        return getOptionalChainMembers(expression.callee, members);
     }
 
     if (expression.type === AST_NODE_TYPES.MemberExpression) {
-        return expression.object.type === AST_NODE_TYPES.ChainExpression
-            ? getExpressionWithOptionalChain(expression.object)
-            : expression;
+        return getOptionalChainMembers(expression.object, members);
     }
 
-    return expression;
+    if (expression.type === AST_NODE_TYPES.CallExpression) {
+        return getOptionalChainMembers(expression.callee, members);
+    }
+
+    return members;
 }
 
 function createRuleVisitor(context: RuleContext<Options>) {
@@ -40,14 +59,16 @@ function createRuleVisitor(context: RuleContext<Options>) {
             if (!services.program) return;
 
             const checker = services.program.getTypeChecker();
-            const expressionWithOptionalChain = getExpressionWithOptionalChain(node.expression);
+            const optionalMembers = getOptionalChainMembers(node.expression);
 
-            if (!isTypeNullable(getTypeFromESTreeNode(services, checker, expressionWithOptionalChain))) {
-                context.report({
-                    node,
-                    messageId: MessageIds,
-                });
-            }
+            optionalMembers.forEach(({ node: memberNode, object }) => {
+                if (!isTypeNullable(getTypeFromESTreeNode(services, checker, object))) {
+                    context.report({
+                        node: memberNode,
+                        messageId: MessageIds,
+                    });
+                }
+            });
         },
     };
 }
