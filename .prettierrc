@@ -1,13 +1,5 @@
 {
   "trailingComma": "es5",
-  "overrides": [
-    {
-      "files": [".eslint.config.ts"],
-      "options": {
-        "parser": "typescript"
-      }
-    }
-  ],
   "semi": true,
   "singleQuote": true
 }
