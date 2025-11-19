@@ -1,4 +1,3 @@
-// Plugin for the rule no-unnecessary-optional-chain
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
@@ -13,19 +12,23 @@ type Options = RuleDefinitionTypeOptions & {
     RuleOptions: RuleOptions;
 };
 
-function getBaseExpressionBeforeOptionalChain(
+function getExpressionWithOptionalChain(
     expression: TSESTree.Expression | TSESTree.Super
 ): TSESTree.Expression | TSESTree.Super {
     if (expression.type === AST_NODE_TYPES.ChainExpression) {
-        return getBaseExpressionBeforeOptionalChain(expression.expression);
+        return getExpressionWithOptionalChain(expression.expression);
+    }
+
+    if (expression.type === AST_NODE_TYPES.CallExpression) {
+        return getExpressionWithOptionalChain(expression.callee);
     }
 
     if (expression.type === AST_NODE_TYPES.MemberExpression) {
         if (expression.object.type === AST_NODE_TYPES.ChainExpression) {
-            return getBaseExpressionBeforeOptionalChain(expression.object);
+            return getExpressionWithOptionalChain(expression.object);
         }
 
-        return expression.object;
+        return expression;
     }
 
     return expression;
@@ -39,9 +42,9 @@ function createRuleVisitor(context: RuleContext<Options>) {
             if (!services.program) return;
 
             const checker = services.program.getTypeChecker();
-            const baseExpression = getBaseExpressionBeforeOptionalChain(node.expression);
+            const expressionWithOptionalChain = getExpressionWithOptionalChain(node.expression);
 
-            if (!isTypeNullable(getTypeFromESTreeNode(services, checker, baseExpression))) {
+            if (!isTypeNullable(getTypeFromESTreeNode(services, checker, expressionWithOptionalChain))) {
                 context.report({
                     node,
                     messageId: MessageIds,

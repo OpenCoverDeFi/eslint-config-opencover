@@ -1,4 +1,3 @@
-// Plugin for the rule no-unnecessary-as-assertion
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 import type { TypeChecker, Type, Expression } from 'typescript';

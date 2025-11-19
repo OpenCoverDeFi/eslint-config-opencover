@@ -58,4 +58,27 @@ describe(ruleName, () => {
         const result = await lintText(defaultConfig, code);
         expectNoRuleError(result, ruleName);
     });
+
+    it('should not throw error for optional property access like AxiosError.response', async () => {
+        const code = dedent`
+            type AxiosResponse = { headers: { 'retry-after'?: string } };
+            type AxiosError = { response?: AxiosResponse };
+            function handleError(error: AxiosError) {
+                const response = error.response?.headers['retry-after'];
+                return response;
+            }
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, ruleName);
+    });
+
+    it('should not throw error for optional call when callee is nullable', async () => {
+        const code = dedent`
+            type Example = { callback?: () => string };
+            const ex: Example = { callback: () => 'hello' };
+            const result = ex.callback?.();
+        `;
+        const result = await lintText(defaultConfig, code);
+        expectNoRuleError(result, ruleName);
+    });
 });

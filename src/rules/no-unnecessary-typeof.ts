@@ -1,4 +1,3 @@
-// Plugin for the rule no-unnecessary-typeof
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { TypeChecker, Type } from 'typescript';
