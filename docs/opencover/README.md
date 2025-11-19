@@ -11,4 +11,5 @@ This section documents the custom ESLint rules specifically designed for OpenCov
 - [`no-unnecessary-nullish-coalescing`](./no-unnecessary-nullish-coalescing.md) - Disallows unnecessary nullish coalescing operators with null/undefined
 - [`no-unnecessary-optional-chain`](./no-unnecessary-optional-chain.md) - Disallows unnecessary optional chaining
 - [`no-unnecessary-typeof`](./no-unnecessary-typeof.md) - Disallows unnecessary `typeof` checks
+- [`todo-note-comment-style`](./todo-note-comment-style.md) - Enforces consistent format for TODO and NOTE comments
 

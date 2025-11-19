@@ -17,11 +17,11 @@ type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression |
 
 const DEFAULT_MAX_COMPLEXITY = 10;
 
-// NOTE (@eniko1556, 2025-11-19) null as that comes from the typing inherited
+// NOTE (@eniko1556, 2025-11-19): null as that comes from the typing inherited
 function traverse(node: TSESTree.Node | null): number {
     if (!node) return 0;
 
-    // // NOTE (@eniko1556, 2025-11-19) function is here because callstack will be too deep otherwise
+    // NOTE (@eniko1556, 2025-11-19): function is here because callstack will be too deep otherwise
     function traverseAll(nodes: (TSESTree.Node | null)[]): number {
         return nodes.reduce((sum, n) => sum + traverse(n), 0);
     }

@@ -45,6 +45,7 @@ const config = defineConfig([
                     maxComplexity: 10,
                 },
             ],
+            '@opencover-eslint/todo-note-comment-style': 'error',
             '@typescript-eslint/consistent-type-imports': [
                 'error',
                 {

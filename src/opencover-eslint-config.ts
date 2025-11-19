@@ -6,6 +6,7 @@ import { rule as noUnnecessaryTypeofRule } from './rules/no-unnecessary-typeof.j
 import { rule as noUnnecessaryLogicalOrRule } from './rules/no-unnecessary-logical-or.js';
 import { rule as noUnnecessaryNullishCoalescingRule } from './rules/no-unnecessary-nullish-coalescing.js';
 import { rule as complexityRequiresReturnTypeRule } from './rules/complexity-requires-return-type.js';
+import { rule as todoNoteCommentStyleRule } from './rules/todo-note-comment-style.js';
 
 export default {
     meta: {
@@ -20,5 +21,6 @@ export default {
         'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
         'no-unnecessary-nullish-coalescing': noUnnecessaryNullishCoalescingRule,
         'complexity-requires-return-type': complexityRequiresReturnTypeRule,
+        'todo-note-comment-style': todoNoteCommentStyleRule,
     },
 } as const satisfies ESLint.Plugin;
