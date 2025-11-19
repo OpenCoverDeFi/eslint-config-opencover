@@ -38,6 +38,7 @@ const config = defineConfig([
             '@opencover-eslint/no-unnecessary-as-assertion': 'error',
             '@opencover-eslint/no-unnecessary-typeof': 'error',
             '@opencover-eslint/no-unnecessary-logical-or': 'error',
+            '@opencover-eslint/no-unnecessary-nullish-coalescing': 'error',
             '@opencover-eslint/complexity-requires-return-type': [
                 'error',
                 {

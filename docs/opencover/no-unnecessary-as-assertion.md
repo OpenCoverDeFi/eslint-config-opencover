@@ -12,13 +12,23 @@ Disallows unnecessary `as` type assertions when TypeScript already knows the exp
 Here are some examples:
 
 ```typescript
-// Bad
+// Bad - unnecessary assertion when type is already known
 const value: string = 'hello';
 const result = value as string;
 
-// Good
+// Good - no assertion needed
 const value: string = 'hello';
 const result = value;
+
+// Bad - unnecessary assertion on union when type can be inferred
+const union: string | number = 'hello';
+const str = union as string;
+
+// Good - use type narrowing instead
+const union: string | number = 'hello';
+if (typeof union === 'string') {
+  const str = union; // Type narrowed, no assertion needed
+}
 ```
 
 ## Rule Details
@@ -48,8 +58,25 @@ const result = value as string;
 const num: number = 42;
 const numResult = num as number;
 
-const union: string | number = 'test';
-const str = union as string; // If union is already assignable to string
+const arr: string[] = ['a', 'b'];
+const result = arr as string[];
+
+type Example = { value: boolean };
+const ex: Example = { value: true };
+const result = ex as Example;
+
+function getString(): string {
+  return 'hello';
+}
+const result = getString() as string;
+
+const union: string | number = 'hello';
+const str = union as string;
+
+type A = { type: 'a'; value: string };
+type B = { type: 'b'; value: number };
+const value: A | B = { type: 'a', value: 'test' };
+const result = value as A;
 ```
 
 :::
@@ -67,15 +94,29 @@ const result = value;
 const num: number = 42;
 const numResult = num;
 
-// Valid narrowing from union
+const arr: string[] = ['a', 'b'];
+const result = arr;
+
+// Valid narrowing from union using type guards
 const union: string | number = 'test';
 if (typeof union === 'string') {
   const str = union; // Type narrowed, no assertion needed
 }
 
-// Valid when source is any/unknown
-const unknownValue: unknown = getData();
-const typed = unknownValue as MyType;
+// Valid when source is any/unknown - these are intentional assertions
+function getValue(): unknown {
+  return 'hello';
+}
+const typed = getValue() as string;
+
+function getAnyValue(): any {
+  return 'hello';
+}
+const anyTyped = getAnyValue() as string;
+
+// Valid "as const" assertions
+const tuple = ['a', 'b'] as const;
+const obj = { key: 'value' } as const;
 ```
 
 :::

@@ -6,6 +6,8 @@ This section documents the core ESLint rules that are enabled and configured in 
 
 The configuration extends `eslint.configs.recommended`, which includes all recommended rules from the core ESLint JavaScript plugin.
 
+**Note**: For TypeScript files, the configuration primarily uses `typescript-eslint.configs.recommendedTypeChecked` (see [TypeScript ESLint documentation](../typescript-eslint/README.md) for details). The core ESLint `recommended` config provides base JavaScript rules that complement the TypeScript-specific rules.
+
 See the [eslint-recommended configuration](https://github.com/eslint/eslint/blob/main/packages/js/src/configs/eslint-recommended.js) for more details.
 
 ### Rules Included from eslint.configs.recommended

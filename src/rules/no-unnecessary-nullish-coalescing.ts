@@ -3,7 +3,7 @@ import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@es
 import { checkUnnecessaryOperator } from '@/utils.js';
 
 type RuleOptions = [];
-const MessageIds = 'unnecessaryLogicalOr';
+const MessageIds = 'unnecessaryNullishCoalescing';
 type MessageIds = typeof MessageIds;
 type Options = RuleDefinitionTypeOptions & {
     MessageIds: MessageIds;
@@ -13,7 +13,7 @@ type Options = RuleDefinitionTypeOptions & {
 function createRuleVisitor(context: RuleContext<Options>) {
     return {
         LogicalExpression(node: TSESTree.LogicalExpression) {
-            checkUnnecessaryOperator(context, node, '||', MessageIds);
+            checkUnnecessaryOperator(context, node, '??', MessageIds);
         },
     };
 }
@@ -25,11 +25,11 @@ export const rule: RuleDefinition<Options> = {
     meta: {
         type: 'suggestion' as const,
         docs: {
-            description: 'Disallow unnecessary logical OR with null or undefined',
-            url: 'https://opencover.com/rules/no-unnecessary-logical-or',
+            description: 'Disallow unnecessary nullish coalescing with null or undefined',
+            url: 'https://opencover.com/rules/no-unnecessary-nullish-coalescing',
         },
         messages: {
-            unnecessaryLogicalOr: 'Unnecessary logical OR - the value is not nullable',
+            unnecessaryNullishCoalescing: 'Unnecessary nullish coalescing - the value is not nullable',
         },
         schema: [],
     },

@@ -39,3 +39,27 @@ export function getParserServices<
 >(context: RuleContext<T>): ParserServices {
     return ESLintUtils.getParserServices(context as unknown as Readonly<TSESLintRuleContext<MessageIds, Options>>);
 }
+
+export function checkUnnecessaryOperator<
+    MessageIds extends string,
+    RuleOptions extends readonly unknown[],
+    T extends RuleContextTypeOptions & { MessageIds: MessageIds; RuleOptions: RuleOptions },
+>(context: RuleContext<T>, node: TSESTree.LogicalExpression, operator: '||' | '??', messageId: MessageIds): void {
+    if (node.operator !== operator || !isNullishLiteral(node.right)) {
+        return;
+    }
+
+    const services = getParserServices<MessageIds, RuleOptions, T>(context);
+
+    if (!services.program) return;
+
+    const checker = services.program.getTypeChecker();
+    const leftType = getTypeFromESTreeNode(services, checker, node.left);
+
+    if (!isAnyOrUnknown(leftType) && !isTypeNullable(leftType)) {
+        context.report({
+            node,
+            messageId,
+        });
+    }
+}

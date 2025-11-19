@@ -12,30 +12,52 @@ Requires explicit return types for functions that exceed a certain complexity th
 Here are some examples:
 
 ```typescript
-// Bad
-function processData(data: Data[]) {
-  if (data.length === 0) return [];
-  return data
-    .map((item) => {
-      if (item.valid) {
-        return transform(item);
+// Bad - function with complexity > 10 (multiple nested if statements)
+function validateUser(user: unknown) {
+  if (user && typeof user === 'object') {
+    if ('name' in user) {
+      if (typeof user.name === 'string') {
+        if (user.name.length > 0) {
+          if (user.name.length < 100) {
+            if (!user.name.includes(' ')) {
+              if (user.name.match(/^[a-zA-Z]+$/)) {
+                if ('email' in user) {
+                  if (typeof user.email === 'string') {
+                    return true;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
-      return null;
-    })
-    .filter(Boolean);
+    }
+  }
+  return false;
 }
 
-// Good
-function processData(data: Data[]): TransformedData[] {
-  if (data.length === 0) return [];
-  return data
-    .map((item) => {
-      if (item.valid) {
-        return transform(item);
+// Good - same function with explicit return type
+function validateUser(user: unknown): boolean {
+  if (user && typeof user === 'object') {
+    if ('name' in user) {
+      if (typeof user.name === 'string') {
+        if (user.name.length > 0) {
+          if (user.name.length < 100) {
+            if (!user.name.includes(' ')) {
+              if (user.name.match(/^[a-zA-Z]+$/)) {
+                if ('email' in user) {
+                  if (typeof user.email === 'string') {
+                    return true;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
-      return null;
-    })
-    .filter(Boolean);
+    }
+  }
+  return false;
 }
 ```
 
@@ -70,25 +92,62 @@ Examples of **incorrect** code for the default `{ "maxComplexity": 10 }` option:
 ```typescript
 /*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
 
-function processData(data: Data[]) {
-  if (data.length === 0) return [];
-  return data
-    .map((item) => {
-      if (item.valid) {
-        return transform(item);
-      }
-      return null;
-    })
-    .filter(Boolean);
+function processData(data: unknown) {
+  if (typeof data === 'string') {
+    return data.toUpperCase();
+  }
+  if (typeof data === 'number') {
+    return data.toString();
+  }
+  if (typeof data === 'boolean') {
+    return data ? 'true' : 'false';
+  }
+  if (typeof data === 'object') {
+    return JSON.stringify(data);
+  }
+  if (Array.isArray(data)) {
+    return data.join(',');
+  }
+  if (data === null) {
+    return 'null';
+  }
+  if (data === undefined) {
+    return 'undefined';
+  }
+  if (typeof data === 'function') {
+    return 'function';
+  }
+  if (typeof data === 'symbol') {
+    return 'symbol';
+  }
+  return 'unknown';
 }
 
-const handler = (event: Event) => {
-  if (event.type === 'click') {
-    if (event.target) {
-      return handleClick(event.target);
+const processValue = (value: unknown) => {
+  if (value === null || value === undefined) {
+    return 'nullish';
+  }
+  if (typeof value === 'string' && value.length > 0) {
+    if (value.length > 10) {
+      if (value.includes('@')) {
+        if (value.includes('.') && value.length < 100) {
+          return value.toUpperCase();
+        }
+      }
     }
   }
-  return null;
+  if (typeof value === 'number') {
+    if (value > 0) {
+      if (value < 100) {
+        if (value % 2 === 0) {
+          if (value % 4 === 0) {
+            return value.toString();
+          }
+        }
+      }
+    }
+  }
+  return String(value);
 };
 ```
 
@@ -101,24 +160,62 @@ Examples of **correct** code for the default `{ "maxComplexity": 10 }` option:
 ```typescript
 /*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
 
-function processData(data: Data[]): TransformedData[] {
-  if (data.length === 0) return [];
-  return data
-    .map((item) => {
-      if (item.valid) {
-        return transform(item);
-      }
-      return null;
-    })
-    .filter(Boolean);
+function processData(data: unknown): string {
+  if (typeof data === 'string') {
+    return data.toUpperCase();
+  }
+  if (typeof data === 'number') {
+    return data.toString();
+  }
+  if (typeof data === 'boolean') {
+    return data ? 'true' : 'false';
+  }
+  if (typeof data === 'object') {
+    return JSON.stringify(data);
+  }
+  if (Array.isArray(data)) {
+    return data.join(',');
+  }
+  if (data === null) {
+    return 'null';
+  }
+  if (data === undefined) {
+    return 'undefined';
+  }
+  if (typeof data === 'function') {
+    return 'function';
+  }
+  if (typeof data === 'symbol') {
+    return 'symbol';
+  }
+  return 'unknown';
 }
 
-const handler = (event: Event): void => {
-  if (event.type === 'click') {
-    if (event.target) {
-      handleClick(event.target);
+const processValue = (value: unknown): string => {
+  if (value === null || value === undefined) {
+    return 'nullish';
+  }
+  if (typeof value === 'string' && value.length > 0) {
+    if (value.length > 10) {
+      if (value.includes('@')) {
+        if (value.includes('.') && value.length < 100) {
+          return value.toUpperCase();
+        }
+      }
     }
   }
+  if (typeof value === 'number') {
+    if (value > 0) {
+      if (value < 100) {
+        if (value % 2 === 0) {
+          if (value % 4 === 0) {
+            return value.toString();
+          }
+        }
+      }
+    }
+  }
+  return String(value);
 };
 ```
 
@@ -132,16 +229,29 @@ Examples of **correct** code with `{ "maxComplexity": 15 }` option:
 /*eslint @opencover-eslint/complexity-requires-return-type: ["error", { "maxComplexity": 15 }]*/
 
 // This function has complexity 12, which is below the threshold of 15
-function processData(data: Data[]) {
-  if (data.length === 0) return [];
-  return data
-    .map((item) => {
-      if (item.valid) {
-        return transform(item);
-      }
-      return null;
-    })
-    .filter(Boolean);
+function processData(data: unknown) {
+  if (typeof data === 'string') {
+    return data.toUpperCase();
+  }
+  if (typeof data === 'number') {
+    return data.toString();
+  }
+  if (typeof data === 'boolean') {
+    return data ? 'true' : 'false';
+  }
+  if (typeof data === 'object') {
+    return JSON.stringify(data);
+  }
+  if (Array.isArray(data)) {
+    return data.join(',');
+  }
+  if (data === null) {
+    return 'null';
+  }
+  if (typeof data === 'function') {
+    return 'function';
+  }
+  return 'unknown';
 }
 ```
 
