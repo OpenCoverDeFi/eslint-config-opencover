@@ -1,12 +1,6 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import {
-    getParserServices,
-    getTypeFromESTreeNode,
-    isAnyOrUnknown,
-    isNullishLiteral,
-    isTypeNullable,
-} from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown, isNullishLiteral, isTypeNullable } from '@/utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryLogicalOr';
@@ -45,7 +39,7 @@ export const rule: RuleDefinition<Options> = {
         return createRuleVisitor(context);
     },
     meta: {
-        type: 'problem' as const,
+        type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary logical OR with null or undefined',
             url: 'https://opencover.com/rules/no-unnecessary-logical-or',

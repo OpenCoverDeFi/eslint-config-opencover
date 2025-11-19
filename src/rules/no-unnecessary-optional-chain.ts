@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '@/utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryOptionalChain';
@@ -24,11 +24,9 @@ function getExpressionWithOptionalChain(
     }
 
     if (expression.type === AST_NODE_TYPES.MemberExpression) {
-        if (expression.object.type === AST_NODE_TYPES.ChainExpression) {
-            return getExpressionWithOptionalChain(expression.object);
-        }
-
-        return expression;
+        return expression.object.type === AST_NODE_TYPES.ChainExpression
+            ? getExpressionWithOptionalChain(expression.object)
+            : expression;
     }
 
     return expression;
@@ -59,7 +57,7 @@ export const rule: RuleDefinition<Options> = {
         return createRuleVisitor(context);
     },
     meta: {
-        type: 'problem' as const,
+        type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary optional chaining',
             url: 'https://opencover.com/rules/no-unnecessary-optional-chain',

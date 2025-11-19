@@ -3,7 +3,7 @@ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { TypeChecker, Type } from 'typescript';
 import { TypeFlags } from 'typescript';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getParserServices, getTypeFromESTreeNode } from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode } from '@/utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryTypeof';
@@ -111,7 +111,7 @@ export const rule: RuleDefinition<Options> = {
         return createRuleVisitor(context);
     },
     meta: {
-        type: 'problem' as const,
+        type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary typeof checks when TypeScript already knows the type',
             url: 'https://opencover.com/rules/no-unnecessary-typeof',

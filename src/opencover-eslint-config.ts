@@ -9,7 +9,7 @@ import { rule as complexityRequiresReturnTypeRule } from './rules/complexity-req
 export default {
     meta: {
         name: 'opencover-eslint',
-        version: '1.0.0',
+        version: '3.0.0',
     },
     rules: {
         'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,

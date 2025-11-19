@@ -40,7 +40,7 @@ export const rule: RuleDefinition<Options> = {
         return createRuleVisitor(context);
     },
     meta: {
-        type: 'problem' as const,
+        type: 'suggestion' as const,
         docs: {
             description: 'Disallow dots in filenames (except .test. in test files)',
             url: 'https://opencover.com/rules/filename-no-dots',
