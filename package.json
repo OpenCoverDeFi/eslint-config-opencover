@@ -43,7 +43,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "prepack": "yarn build",
+    "postinstall": "yarn build",
     "prepare": "husky",
     "eslint": "tsx ./node_modules/.bin/eslint --max-warnings=0 .",
     "lint": "tsx ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
