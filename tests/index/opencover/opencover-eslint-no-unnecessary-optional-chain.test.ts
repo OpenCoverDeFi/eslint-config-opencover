@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-optional-chain';
 
@@ -12,7 +11,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex?.value;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -22,7 +21,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex.value?.();
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -32,7 +31,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex?.[0];
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -43,7 +42,7 @@ describe(ruleName, () => {
             const error: Error = { response: { headers: { 'retry-after': '60' } } };
             const response = error.response?.headers['retry-after'];
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -55,7 +54,7 @@ describe(ruleName, () => {
             const error: Error = { response: { headers: { 'retry-after': '60' } } };
             const retryAfter = error.response?.headers['retry-after'];
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -68,7 +67,7 @@ describe(ruleName, () => {
                 return response;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -78,7 +77,7 @@ describe(ruleName, () => {
             const ex: Example = { callback: () => 'hello' };
             const result = ex.callback?.();
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -91,7 +90,7 @@ describe(ruleName, () => {
                 return obj?.middle?.inner?.value;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 });

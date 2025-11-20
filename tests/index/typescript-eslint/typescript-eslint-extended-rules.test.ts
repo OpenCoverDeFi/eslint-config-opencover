@@ -1,7 +1,6 @@
 import { describe, it, beforeAll } from 'vitest';
 import dedent from 'dedent';
-import { lintText, lintFileWithName, expectRuleError, expectNoRuleError, createTempFile } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError, createTempFile } from '@tests/test-utils.js';
 
 describe('typescript-eslint extended rules', () => {
     it('should enforce consistent-type-imports', async () => {
@@ -9,7 +8,7 @@ describe('typescript-eslint extended rules', () => {
             import { Example } from './example';
             type Test = Example;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/consistent-type-imports');
     });
 
@@ -19,7 +18,7 @@ describe('typescript-eslint extended rules', () => {
                 field: string;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/explicit-member-accessibility');
     });
 
@@ -32,7 +31,7 @@ describe('typescript-eslint extended rules', () => {
                 }
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/member-ordering');
     });
 
@@ -41,7 +40,7 @@ describe('typescript-eslint extended rules', () => {
             const value: string | null = null;
             const result = value!.toString();
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/no-non-null-assertion');
     });
 
@@ -49,7 +48,7 @@ describe('typescript-eslint extended rules', () => {
         const code = dedent`
             const map: Map<string, number> = new Map();
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/no-restricted-types');
     });
 
@@ -58,7 +57,7 @@ describe('typescript-eslint extended rules', () => {
             const value: string = 'hello';
             const result = value as string;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/no-unnecessary-type-assertion');
     });
 
@@ -71,7 +70,7 @@ describe('typescript-eslint extended rules', () => {
             if (status === 'open') {
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/no-unsafe-enum-comparison');
     });
 
@@ -79,7 +78,7 @@ describe('typescript-eslint extended rules', () => {
         const code = dedent`
             const unusedVar = 42;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
@@ -87,7 +86,7 @@ describe('typescript-eslint extended rules', () => {
         const code = dedent`
             const _unusedVar = 42;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
@@ -97,7 +96,7 @@ describe('typescript-eslint extended rules', () => {
             }
             test(1);
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
@@ -105,7 +104,7 @@ describe('typescript-eslint extended rules', () => {
         const code = dedent`
             const [_first, _second] = [1, 2];
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
@@ -116,7 +115,7 @@ describe('typescript-eslint extended rules', () => {
             } catch (_error) {
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, '@typescript-eslint/no-unused-vars');
     });
 
@@ -138,7 +137,7 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = expect.any(String);
                 });
             `;
-            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            const result = await lintDefault(code, testFilePath);
             expectNoRuleError(result, ruleName);
         });
 
@@ -150,7 +149,7 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = 1 as any;
                 });
             `;
-            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            const result = await lintDefault(code, testFilePath);
             expectNoRuleError(result, ruleName);
         });
 
@@ -166,7 +165,7 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = getAny();
                 });
             `;
-            const result = await lintFileWithName(defaultConfig, testFilePath, code);
+            const result = await lintDefault(code, testFilePath);
             expectNoRuleError(result, ruleName);
         });
 
@@ -174,7 +173,7 @@ describe('typescript-eslint extended rules', () => {
             const code = dedent`
                 const value: string = 1 as any;
             `;
-            const result = await lintFileWithName(defaultConfig, regularFilePath, code);
+            const result = await lintDefault(code, regularFilePath);
             expectRuleError(result, ruleName);
         });
 
@@ -186,7 +185,7 @@ describe('typescript-eslint extended rules', () => {
 
                 const value: string = getAny();
             `;
-            const result = await lintFileWithName(defaultConfig, regularFilePath, code);
+            const result = await lintDefault(code, regularFilePath);
             expectRuleError(result, ruleName);
         });
     });

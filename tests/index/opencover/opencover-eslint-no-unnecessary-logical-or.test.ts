@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-logical-or';
 
@@ -11,7 +10,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value || null;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -20,7 +19,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value || undefined;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -32,7 +31,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || null;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -44,7 +43,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || undefined;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 });

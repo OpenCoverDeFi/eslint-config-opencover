@@ -1,13 +1,12 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectRuleWarning, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectRuleWarning, expectNoRuleError } from '@tests/test-utils.js';
 
 describe('extended ESLint rules', () => {
     describe('block-spacing', () => {
         it('should enforce block spacing', async () => {
             const code = 'function test(){return true;}';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'block-spacing');
         });
     });
@@ -21,7 +20,7 @@ describe('extended ESLint rules', () => {
                 // and this one as well because it follows yet another comment.
             `;
 
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleWarning(result, 'capitalized-comments');
         });
     });
@@ -33,7 +32,7 @@ describe('extended ESLint rules', () => {
                 const obj = {a:1,b:2};
             `;
 
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'comma-spacing');
         });
     });
@@ -45,7 +44,7 @@ describe('extended ESLint rules', () => {
                 fn({a:1});
             `;
 
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleWarning(result, 'key-spacing');
         });
     });
@@ -53,7 +52,7 @@ describe('extended ESLint rules', () => {
     describe('keyword-spacing', () => {
         it('should enforce keyword spacing', async () => {
             const code = 'if(true){return;}';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'keyword-spacing');
         });
     });
@@ -61,7 +60,7 @@ describe('extended ESLint rules', () => {
     describe('no-multi-spaces', () => {
         it('should enforce no multiple spaces', async () => {
             const code = 'const x = 1;  const y = 2;';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-multi-spaces');
         });
     });
@@ -73,7 +72,7 @@ describe('extended ESLint rules', () => {
 
 
             const y = 2;`;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleWarning(result, 'no-multiple-empty-lines');
         });
     });
@@ -84,7 +83,7 @@ describe('extended ESLint rules', () => {
                 const fn = (x) => x;
                 fn({a:1});
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleWarning(result, 'object-curly-spacing');
         });
     });
@@ -92,7 +91,7 @@ describe('extended ESLint rules', () => {
     describe('quote-props', () => {
         it('should enforce quote props as needed', async () => {
             const code = "const obj = {'prop': 1, 'valid-prop': 2};";
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleWarning(result, 'quote-props');
         });
     });
@@ -100,7 +99,7 @@ describe('extended ESLint rules', () => {
     describe('quotes', () => {
         it('should enforce single quotes', async () => {
             const code = 'const notUsed = "5";';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'quotes');
         });
     });
@@ -111,7 +110,7 @@ describe('extended ESLint rules', () => {
                 const x = 1
                 const y = 2
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'semi');
         });
     });
@@ -119,7 +118,7 @@ describe('extended ESLint rules', () => {
     describe('space-before-blocks', () => {
         it('should enforce space before blocks', async () => {
             const code = 'function test(){return true;}';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'space-before-blocks');
         });
     });
@@ -130,7 +129,7 @@ describe('extended ESLint rules', () => {
                 const result = ( 1 + 2 );
                 function test( x ) { return x; }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'space-in-parens');
         });
     });
@@ -141,7 +140,7 @@ describe('extended ESLint rules', () => {
                 const x = 1+2;
                 const y = 3*4;
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'space-infix-ops');
         });
     });
@@ -149,7 +148,7 @@ describe('extended ESLint rules', () => {
     describe('spaced-comment', () => {
         it('should enforce spaced comments', async () => {
             const code = 'const fn = (x) => x; //an uncapitalized comment without a space before it';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'spaced-comment');
         });
     });
@@ -157,7 +156,7 @@ describe('extended ESLint rules', () => {
     describe('no-unneeded-ternary', () => {
         it('should enforce no unneeded ternary', async () => {
             const code = 'const value = x === 2 ? true : false;';
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-unneeded-ternary');
         });
     });
@@ -168,7 +167,7 @@ describe('extended ESLint rules', () => {
                 console.log(x);
                 const x = 5;
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-use-before-define');
         });
     });
@@ -181,7 +180,7 @@ describe('extended ESLint rules', () => {
                     Inactive,
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-restricted-syntax');
         });
 
@@ -193,7 +192,7 @@ describe('extended ESLint rules', () => {
                     Blue = 'blue',
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-restricted-syntax');
         });
 
@@ -206,7 +205,7 @@ describe('extended ESLint rules', () => {
                     Right,
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-restricted-syntax');
         });
 
@@ -217,7 +216,7 @@ describe('extended ESLint rules', () => {
                     Second = 'second',
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'no-restricted-syntax');
         });
 
@@ -225,7 +224,7 @@ describe('extended ESLint rules', () => {
             const code = dedent`
                 type Status = 'active' | 'inactive';
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectNoRuleError(result, 'no-restricted-syntax');
         });
 
@@ -236,7 +235,7 @@ describe('extended ESLint rules', () => {
                     Inactive: 'inactive',
                 } as const;
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectNoRuleError(result, 'no-restricted-syntax');
         });
 
@@ -246,7 +245,7 @@ describe('extended ESLint rules', () => {
                     return 'active';
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectNoRuleError(result, 'no-restricted-syntax');
         });
     });
@@ -263,7 +262,7 @@ describe('extended ESLint rules', () => {
                     }
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'lines-between-class-members');
         });
 
@@ -274,7 +273,7 @@ describe('extended ESLint rules', () => {
                     public method() {}
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectNoRuleError(result, 'lines-between-class-members');
         });
 
@@ -289,7 +288,7 @@ describe('extended ESLint rules', () => {
                     }
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectRuleError(result, 'lines-between-class-members');
         });
 
@@ -307,7 +306,7 @@ describe('extended ESLint rules', () => {
                     }
                 }
             `;
-            const result = await lintText(defaultConfig, code);
+            const result = await lintDefault(code);
             expectNoRuleError(result, 'lines-between-class-members');
         });
     });

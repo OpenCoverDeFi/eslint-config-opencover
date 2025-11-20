@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/complexity-requires-return-type';
 
@@ -12,7 +11,7 @@ describe(ruleName, () => {
                 return 'hello';
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -22,7 +21,7 @@ describe(ruleName, () => {
                 return 'hello';
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -32,7 +31,7 @@ describe(ruleName, () => {
                 return 'hello';
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -42,7 +41,7 @@ describe(ruleName, () => {
                 return 'hello';
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -79,7 +78,7 @@ describe(ruleName, () => {
                 return 'unknown';
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -108,7 +107,7 @@ describe(ruleName, () => {
                 return false;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -140,7 +139,7 @@ describe(ruleName, () => {
                 return sum;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -169,7 +168,7 @@ describe(ruleName, () => {
                 return -1;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -202,7 +201,7 @@ describe(ruleName, () => {
                 }
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -235,7 +234,7 @@ describe(ruleName, () => {
                 return String(value);
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -247,7 +246,7 @@ describe(ruleName, () => {
                     : (condition2 ? (condition3 ? (condition4 ? (condition5 ? 'second-four-five' : 'second-four') : 'second-third') : (condition4 ? (condition5 ? 'second-fourth-fifth' : 'second-fourth') : 'second-only')) : (condition3 ? (condition4 ? (condition5 ? 'third-fourth-fifth' : 'third-fourth') : (condition5 ? 'third-fifth' : 'third-only')) : (condition4 ? (condition5 ? 'fourth-fifth' : 'fourth-only') : (condition5 ? 'fifth-only' : 'none'))));
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -270,7 +269,7 @@ describe(ruleName, () => {
             }
         `;
 
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
 
         expectRuleError(result, ruleName);
     });
@@ -299,7 +298,7 @@ describe(ruleName, () => {
                 return results;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -327,7 +326,7 @@ describe(ruleName, () => {
                 return keys;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -360,7 +359,7 @@ describe(ruleName, () => {
                 return 'finished';
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -376,7 +375,7 @@ describe(ruleName, () => {
                 return 'unknown';
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -389,7 +388,7 @@ describe(ruleName, () => {
                 return String(value);
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 });

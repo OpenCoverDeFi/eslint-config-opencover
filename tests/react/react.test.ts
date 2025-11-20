@@ -1,6 +1,6 @@
 import { beforeAll, describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintFileWithName, expectRuleError, createTempFile } from '../test-utils.js';
+import { lintText, expectRuleError, createTempFile } from '../test-utils.js';
 import withReactConfig from '@/react.js';
 
 let filePath: string;
@@ -9,8 +9,8 @@ beforeAll(() => {
     filePath = createTempFile('test.tsx');
 });
 
-async function lint(code: string) {
-    return await lintFileWithName(withReactConfig, filePath, code);
+async function lintReact(code: string) {
+    return await lintText(withReactConfig, code, filePath);
 }
 
 describe('With React ESLint Rules', () => {
@@ -20,7 +20,7 @@ describe('With React ESLint Rules', () => {
                 return <div>Hello</div>;
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/display-name');
     });
 
@@ -29,7 +29,7 @@ describe('With React ESLint Rules', () => {
             const items = [1, 2, 3];
             return items.map(item => <div>{item}</div>);
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-key');
     });
 
@@ -43,7 +43,7 @@ describe('With React ESLint Rules', () => {
                   }
              });
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-no-comment-textnodes');
     });
 
@@ -51,7 +51,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             const element = <div id="1" id="2">Hello</div>;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-no-duplicate-props');
     });
 
@@ -59,7 +59,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             const element = <a href="https://example.com" target="_blank">Link</a>;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-no-target-blank');
     });
 
@@ -67,7 +67,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             const element = <UndefinedComponent />;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-no-undef');
     });
 
@@ -77,7 +77,7 @@ describe('With React ESLint Rules', () => {
 
             // nothing to do with React
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-uses-react');
     });
 
@@ -85,7 +85,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             var Hello = require('./Hello');
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/jsx-uses-vars');
     });
 
@@ -93,7 +93,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             <div children="Hello" />;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-children-prop');
     });
 
@@ -101,7 +101,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             <div dangerouslySetInnerHTML={{ __html: 'HTML' }}>Children</div>;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-danger-with-children');
     });
 
@@ -111,7 +111,7 @@ describe('With React ESLint Rules', () => {
             const element = <div>Hello</div>;
             ReactDOM.render(element, document.body);
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-deprecated');
     });
 
@@ -123,7 +123,7 @@ describe('With React ESLint Rules', () => {
                 }
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-direct-mutation-state');
     });
 
@@ -132,7 +132,7 @@ describe('With React ESLint Rules', () => {
             import ReactDOM from "react-dom";
             ReactDOM.findDOMNode(this);
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-find-dom-node');
     });
 
@@ -144,7 +144,7 @@ describe('With React ESLint Rules', () => {
                 }
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-is-mounted');
     });
 
@@ -153,7 +153,7 @@ describe('With React ESLint Rules', () => {
             import ReactDOM from "react-dom";
             const value = ReactDOM.render(<div />, document.body);
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-render-return-value');
     });
 
@@ -165,7 +165,7 @@ describe('With React ESLint Rules', () => {
                 }
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-string-refs');
     });
 
@@ -179,7 +179,7 @@ describe('With React ESLint Rules', () => {
               Body Text
             </MyComponent>
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-unescaped-entities');
     });
 
@@ -187,7 +187,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             const element = <div class="test">Hello</div>;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/no-unknown-property');
     });
 
@@ -197,7 +197,7 @@ describe('With React ESLint Rules', () => {
                 return <div>{name}</div>;
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/prop-types');
     });
 
@@ -205,7 +205,7 @@ describe('With React ESLint Rules', () => {
         const code = dedent`
             const element = <div>Hello</div>;
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/react-in-jsx-scope');
     });
 
@@ -223,7 +223,7 @@ describe('With React ESLint Rules', () => {
               }
             }
         `;
-        const result = await lint(code);
+        const result = await lintReact(code);
         expectRuleError(result, 'react/require-render-return');
     });
 });

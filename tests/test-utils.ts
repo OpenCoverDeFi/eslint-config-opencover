@@ -1,12 +1,13 @@
 import { resolve, dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
 import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
 import { expect } from 'vitest';
 import { tempDir } from './global-setup.js';
+import defaultConfig from '@/index.js';
 
-let tempFilePath: string | null = null;
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
 
 export const createTempFile = (filename: string): string => {
@@ -49,29 +50,22 @@ export const createESLintInstance = (config: Config): ESLint => {
     });
 };
 
-export const lintFile = async (config: Config, filePath: string): Promise<ESLint.LintResult> => {
+export const lintFilePath = async (config: Config, filePath: string): Promise<ESLint.LintResult> => {
     const linter = createESLintInstance(config);
     const results = await linter.lintFiles([filePath]);
     return results[0];
 };
 
-export const lintFileWithName = async (config: Config, filePath: string, code: string): Promise<ESLint.LintResult> => {
+export const lintText = async (config: Config, code: string, filePath?: string): Promise<ESLint.LintResult> => {
     return (
         await createESLintInstance(config).lintText(code, {
-            filePath, // We need to pass this for test rules to work
+            filePath: filePath ?? fileURLToPath(import.meta.url),
         })
     )[0];
 };
 
-export const lintText = async (config: Config, code: string): Promise<ESLint.LintResult> => {
-    if (!tempFilePath) {
-        const timestamp = Date.now();
-        const randomId = Math.random().toString(36).substring(7);
-        const filename = `temp-${timestamp}-${randomId}.ts`;
-        tempFilePath = createTempFile(filename);
-    }
-
-    return await lintFileWithName(config, tempFilePath, code);
+export const lintDefault = async (code: string, filePath?: string) => {
+    return await lintText(defaultConfig, code, filePath);
 };
 
 export const expectRuleError = (result: ESLint.LintResult, ruleId: string) => {

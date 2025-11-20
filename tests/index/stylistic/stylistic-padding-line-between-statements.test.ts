@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 const ruleName = '@stylistic/padding-line-between-statements';
 
@@ -11,7 +10,7 @@ describe(ruleName, () => {
             const x = 1;
             function foo() {}
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -20,7 +19,7 @@ describe(ruleName, () => {
             function foo() {}
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -29,7 +28,7 @@ describe(ruleName, () => {
             const x = 1;
             class MyClass {}
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -38,7 +37,7 @@ describe(ruleName, () => {
             class MyClass {}
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -47,7 +46,7 @@ describe(ruleName, () => {
             const x = 1;
             export const y = 2;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -56,7 +55,7 @@ describe(ruleName, () => {
             export const y = 2;
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -65,7 +64,7 @@ describe(ruleName, () => {
             const x = 1;
             if (x > 0) {}
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -74,7 +73,7 @@ describe(ruleName, () => {
             function foo() {}
             if (true) {}
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -83,7 +82,7 @@ describe(ruleName, () => {
             if (true) {}
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -101,7 +100,7 @@ describe(ruleName, () => {
 
             const z = 3;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 });

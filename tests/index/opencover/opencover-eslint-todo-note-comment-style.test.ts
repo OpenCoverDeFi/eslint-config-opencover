@@ -1,7 +1,6 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/todo-note-comment-style';
 
@@ -11,7 +10,7 @@ describe(ruleName, () => {
             // TODO fix this
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -20,7 +19,7 @@ describe(ruleName, () => {
             // NOTE important information
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -29,7 +28,7 @@ describe(ruleName, () => {
             // TODO (
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -38,7 +37,7 @@ describe(ruleName, () => {
             // TODO (@user)
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -47,7 +46,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01)
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -56,7 +55,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-1-1):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -65,7 +64,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-1-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -74,7 +73,7 @@ describe(ruleName, () => {
             // NOTE (@user, 24-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -83,7 +82,7 @@ describe(ruleName, () => {
             // TODO(@user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -92,7 +91,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -101,7 +100,7 @@ describe(ruleName, () => {
             // NOTE (@user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -110,7 +109,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01): fix this issue
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -119,7 +118,7 @@ describe(ruleName, () => {
             // NOTE (@user, 2024-01-01): important information
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -128,7 +127,7 @@ describe(ruleName, () => {
             // todo (@user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -137,7 +136,7 @@ describe(ruleName, () => {
             // note (@user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -146,7 +145,7 @@ describe(ruleName, () => {
             // This is a regular comment
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -155,7 +154,7 @@ describe(ruleName, () => {
             // TODOIST is a task manager
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -164,7 +163,7 @@ describe(ruleName, () => {
             // TODO (user, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -173,7 +172,7 @@ describe(ruleName, () => {
             // TODO (@john.doe, 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, ruleName);
     });
 
@@ -182,7 +181,7 @@ describe(ruleName, () => {
             // TODO (@user 2024-01-01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 
@@ -191,7 +190,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024 - 01 - 01):
             const x = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, ruleName);
     });
 });

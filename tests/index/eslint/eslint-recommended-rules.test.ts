@@ -1,12 +1,11 @@
 import { describe, it } from 'vitest';
 import dedent from 'dedent';
-import { lintText, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
 
 describe('eslint.configs.recommended rules', () => {
     it('should enforce no-async-promise-executor', async () => {
         const code = 'new Promise(async (resolve) => { resolve(1); });';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-async-promise-executor');
     });
 
@@ -18,49 +17,49 @@ describe('eslint.configs.recommended rules', () => {
                     break;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-case-declarations');
     });
 
     it('should enforce no-compare-neg-zero', async () => {
         const code = 'if (x === -0) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-compare-neg-zero');
     });
 
     it('should enforce no-cond-assign', async () => {
         const code = 'if (x = 0) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-cond-assign');
     });
 
     it('should enforce no-constant-binary-expression', async () => {
         const code = 'const value1 = +x == null;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-constant-binary-expression');
     });
 
     it('should enforce no-constant-condition', async () => {
         const code = 'if (true) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-constant-condition');
     });
 
     it('should enforce no-control-regex', async () => {
         const code = 'const regex = /\\x1f/;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-control-regex');
     });
 
     it('should enforce no-debugger', async () => {
         const code = 'debugger;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-debugger');
     });
 
     it('should enforce no-delete-var', async () => {
         const code = 'const x = 1; delete x;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-delete-var');
     });
 
@@ -69,7 +68,7 @@ describe('eslint.configs.recommended rules', () => {
             if (a) {}
             else if (a) {}
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-dupe-else-if');
     });
 
@@ -82,25 +81,25 @@ describe('eslint.configs.recommended rules', () => {
                     break;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-duplicate-case');
     });
 
     it('should enforce no-empty', async () => {
         const code = 'if (x) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-empty');
     });
 
     it('should enforce no-empty-character-class', async () => {
         const code = 'const regex = /[]/;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-empty-character-class');
     });
 
     it('should enforce no-empty-pattern', async () => {
         const code = 'const {} = obj;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-empty-pattern');
     });
 
@@ -110,7 +109,7 @@ describe('eslint.configs.recommended rules', () => {
                 static {}
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-empty-static-block');
     });
 
@@ -121,13 +120,13 @@ describe('eslint.configs.recommended rules', () => {
                 e = 1;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-ex-assign');
     });
 
     it('should enforce no-extra-boolean-cast', async () => {
         const code = 'if (!!x) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-extra-boolean-cast');
     });
 
@@ -142,31 +141,31 @@ describe('eslint.configs.recommended rules', () => {
             }
 
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-fallthrough');
     });
 
     it('should enforce no-global-assign', async () => {
         const code = 'Object = null;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-global-assign');
     });
 
     it('should enforce no-invalid-regexp', async () => {
         const code = 'new RegExp("[");';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-invalid-regexp');
     });
 
     it('should enforce no-irregular-whitespace', async () => {
         const code = 'const x = 1\u200B;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-irregular-whitespace');
     });
 
     it('should enforce no-loss-of-precision', async () => {
         const code = 'const x = 9007199254740993;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-loss-of-precision');
     });
 
@@ -180,7 +179,7 @@ describe('eslint.configs.recommended rules', () => {
             /^[👍]$/;
             new RegExp("[🎵]");
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-misleading-character-class');
     });
 
@@ -191,37 +190,37 @@ describe('eslint.configs.recommended rules', () => {
             const num = 071;
             const result = 5 + 07;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-octal');
     });
 
     it('should enforce no-prototype-builtins', async () => {
         const code = 'const hasOwn = obj.hasOwnProperty("prop");';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-prototype-builtins');
     });
 
     it('should enforce no-regex-spaces', async () => {
         const code = 'const regex = /foo   bar/;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-regex-spaces');
     });
 
     it('should enforce no-self-assign', async () => {
         const code = 'x = x;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-self-assign');
     });
 
     it('should enforce no-shadow-restricted-names', async () => {
         const code = 'const undefined = 1;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-shadow-restricted-names');
     });
 
     it('should enforce no-sparse-arrays', async () => {
         const code = 'const arr = [1,,2];';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-sparse-arrays');
     });
 
@@ -230,7 +229,7 @@ describe('eslint.configs.recommended rules', () => {
             const x = 1
             [1, 2, 3].forEach(() => {});
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-unexpected-multiline');
     });
 
@@ -247,7 +246,7 @@ describe('eslint.configs.recommended rules', () => {
             };
 
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-unsafe-finally');
     });
 
@@ -280,13 +279,13 @@ describe('eslint.configs.recommended rules', () => {
                (await obj?.foo).bar;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-unsafe-optional-chaining');
     });
 
     it('should enforce no-unused-labels', async () => {
         const code = 'label: while(true) { break; }';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-unused-labels');
     });
 
@@ -296,13 +295,13 @@ describe('eslint.configs.recommended rules', () => {
                 #unused() {}
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-unused-private-class-members');
     });
 
     it('should enforce no-useless-backreference', async () => {
         const code = 'const regex = /(\\1)/;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-useless-backreference');
     });
 
@@ -314,37 +313,37 @@ describe('eslint.configs.recommended rules', () => {
                 throw e;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-useless-catch');
     });
 
     it('should enforce no-useless-escape', async () => {
         const code = 'const str = "\\a";';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-useless-escape');
     });
 
     it('should enforce require-yield', async () => {
         const code = 'function* gen() { return 1; }';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'require-yield');
     });
 
     it('should enforce use-isnan', async () => {
         const code = 'if (x == NaN) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'use-isnan');
     });
 
     it('should enforce valid-typeof', async () => {
         const code = 'if (typeof x === "strnig") {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'valid-typeof');
     });
 
     it('should enforce for-direction', async () => {
         const code = 'for (let i = 0; i < 10; i--) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'for-direction');
     });
 
@@ -359,7 +358,7 @@ describe('eslint.configs.recommended rules', () => {
             const baz = "Don't use \\8 and \\9 escapes.";
             const quux = "\\0\\8";
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectRuleError(result, 'no-nonoctal-decimal-escape');
     });
 });
@@ -367,25 +366,25 @@ describe('eslint.configs.recommended rules', () => {
 describe('Rules disabled by typescript-eslint', () => {
     it('should not enforce no-array-constructor (replaced by @typescript-eslint/no-array-constructor)', async () => {
         const code = 'const arr = new Array(1, 2, 3);';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-array-constructor');
     });
 
     it('should not enforce no-unused-expressions (replaced by @typescript-eslint/no-unused-expressions)', async () => {
         const code = '1 + 1;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-unused-expressions');
     });
 
     it('should not enforce no-unused-vars (replaced by @typescript-eslint/no-unused-vars)', async () => {
         const code = 'const unused = 1;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-unused-vars');
     });
 
     it('should not enforce no-implied-eval (replaced by @typescript-eslint/no-implied-eval)', async () => {
         const code = 'setTimeout("alert(\'Hi!\');", 100);';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-implied-eval');
     });
 
@@ -396,19 +395,19 @@ describe('Rules disabled by typescript-eslint', () => {
             throw false;
             throw null;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-throw-literal');
     });
 
     it('should not enforce prefer-promise-reject-errors (replaced by @typescript-eslint/prefer-promise-reject-errors)', async () => {
         const code = 'Promise.reject("something bad happened");';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'prefer-promise-reject-errors');
     });
 
     it('should not enforce require-await (replaced by @typescript-eslint/require-await)', async () => {
         const code = 'async function foo() { return 1; }';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'require-await');
     });
 
@@ -421,7 +420,7 @@ describe('Rules disabled by typescript-eslint', () => {
                 }
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'constructor-super');
     });
 
@@ -433,7 +432,7 @@ describe('Rules disabled by typescript-eslint', () => {
                 }
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'getter-return');
     });
 
@@ -442,19 +441,19 @@ describe('Rules disabled by typescript-eslint', () => {
             class A {}
             A = 0;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-class-assign');
     });
 
     it('should not enforce no-const-assign (handled by TypeScript)', async () => {
         const code = 'const x = 1; x = 2;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-const-assign');
     });
 
     it('should not enforce no-dupe-args (handled by TypeScript)', async () => {
         const code = 'function foo(a, a) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-dupe-args');
     });
 
@@ -465,13 +464,13 @@ describe('Rules disabled by typescript-eslint', () => {
                 foo() {}
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-dupe-class-members');
     });
 
     it('should not enforce no-dupe-keys (handled by TypeScript)', async () => {
         const code = 'const obj = { a: 1, a: 2 };';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-dupe-keys');
     });
 
@@ -480,7 +479,7 @@ describe('Rules disabled by typescript-eslint', () => {
             function foo() {}
             foo = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-func-assign');
     });
 
@@ -489,7 +488,7 @@ describe('Rules disabled by typescript-eslint', () => {
             import mod from './mod';
             mod = 1;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-import-assign');
     });
 });
@@ -497,19 +496,19 @@ describe('Rules disabled by typescript-eslint', () => {
 describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v8 compatibility, will be re-enabled after ESLint v8 support is dropped)', () => {
     it('should not enforce no-new-native-nonconstructor (handled by TypeScript)', async () => {
         const code = 'const x = new Symbol();';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-new-native-nonconstructor');
     });
 
     it('should not enforce no-new-symbol (handled by TypeScript)', async () => {
         const code = 'const x = new Symbol();';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-new-symbol');
     });
 
     it('should not enforce no-obj-calls (handled by TypeScript)', async () => {
         const code = 'const x = Math();';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-obj-calls');
     });
 
@@ -518,7 +517,7 @@ describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v
             let x = 1;
             let x = 2;
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-redeclare');
     });
 
@@ -530,7 +529,7 @@ describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v
                 }
             };
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-setter-return');
     });
 
@@ -544,13 +543,13 @@ describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v
                 }
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-this-before-super');
     });
 
     it('should not enforce no-undef (handled by TypeScript)', async () => {
         const code = 'const x = undefinedVariable;';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-undef');
     });
 
@@ -561,13 +560,13 @@ describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v
                 return 2;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-unreachable');
     });
 
     it('should not enforce no-unsafe-negation (handled by TypeScript)', async () => {
         const code = 'if (!x in obj) {}';
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-unsafe-negation');
     });
 
@@ -577,7 +576,7 @@ describe('Rules disabled by typescript-eslint (temporarily disabled for ESLint v
                 prop = 1;
             }
         `;
-        const result = await lintText(defaultConfig, code);
+        const result = await lintDefault(code);
         expectNoRuleError(result, 'no-with');
     });
 });
