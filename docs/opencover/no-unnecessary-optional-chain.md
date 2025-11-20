@@ -39,7 +39,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-optional-chain: "error"*/
+/*eslint opencover/no-unnecessary-optional-chain: "error"*/
 
 const user: { name: string } = { name: 'John' };
 const name = user?.name; // user is never null/undefined
@@ -60,7 +60,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-optional-chain: "error"*/
+/*eslint opencover/no-unnecessary-optional-chain: "error"*/
 
 const user: { name: string } = { name: 'John' };
 const name = user.name;

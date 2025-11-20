@@ -1,6 +1,6 @@
 # OpenCover Custom Rules
 
-This section documents the custom ESLint rules specifically designed for OpenCover's coding standards. These rules are part of the `@opencover-eslint` plugin.
+This section documents the custom ESLint rules specifically designed for OpenCover's coding standards. These rules are part of the `opencover` plugin.
 
 ## Available Rules
 

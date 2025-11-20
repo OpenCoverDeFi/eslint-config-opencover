@@ -1,7 +1,7 @@
 import type { RulesConfig } from '@eslint/core';
 
 export const stylisticRules: Partial<RulesConfig> = {
-    '@stylistic/padding-line-between-statements': [
+    'stylistic/padding-line-between-statements': [
         'error',
         {
             blankLine: 'always',

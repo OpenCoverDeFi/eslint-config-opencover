@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/no-unnecessary-logical-or';
+const ruleName = 'opencover/no-unnecessary-logical-or';
 
 describe(ruleName, () => {
     it('should throw error for unnecessary || null with non-nullable value', async () => {

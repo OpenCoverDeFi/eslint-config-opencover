@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/no-unnecessary-typeof';
+const ruleName = 'opencover/no-unnecessary-typeof';
 
 describe(ruleName, () => {
     it('should throw error for unnecessary typeof check when type is already known', async () => {

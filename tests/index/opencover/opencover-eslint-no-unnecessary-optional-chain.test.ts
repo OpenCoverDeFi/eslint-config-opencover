@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/no-unnecessary-optional-chain';
+const ruleName = 'opencover/no-unnecessary-optional-chain';
 
 describe(ruleName, () => {
     it('should throw error for ex?.value when ex is not nullable', async () => {

@@ -50,7 +50,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-as-assertion: "error"*/
+/*eslint opencover/no-unnecessary-as-assertion: "error"*/
 
 const value: string = 'hello';
 const result = value as string;
@@ -86,7 +86,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-as-assertion: "error"*/
+/*eslint opencover/no-unnecessary-as-assertion: "error"*/
 
 const value: string = 'hello';
 const result = value;

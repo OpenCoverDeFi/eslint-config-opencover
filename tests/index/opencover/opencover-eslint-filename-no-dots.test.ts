@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { createTempFile, lintFilePath } from '@tests/test-utils.js';
 import defaultConfig from '@/index.js';
 
-const ruleName = '@opencover-eslint/filename-no-dots';
+const ruleName = 'opencover/filename-no-dots';
 
 describe(ruleName, () => {
     it('should throw error for filename with dot (file.name.ts)', async () => {

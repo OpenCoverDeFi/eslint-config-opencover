@@ -1,17 +1,19 @@
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import type { ESLint } from 'eslint';
 import { PARSER_OPTIONS } from './constants.js';
+import { GLOBAL_IGNORE_PATTERNS } from './constants.js';
 
 const config = defineConfig([
+    globalIgnores(GLOBAL_IGNORE_PATTERNS),
     react.configs.flat.recommended,
     reactHooks.configs.flat.recommended,
     {
         files: ['**/*.jsx', '**/*.tsx'],
         plugins: {
-            react: react as ESLint.Plugin,
+            react: react,
             'react-hooks': reactHooks as ESLint.Plugin,
         },
         languageOptions: {

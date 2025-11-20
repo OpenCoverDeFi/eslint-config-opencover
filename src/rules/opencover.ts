@@ -1,22 +1,22 @@
 import type { RulesConfig } from '@eslint/core';
 
 export const opencoverRules: Partial<RulesConfig> = {
-    '@opencover-eslint/no-unnecessary-optional-chain': 'error',
-    '@opencover-eslint/filename-no-dots': [
+    'opencover/no-unnecessary-optional-chain': 'error',
+    'opencover/filename-no-dots': [
         'error',
         {
             ignorePattern: ['^.+\\.config\\.[^.]+$'],
         },
     ],
-    '@opencover-eslint/no-unnecessary-as-assertion': 'error',
-    '@opencover-eslint/no-unnecessary-typeof': 'error',
-    '@opencover-eslint/no-unnecessary-logical-or': 'error',
-    '@opencover-eslint/no-unnecessary-nullish-coalescing': 'error',
-    '@opencover-eslint/complexity-requires-return-type': [
+    'opencover/no-unnecessary-as-assertion': 'error',
+    'opencover/no-unnecessary-typeof': 'error',
+    'opencover/no-unnecessary-logical-or': 'error',
+    'opencover/no-unnecessary-nullish-coalescing': 'error',
+    'opencover/complexity-requires-return-type': [
         'error',
         {
             maxComplexity: 10,
         },
     ],
-    '@opencover-eslint/todo-note-comment-style': 'error',
+    'opencover/todo-note-comment-style': 'error',
 };

@@ -30,7 +30,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/todo-note-comment-style: "error"*/
+/*eslint opencover/todo-note-comment-style: "error"*/
 
 // TODO fix this
 const x = 1;
@@ -64,7 +64,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/todo-note-comment-style: "error"*/
+/*eslint opencover/todo-note-comment-style: "error"*/
 
 // TODO (@user, 2024-01-01): fix this
 const x = 1;

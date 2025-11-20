@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/no-unnecessary-as-assertion';
+const ruleName = 'opencover/no-unnecessary-as-assertion';
 
 describe(ruleName, () => {
     it('should throw error for unnecessary type assertion on string literal', async () => {

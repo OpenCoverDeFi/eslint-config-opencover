@@ -40,7 +40,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-logical-or: "error"*/
+/*eslint opencover/no-unnecessary-logical-or: "error"*/
 
 const value: string = 'hello';
 const result = value || 'default'; // value is never null/undefined
@@ -61,7 +61,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-logical-or: "error"*/
+/*eslint opencover/no-unnecessary-logical-or: "error"*/
 
 const value: string = 'hello';
 const result = value;

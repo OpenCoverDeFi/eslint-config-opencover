@@ -10,8 +10,8 @@ export const baseConfig = {
     plugins: {
         import: importPlugin,
         unicorn,
-        '@opencover-eslint': opencover,
-        '@stylistic': stylistic,
+        opencover,
+        stylistic,
     },
     languageOptions: LANGUAGE_OPTIONS,
     rules: baseRules,

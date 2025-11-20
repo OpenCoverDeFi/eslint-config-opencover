@@ -90,7 +90,7 @@ Examples of **incorrect** code for the default `{ "maxComplexity": 10 }` option:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
+/*eslint opencover/complexity-requires-return-type: "error"*/
 
 function processData(data: unknown) {
   if (typeof data === 'string') {
@@ -158,7 +158,7 @@ Examples of **correct** code for the default `{ "maxComplexity": 10 }` option:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/complexity-requires-return-type: "error"*/
+/*eslint opencover/complexity-requires-return-type: "error"*/
 
 function processData(data: unknown): string {
   if (typeof data === 'string') {
@@ -226,7 +226,7 @@ Examples of **correct** code with `{ "maxComplexity": 15 }` option:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/complexity-requires-return-type: ["error", { "maxComplexity": 15 }]*/
+/*eslint opencover/complexity-requires-return-type: ["error", { "maxComplexity": 15 }]*/
 
 // This function has complexity 12, which is below the threshold of 15
 function processData(data: unknown) {

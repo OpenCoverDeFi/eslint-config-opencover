@@ -6,9 +6,9 @@ import { baseConfig } from './base.js';
 import { testConfig } from './test.js';
 
 const config = defineConfig([
+    globalIgnores(GLOBAL_IGNORE_PATTERNS),
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
-    globalIgnores(GLOBAL_IGNORE_PATTERNS),
     baseConfig,
     testConfig,
 ]);

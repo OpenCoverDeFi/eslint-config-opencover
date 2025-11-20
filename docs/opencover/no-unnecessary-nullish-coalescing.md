@@ -40,7 +40,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-nullish-coalescing: "error"*/
+/*eslint opencover/no-unnecessary-nullish-coalescing: "error"*/
 
 const value: string = 'hello';
 const result = value ?? null; // value is never null/undefined
@@ -61,7 +61,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-nullish-coalescing: "error"*/
+/*eslint opencover/no-unnecessary-nullish-coalescing: "error"*/
 
 const value: string = 'hello';
 const result = value;

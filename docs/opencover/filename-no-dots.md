@@ -86,7 +86,7 @@ Examples of **correct** code with `ignorePattern` option:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/filename-no-dots: ["error", { "ignorePattern": ["^legacy\\..*\\.ts$"] }]*/
+/*eslint opencover/filename-no-dots: ["error", { "ignorePattern": ["^legacy\\..*\\.ts$"] }]*/
 
 // File: legacy.old.code.ts (ignored due to pattern)
 export const legacyCode = {};

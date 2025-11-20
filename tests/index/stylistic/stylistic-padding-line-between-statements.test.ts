@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@stylistic/padding-line-between-statements';
+const ruleName = 'stylistic/padding-line-between-statements';
 
 describe(ruleName, () => {
     it('should enforce blank line before function declaration', async () => {

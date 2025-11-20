@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/complexity-requires-return-type';
+const ruleName = 'opencover/complexity-requires-return-type';
 
 describe(ruleName, () => {
     it('should not throw error for function with explicit return type', async () => {

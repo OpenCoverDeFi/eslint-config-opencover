@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
 import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
-const ruleName = '@opencover-eslint/todo-note-comment-style';
+const ruleName = 'opencover/todo-note-comment-style';
 
 describe(ruleName, () => {
     it('should throw error for TODO without parentheses', async () => {

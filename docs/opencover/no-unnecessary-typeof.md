@@ -46,7 +46,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-typeof: "error"*/
+/*eslint opencover/no-unnecessary-typeof: "error"*/
 
 const value: string = 'hello';
 if (typeof value === 'string') {
@@ -74,7 +74,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint @opencover-eslint/no-unnecessary-typeof: "error"*/
+/*eslint opencover/no-unnecessary-typeof: "error"*/
 
 const value: string = 'hello';
 // No typeof check needed, use value directly
