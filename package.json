@@ -2,7 +2,7 @@
   "name": "@opencover/eslint-config-opencover",
   "version": "3.0.0",
   "type": "module",
-  "private": "true",
+  "private": true,
   "main": "dist/index.js",
   "description": "ESLint Typescript shareable config for OpenCover's coding style.",
   "author": {
@@ -18,7 +18,7 @@
     "react",
     "node"
   ],
-  "license": "MIT",
+  "license": "UNLICENSED",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
@@ -46,8 +46,7 @@
     "format": "tsx ./node_modules/.bin/eslint --fix . && prettier --write .",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
-    "postinstall": "yarn build",
-    "eslint": "tsx ./node_modules/.bin/eslint --max-warnings=0 ."
+    "postinstall": "yarn build"
   },
   "dependencies": {
     "@eslint/js": "^9.39.1",
