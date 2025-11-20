@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig } from '@tests/test-utils.js';
+import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-optional-chain';
 
@@ -11,7 +11,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex?.value;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for ex.value?.() when value is not a function', async () => {
@@ -20,7 +20,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex.value?.();
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for ex?.[0] when ex is not nullable', async () => {
@@ -29,7 +29,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex?.[0];
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for error.response?.headers when error.response is nullable', async () => {
@@ -39,7 +39,7 @@ describe(ruleName, () => {
             const error: Error = { response: { headers: { 'retry-after': '60' } } };
             const response = error.response?.headers['retry-after'];
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for nested optional chain when base is nullable', async () => {
@@ -50,7 +50,7 @@ describe(ruleName, () => {
             const error: Error = { response: { headers: { 'retry-after': '60' } } };
             const retryAfter = error.response?.headers['retry-after'];
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for optional property access like AxiosError.response', async () => {
@@ -62,7 +62,7 @@ describe(ruleName, () => {
                 return response;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for optional call when callee is nullable', async () => {
@@ -71,7 +71,7 @@ describe(ruleName, () => {
             const ex: Example = { callback: () => 'hello' };
             const result = ex.callback?.();
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for nested optional chain when inner property is not nullable', async () => {
@@ -83,6 +83,6 @@ describe(ruleName, () => {
                 return obj?.middle?.inner?.value;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 });

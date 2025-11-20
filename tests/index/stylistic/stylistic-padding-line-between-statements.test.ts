@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig } from '@tests/test-utils.js';
+import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = '@stylistic/padding-line-between-statements';
 
@@ -10,7 +10,7 @@ describe(ruleName, () => {
             const x = 1;
             function foo() {}
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line after function declaration', async () => {
@@ -18,7 +18,7 @@ describe(ruleName, () => {
             function foo() {}
             const x = 1;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line before class declaration', async () => {
@@ -26,7 +26,7 @@ describe(ruleName, () => {
             const x = 1;
             class MyClass {}
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line after class declaration', async () => {
@@ -34,7 +34,7 @@ describe(ruleName, () => {
             class MyClass {}
             const x = 1;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line before export', async () => {
@@ -42,7 +42,7 @@ describe(ruleName, () => {
             const x = 1;
             export const y = 2;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line after export', async () => {
@@ -50,7 +50,7 @@ describe(ruleName, () => {
             export const y = 2;
             const x = 1;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line before if statement', async () => {
@@ -58,7 +58,7 @@ describe(ruleName, () => {
             const x = 1;
             if (x > 0) {}
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line after block-like statement before if', async () => {
@@ -66,7 +66,7 @@ describe(ruleName, () => {
             function foo() {}
             if (true) {}
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should enforce blank line after if statement', async () => {
@@ -74,7 +74,7 @@ describe(ruleName, () => {
             if (true) {}
             const x = 1;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error when blank lines are present', async () => {
@@ -91,6 +91,6 @@ describe(ruleName, () => {
 
             const z = 3;
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 });

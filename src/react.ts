@@ -1,16 +1,17 @@
 import tseslint from 'typescript-eslint';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
 import { defineConfig } from 'eslint/config';
 import type { ESLint } from 'eslint';
 
 const config = defineConfig([
-    reactPlugin.configs.flat.recommended,
-    reactHooksPlugin.configs.flat.recommended,
+    react.configs.flat.recommended,
+    reactHooks.configs.flat.recommended,
     {
         files: ['**/*.jsx', '**/*.tsx'],
         plugins: {
-            'react-hooks': reactHooksPlugin as ESLint.Plugin,
+            react: react as ESLint.Plugin,
+            'react-hooks': reactHooks as ESLint.Plugin,
         },
         languageOptions: {
             parser: tseslint.parser,

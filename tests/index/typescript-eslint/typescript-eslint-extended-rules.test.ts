@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig, createTempFile } from '@tests/test-utils.js';
+import { lintWithDefaultConfig, createTempFile } from '@tests/test-utils.js';
 
 describe('typescript-eslint extended rules', () => {
     it('should enforce consistent-type-imports', async () => {
@@ -8,7 +8,7 @@ describe('typescript-eslint extended rules', () => {
             import { Example } from './example';
             type Test = Example;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/consistent-type-imports');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/consistent-type-imports');
     });
 
     it('should enforce explicit-member-accessibility', async () => {
@@ -17,7 +17,7 @@ describe('typescript-eslint extended rules', () => {
                 field: string;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/explicit-member-accessibility');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/explicit-member-accessibility');
     });
 
     it('should enforce member-ordering', async () => {
@@ -29,7 +29,7 @@ describe('typescript-eslint extended rules', () => {
                 }
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/member-ordering');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/member-ordering');
     });
 
     it('should enforce no-non-null-assertion', async () => {
@@ -37,14 +37,14 @@ describe('typescript-eslint extended rules', () => {
             const value: string | null = null;
             const result = value!.toString();
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-non-null-assertion');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-non-null-assertion');
     });
 
     it('should enforce no-restricted-types (Map and Set)', async () => {
         const code = dedent`
             const map: Map<string, number> = new Map();
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-restricted-types');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-restricted-types');
     });
 
     it('should enforce no-unnecessary-type-assertion', async () => {
@@ -52,7 +52,7 @@ describe('typescript-eslint extended rules', () => {
             const value: string = 'hello';
             const result = value as string;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-assertion');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-assertion');
     });
 
     it('should enforce no-unsafe-enum-comparison', async () => {
@@ -64,21 +64,21 @@ describe('typescript-eslint extended rules', () => {
             if (status === 'open') {
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-enum-comparison');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-enum-comparison');
     });
 
     it('should enforce no-unused-vars', async () => {
         const code = dedent`
             const unusedVar = 42;
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should ignore unused vars starting with underscore', async () => {
         const code = dedent`
             const _unusedVar = 42;
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should ignore unused function args starting with underscore', async () => {
@@ -87,14 +87,14 @@ describe('typescript-eslint extended rules', () => {
             }
             test(1);
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should ignore unused destructured array elements starting with underscore', async () => {
         const code = dedent`
             const [_first, _second] = [1, 2];
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should ignore unused caught errors starting with underscore', async () => {
@@ -104,7 +104,7 @@ describe('typescript-eslint extended rules', () => {
             } catch (_error) {
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
     });
 
     describe('@typescript-eslint/no-unsafe-assignment', () => {
@@ -125,7 +125,7 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = expect.any(String);
                 });
             `;
-            expect(await lintDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
         });
 
         it('should NOT throw error for unsafe assignment in test files (any type)', async () => {
@@ -136,7 +136,7 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = 1 as any;
                 });
             `;
-            expect(await lintDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
         });
 
         it('should NOT throw error for unsafe assignment in test files (function returning any)', async () => {
@@ -151,14 +151,14 @@ describe('typescript-eslint extended rules', () => {
                     const value: string = getAny();
                 });
             `;
-            expect(await lintDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, testFilePath)).toHaveNoRuleError(ruleName);
         });
 
         it('should throw error for unsafe assignment in regular files (any type)', async () => {
             const code = dedent`
                 const value: string = 1 as any;
             `;
-            expect(await lintDefaultConfig(code, regularFilePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, regularFilePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error for unsafe assignment in regular files (function returning any)', async () => {
@@ -169,7 +169,7 @@ describe('typescript-eslint extended rules', () => {
 
                 const value: string = getAny();
             `;
-            expect(await lintDefaultConfig(code, regularFilePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, regularFilePath)).toHaveRuleError(ruleName);
         });
     });
 });

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig } from '@tests/test-utils.js';
+import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = 'unicorn/no-array-callback-reference';
 
@@ -11,6 +11,6 @@ describe(ruleName, () => {
             const array = [1, 2, 3];
             const foo = array.map(callback);
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 });

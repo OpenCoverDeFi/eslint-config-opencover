@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig, createTempFile } from '@tests/test-utils.js';
+import { lintWithDefaultConfig, createTempFile } from '@tests/test-utils.js';
 
 let filePath: string;
 
@@ -23,7 +23,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when beforeAll has no padding after', async () => {
@@ -36,7 +36,7 @@ describe('Vitest Padding Rules', () => {
                 it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when beforeAll has proper padding', async () => {
@@ -51,7 +51,7 @@ describe('Vitest Padding Rules', () => {
                 it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 
@@ -65,7 +65,7 @@ describe('Vitest Padding Rules', () => {
                     it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when describe has no padding after', async () => {
@@ -78,7 +78,7 @@ describe('Vitest Padding Rules', () => {
                     it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when describe has proper padding', async () => {
@@ -93,7 +93,7 @@ describe('Vitest Padding Rules', () => {
                     it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 
@@ -111,7 +111,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when beforeEach has no padding after', async () => {
@@ -125,7 +125,7 @@ describe('Vitest Padding Rules', () => {
                 });
             `;
 
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when beforeEach has proper padding', async () => {
@@ -140,7 +140,7 @@ describe('Vitest Padding Rules', () => {
                 it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 
@@ -158,7 +158,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when afterAll has no padding after', async () => {
@@ -171,7 +171,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when afterAll has proper padding', async () => {
@@ -186,7 +186,7 @@ describe('Vitest Padding Rules', () => {
 
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 
@@ -204,7 +204,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when afterEach has no padding after', async () => {
@@ -217,7 +217,7 @@ describe('Vitest Padding Rules', () => {
                 });
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when afterEach has proper padding', async () => {
@@ -232,7 +232,7 @@ describe('Vitest Padding Rules', () => {
 
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 
@@ -248,7 +248,7 @@ describe('Vitest Padding Rules', () => {
                 it('should work', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should throw error when it/test has no padding after', async () => {
@@ -259,7 +259,7 @@ describe('Vitest Padding Rules', () => {
                 it('should work2', () => {});
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveRuleError(ruleName);
         });
 
         it('should not throw error when it/test has proper padding', async () => {
@@ -273,7 +273,7 @@ describe('Vitest Padding Rules', () => {
 
                 });
             `;
-            expect(await lintDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
+            expect(await lintWithDefaultConfig(code, filePath)).toHaveNoRuleError(ruleName);
         });
     });
 });

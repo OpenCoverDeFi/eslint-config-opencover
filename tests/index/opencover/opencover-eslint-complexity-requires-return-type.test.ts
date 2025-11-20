@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefaultConfig } from '@tests/test-utils.js';
+import { lintWithDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/complexity-requires-return-type';
 
@@ -11,7 +11,7 @@ describe(ruleName, () => {
                 return 'hello';
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for arrow function with explicit return type', async () => {
@@ -20,7 +20,7 @@ describe(ruleName, () => {
                 return 'hello';
             };
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for function expression with explicit return type', async () => {
@@ -29,7 +29,7 @@ describe(ruleName, () => {
                 return 'hello';
             };
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for simple function without return type (complexity <= maxComplexity)', async () => {
@@ -38,7 +38,7 @@ describe(ruleName, () => {
                 return 'hello';
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for complex function with multiple if statements without return type', async () => {
@@ -74,7 +74,7 @@ describe(ruleName, () => {
                 return 'unknown';
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with nested if statements without return type', async () => {
@@ -102,7 +102,7 @@ describe(ruleName, () => {
                 return false;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with for loop without return type', async () => {
@@ -133,7 +133,7 @@ describe(ruleName, () => {
                 return sum;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with while loop without return type', async () => {
@@ -161,7 +161,7 @@ describe(ruleName, () => {
                 return -1;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with switch statement without return type', async () => {
@@ -193,7 +193,7 @@ describe(ruleName, () => {
                 }
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex arrow function with multiple conditions without return type', async () => {
@@ -225,7 +225,7 @@ describe(ruleName, () => {
                 return String(value);
             };
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with ternary operators without return type', async () => {
@@ -236,7 +236,7 @@ describe(ruleName, () => {
                     : (condition2 ? (condition3 ? (condition4 ? (condition5 ? 'second-four-five' : 'second-four') : 'second-third') : (condition4 ? (condition5 ? 'second-fourth-fifth' : 'second-fourth') : 'second-only')) : (condition3 ? (condition4 ? (condition5 ? 'third-fourth-fifth' : 'third-fourth') : (condition5 ? 'third-fifth' : 'third-only')) : (condition4 ? (condition5 ? 'fourth-fifth' : 'fourth-only') : (condition5 ? 'fifth-only' : 'none'))));
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with logical operators without return type', async () => {
@@ -258,7 +258,7 @@ describe(ruleName, () => {
             }
         `;
 
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with for-of loop without return type', async () => {
@@ -285,7 +285,7 @@ describe(ruleName, () => {
                 return results;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with for-in loop without return type', async () => {
@@ -312,7 +312,7 @@ describe(ruleName, () => {
                 return keys;
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for complex function with do-while loop without return type', async () => {
@@ -344,7 +344,7 @@ describe(ruleName, () => {
                 return 'finished';
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for complex function with explicit return type', async () => {
@@ -359,7 +359,7 @@ describe(ruleName, () => {
                 return 'unknown';
             }
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for complex arrow function with explicit return type', async () => {
@@ -371,6 +371,6 @@ describe(ruleName, () => {
                 return String(value);
             };
         `;
-        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
+        expect(await lintWithDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 });

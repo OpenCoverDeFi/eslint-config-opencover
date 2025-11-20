@@ -1,7 +1,6 @@
 import { beforeAll, describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintText, createTempFile } from '../test-utils.js';
-import withReactConfig from '@/react.js';
+import { createTempFile, lintWithReactConfig } from '../test-utils.js';
 
 let filePath: string;
 
@@ -10,7 +9,7 @@ beforeAll(() => {
 });
 
 async function lintReact(code: string) {
-    return await lintText(withReactConfig, code, filePath);
+    return await lintWithReactConfig(code, filePath);
 }
 
 describe('With React ESLint Rules', () => {

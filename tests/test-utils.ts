@@ -1,4 +1,4 @@
-import { resolve, dirname, join } from 'path';
+import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
@@ -6,8 +6,34 @@ import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
 import { tempDir } from './global-setup.js';
 import defaultConfig from '@/index.js';
+import reactConfig from '@/react.js';
 
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
+
+const __filename = fileURLToPath(import.meta.url);
+
+const DEFAULT_PROJECT_SERVICE_CONFIG = {
+    languageOptions: {
+        parserOptions: {
+            projectService: {
+                // NOTE (@eniko1556, 2025-11-19): we need this as we need to create files
+                // For typescript with projectService: true requires files to be created
+                allowDefaultProject: ['.temp/*.ts', '.temp/*.tsx', '.temp/*.test.ts'],
+                maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
+            },
+        },
+    },
+} as const satisfies Linter.Config<RulesConfig>;
+
+function createESLintInstance(config: Config): ESLint {
+    const configArray = Array.isArray(config) ? config : [config];
+
+    return new ESLint({
+        overrideConfigFile: true,
+        overrideConfig: [...configArray, DEFAULT_PROJECT_SERVICE_CONFIG],
+        ignore: false,
+    });
+}
 
 export const createTempFile = (filename: string): string => {
     const filePath = join(tempDir, filename);
@@ -23,46 +49,23 @@ export const createTempFile = (filename: string): string => {
     return filePath;
 };
 
-export const createESLintInstance = (config: Config): ESLint => {
-    const configArray = Array.isArray(config) ? config : [config];
-    const rootDir = resolve(__dirname, '..');
-
-    return new ESLint({
-        overrideConfigFile: true,
-        overrideConfig: [
-            ...configArray,
-            {
-                languageOptions: {
-                    parserOptions: {
-                        projectService: {
-                            // NOTE (@eniko1556, 2025-11-19): we need this as we need to create files
-                            // For typescript with projectService: true requires files to be created
-                            allowDefaultProject: ['.temp/*.ts', '.temp/*.tsx', '.temp/*.test.ts'],
-                            maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
-                        },
-                    },
-                },
-            },
-        ],
-        cwd: rootDir,
-        ignore: false,
-    });
-};
-
 export const lintFilePath = async (config: Config, filePath: string): Promise<ESLint.LintResult> => {
     const linter = createESLintInstance(config);
     const results = await linter.lintFiles([filePath]);
     return results[0];
 };
 
-export const lintText = async (config: Config, code: string, filePath?: string): Promise<ESLint.LintResult> => {
-    return (
-        await createESLintInstance(config).lintText(code, {
-            filePath: filePath ?? fileURLToPath(import.meta.url),
-        })
-    )[0];
+const lintText = async (config: Config, code: string, filePath?: string): Promise<ESLint.LintResult> => {
+    const linter = createESLintInstance(config);
+    const filePathToUse = filePath ?? __filename;
+
+    return (await linter.lintText(code, { filePath: filePathToUse }))[0];
 };
 
-export const lintDefaultConfig = async (code: string, filePath?: string) => {
+export const lintWithDefaultConfig = async (code: string, filePath?: string): Promise<ESLint.LintResult> => {
     return await lintText(defaultConfig, code, filePath);
+};
+
+export const lintWithReactConfig = async (code: string, filePath?: string): Promise<ESLint.LintResult> => {
+    return await lintText(reactConfig, code, filePath);
 };
