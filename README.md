@@ -13,7 +13,7 @@ yarn add -D eslint-config-opencover
 Then, create an `eslint.config.mjs` file:
 
 ```mjs
-export { default } from './src/index.js';
+export { default } from '@opencover/eslint-config-opencover';
 ```
 
 ### Usage for React
