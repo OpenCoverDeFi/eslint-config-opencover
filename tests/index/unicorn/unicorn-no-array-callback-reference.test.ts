@@ -6,12 +6,11 @@ const ruleName = 'unicorn/no-array-callback-reference';
 
 describe(ruleName, () => {
     it('should throw error for array callback reference', async () => {
-        expect(
-            await lintDefault(dedent`
-                const callback = (element) => element * 2;
-                const array = [1, 2, 3];
-                const foo = array.map(callback);
-            `)
-        ).toHaveRuleError(ruleName);
+        const code = dedent`
+            const callback = (element) => element * 2;
+            const array = [1, 2, 3];
+            const foo = array.map(callback);
+        `;
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 });

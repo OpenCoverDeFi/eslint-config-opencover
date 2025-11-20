@@ -6,11 +6,10 @@ const ruleName = 'import/order';
 
 describe(ruleName, () => {
     it('should enforce import order', async () => {
-        expect(
-            await lintDefault(dedent`
-                import { something } from './local';
-                import fs from 'fs';
-            `)
-        ).toHaveRuleWarning(ruleName);
+        const code = dedent`
+            import { something } from './local';
+            import fs from 'fs';
+        `;
+        expect(await lintDefault(code)).toHaveRuleWarning(ruleName);
     });
 });
