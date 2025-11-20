@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault } from '@tests/test-utils.js';
+import { lintDefaultConfig } from '@tests/test-utils.js';
 
 describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
     it('should enforce @typescript-eslint/await-thenable', async () => {
         const code = 'await 123;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/await-thenable');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/await-thenable');
     });
 
     it('should enforce @typescript-eslint/ban-ts-comment', async () => {
@@ -13,17 +13,17 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             // @ts-ignore
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/ban-ts-comment');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/ban-ts-comment');
     });
 
     it('should enforce @typescript-eslint/no-array-constructor', async () => {
         const code = 'const arr = new Array(1, 2, 3);';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-array-constructor');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-array-constructor');
     });
 
     it('should enforce @typescript-eslint/no-array-delete', async () => {
         const code = 'const arr = [1, 2, 3]; delete arr[0];';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-array-delete');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-array-delete');
     });
 
     it('should enforce @typescript-eslint/no-base-to-string', async () => {
@@ -31,7 +31,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const obj = {};
             const str = String(obj);
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-base-to-string');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-base-to-string');
     });
 
     it('should enforce @typescript-eslint/no-duplicate-enum-values', async () => {
@@ -41,36 +41,36 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 B = 1,
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-duplicate-enum-values');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-duplicate-enum-values');
     });
 
     it('should enforce @typescript-eslint/no-duplicate-type-constituents', async () => {
         const code = dedent`
             type Test = string | number | string;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-duplicate-type-constituents');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-duplicate-type-constituents');
     });
 
     it('should enforce @typescript-eslint/no-empty-object-type', async () => {
         const code = dedent`
             type Empty = {};
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-empty-object-type');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-empty-object-type');
     });
 
     it('should enforce @typescript-eslint/no-explicit-any', async () => {
         const code = 'const x: any = 1;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-explicit-any');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-explicit-any');
     });
 
     it('should enforce @typescript-eslint/no-extra-non-null-assertion', async () => {
         const code = 'const x = obj!!.prop;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-extra-non-null-assertion');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-extra-non-null-assertion');
     });
 
     it('should enforce @typescript-eslint/no-floating-promises', async () => {
         const code = 'Promise.resolve();';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-floating-promises');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-floating-promises');
     });
 
     it('should enforce @typescript-eslint/no-for-in-array', async () => {
@@ -78,12 +78,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const arr = [1, 2, 3];
             for (const key in arr) {}
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-for-in-array');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-for-in-array');
     });
 
     it('should enforce @typescript-eslint/no-implied-eval', async () => {
         const code = 'setTimeout("console.log(1)", 100);';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-implied-eval');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-implied-eval');
     });
 
     it('should enforce @typescript-eslint/no-misused-new', async () => {
@@ -97,7 +97,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
               constructor(): void;
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-misused-new');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-misused-new');
     });
 
     it('should enforce @typescript-eslint/no-misused-promises', async () => {
@@ -105,7 +105,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const promise = Promise.resolve();
             if (promise) {}
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-misused-promises');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-misused-promises');
     });
 
     it('should enforce @typescript-eslint/no-namespace', async () => {
@@ -114,12 +114,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 export const x = 1;
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-namespace');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-namespace');
     });
 
     it('should enforce @typescript-eslint/no-non-null-asserted-optional-chain', async () => {
         const code = 'const x = obj?.prop!;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-non-null-asserted-optional-chain');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-non-null-asserted-optional-chain');
     });
 
     it('should enforce @typescript-eslint/no-redundant-type-constituents', async () => {
@@ -140,12 +140,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             type IntersectionNumberLiteral = number & 1;
             type IntersectionStringLiteral = string & 'foo';
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-redundant-type-constituents');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-redundant-type-constituents');
     });
 
     it('should enforce @typescript-eslint/no-require-imports', async () => {
         const code = 'const fs = require("fs");';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-require-imports');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-require-imports');
     });
 
     it('should enforce @typescript-eslint/no-this-alias', async () => {
@@ -156,7 +156,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 }
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-this-alias');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-this-alias');
     });
 
     it('should enforce @typescript-eslint/no-unnecessary-type-assertion', async () => {
@@ -164,14 +164,14 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: number = 1;
             const y = x as number;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-assertion');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-assertion');
     });
 
     it('should enforce @typescript-eslint/no-unnecessary-type-constraint', async () => {
         const code = dedent`
             function test<T extends unknown>() {}
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-constraint');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unnecessary-type-constraint');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-argument', async () => {
@@ -199,7 +199,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             declare function baz(arg1: Set<string>, arg2: Map<string, string>): void;
             baz(new Set<any>(), new Map<any, string>());
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-argument');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-argument');
     });
 
     // TODO (@eniko1556, 2025-11-20): Fix this, broke with refactor
@@ -226,7 +226,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: Set<string[]> = new Set<any[]>();
             const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-assignment');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-assignment');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-call', async () => {
@@ -246,7 +246,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             anyVar\`foo\`;
             nestedAny.prop\`foo\`;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-call');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-call');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-declaration-merging', async () => {
@@ -254,7 +254,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             interface Test {}
             class Test {}
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-declaration-merging');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-declaration-merging');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-enum-comparison', async () => {
@@ -264,7 +264,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             }
             const x = Test.A === 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-enum-comparison');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-enum-comparison');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-function-type', async () => {
@@ -278,7 +278,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             let identity: Function;
             identity = value => value;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-function-type');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-function-type');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-member-access', async () => {
@@ -302,7 +302,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             arr[anyVar];
             nestedAny[anyVar];
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-member-access');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-member-access');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-return', async () => {
@@ -348,7 +348,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             type TAssign = () => Set<string>;
             const assignability2: TAssign = () => new Set<any>([true]);
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-return');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-return');
     });
 
     it('should enforce @typescript-eslint/no-unsafe-unary-minus', async () => {
@@ -356,41 +356,41 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const value: unknown = 5;
             const x = -value;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unsafe-unary-minus');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-unary-minus');
     });
 
     it('should enforce @typescript-eslint/no-unused-expressions', async () => {
         const code = '1 + 1;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unused-expressions');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unused-expressions');
     });
 
     it('should enforce @typescript-eslint/no-unused-vars', async () => {
         const code = 'const unused = 1;';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should ignore unused vars starting with underscore in @typescript-eslint/no-unused-vars', async () => {
         const code = 'const _unused = 1;';
-        expect(await lintDefault(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError('@typescript-eslint/no-unused-vars');
     });
 
     it('should enforce @typescript-eslint/no-wrapper-object-types', async () => {
         const code = 'const x: String = "test";';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/no-wrapper-object-types');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-wrapper-object-types');
     });
 
     it('should enforce @typescript-eslint/only-throw-error', async () => {
         const code = dedent`
             throw "error";
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/only-throw-error');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/only-throw-error');
     });
 
     it('should enforce @typescript-eslint/prefer-as-const', async () => {
         const code = dedent`
             const x = "test" as "test";
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/prefer-as-const');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/prefer-as-const');
     });
 
     it('should enforce @typescript-eslint/prefer-namespace-keyword', async () => {
@@ -399,12 +399,12 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 export const x = 1;
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/prefer-namespace-keyword');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/prefer-namespace-keyword');
     });
 
     it('should enforce @typescript-eslint/prefer-promise-reject-errors', async () => {
         const code = 'Promise.reject("error");';
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/prefer-promise-reject-errors');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/prefer-promise-reject-errors');
     });
 
     it('should enforce @typescript-eslint/require-await', async () => {
@@ -413,7 +413,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
                 return 1;
             }
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/require-await');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/require-await');
     });
 
     it('should enforce @typescript-eslint/restrict-plus-operands', async () => {
@@ -421,7 +421,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             let foo = 1n + 1;
             let fn = (a: string, b: never) => a + b;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/restrict-plus-operands');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/restrict-plus-operands');
     });
 
     it('should enforce @typescript-eslint/restrict-template-expressions', async () => {
@@ -429,14 +429,14 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const x: unknown = "test";
             const y = \`value: \${x}\`;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/restrict-template-expressions');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/restrict-template-expressions');
     });
 
     it('should enforce @typescript-eslint/triple-slash-reference', async () => {
         const code = dedent`
             /// <reference path="test.ts" />
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/triple-slash-reference');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/triple-slash-reference');
     });
 
     it('should enforce @typescript-eslint/unbound-method', async () => {
@@ -447,6 +447,6 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
             const instance = new A();
             const fn = instance.method;
         `;
-        expect(await lintDefault(code)).toHaveRuleError('@typescript-eslint/unbound-method');
+        expect(await lintDefaultConfig(code)).toHaveRuleError('@typescript-eslint/unbound-method');
     });
 });

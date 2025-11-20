@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault } from '@tests/test-utils.js';
+import { lintDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/todo-note-comment-style';
 
@@ -10,7 +10,7 @@ describe(ruleName, () => {
             // TODO fix this
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for NOTE without parentheses', async () => {
@@ -18,7 +18,7 @@ describe(ruleName, () => {
             // NOTE important information
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO with incomplete parentheses', async () => {
@@ -26,7 +26,7 @@ describe(ruleName, () => {
             // TODO (
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO without date', async () => {
@@ -34,7 +34,7 @@ describe(ruleName, () => {
             // TODO (@user)
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO without colon', async () => {
@@ -42,7 +42,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01)
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO with invalid date format', async () => {
@@ -50,7 +50,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-1-1):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO with date without leading zeros', async () => {
@@ -58,7 +58,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-1-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for NOTE with invalid date format', async () => {
@@ -66,7 +66,7 @@ describe(ruleName, () => {
             // NOTE (@user, 24-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO without space before parentheses', async () => {
@@ -74,7 +74,7 @@ describe(ruleName, () => {
             // TODO(@user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for valid TODO comment', async () => {
@@ -82,7 +82,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for valid NOTE comment', async () => {
@@ -90,7 +90,7 @@ describe(ruleName, () => {
             // NOTE (@user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for valid TODO comment with description', async () => {
@@ -98,7 +98,7 @@ describe(ruleName, () => {
             // TODO (@user, 2024-01-01): fix this issue
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for valid NOTE comment with description', async () => {
@@ -106,7 +106,7 @@ describe(ruleName, () => {
             // NOTE (@user, 2024-01-01): important information
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for lowercase todo', async () => {
@@ -114,7 +114,7 @@ describe(ruleName, () => {
             // todo (@user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for lowercase note', async () => {
@@ -122,7 +122,7 @@ describe(ruleName, () => {
             // note (@user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for regular comments', async () => {
@@ -130,7 +130,7 @@ describe(ruleName, () => {
             // This is a regular comment
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for comments starting with TODO but not matching pattern', async () => {
@@ -138,7 +138,7 @@ describe(ruleName, () => {
             // TODOIST is a task manager
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for TODO with username without @', async () => {
@@ -146,7 +146,7 @@ describe(ruleName, () => {
             // TODO (user, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for TODO with multiple words in username', async () => {
@@ -154,7 +154,7 @@ describe(ruleName, () => {
             // TODO (@john.doe, 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for TODO with missing comma', async () => {
@@ -162,7 +162,7 @@ describe(ruleName, () => {
             // TODO (@user 2024-01-01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for TODO with extra spaces in date', async () => {
@@ -170,6 +170,6 @@ describe(ruleName, () => {
             // TODO (@user, 2024 - 01 - 01):
             const x = 1;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 });

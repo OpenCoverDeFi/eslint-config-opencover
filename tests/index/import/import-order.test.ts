@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault } from '@tests/test-utils.js';
+import { lintDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = 'import/order';
 
@@ -10,6 +10,6 @@ describe(ruleName, () => {
             import { something } from './local';
             import fs from 'fs';
         `;
-        expect(await lintDefault(code)).toHaveRuleWarning(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleWarning(ruleName);
     });
 });

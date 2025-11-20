@@ -63,6 +63,6 @@ export const lintText = async (config: Config, code: string, filePath?: string):
     )[0];
 };
 
-export const lintDefault = async (code: string, filePath?: string) => {
+export const lintDefaultConfig = async (code: string, filePath?: string) => {
     return await lintText(defaultConfig, code, filePath);
 };

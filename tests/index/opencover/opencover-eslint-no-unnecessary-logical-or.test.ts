@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault } from '@tests/test-utils.js';
+import { lintDefaultConfig } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-logical-or';
 
@@ -10,7 +10,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value || null;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary || undefined with non-nullable value', async () => {
@@ -18,7 +18,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value || undefined;
         `;
-        expect(await lintDefault(code)).toHaveRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for || null with nullable value', async () => {
@@ -29,7 +29,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || null;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for || undefined with optional value', async () => {
@@ -40,6 +40,6 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value || undefined;
         `;
-        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
+        expect(await lintDefaultConfig(code)).toHaveNoRuleError(ruleName);
     });
 });
