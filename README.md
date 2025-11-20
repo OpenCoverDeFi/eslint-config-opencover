@@ -24,9 +24,7 @@ You can use the React config standalone:
 import { defineConfig } from 'eslint/config';
 import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
 
-export default defineConfig([
-  ...openCoverReactConfig
-]);
+export default defineConfig([...openCoverReactConfig]);
 ```
 
 Or combine both the default and React configs together:
@@ -36,10 +34,7 @@ import { defineConfig } from 'eslint/config';
 import opencoverConfig from '@opencover/eslint-config-opencover';
 import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
 
-export default defineConfig([
-  ...opencoverConfig,
-  ...opencoverReactConfig,
-]);
+export default defineConfig([...opencoverConfig, ...opencoverReactConfig]);
 ```
 
 ## Rules
