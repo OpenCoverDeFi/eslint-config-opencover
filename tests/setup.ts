@@ -1,6 +1,11 @@
 import { expect } from 'vitest';
 import type { ESLint } from 'eslint';
 
+function getUniqueRulesList(messages: ESLint.LintResult['messages']): string {
+    const ruleIds = messages.map((m) => m.ruleId).filter(Boolean) as string[];
+    return [...new Set(ruleIds)].join(', ') || 'none';
+}
+
 declare module 'vitest' {
     interface Assertion {
         toHaveRuleError(ruleId: string): void;
@@ -14,63 +19,38 @@ declare module 'vitest' {
     }
 }
 
+const createMatcher =
+    (countKey: 'errorCount' | 'warningCount', type: string) => (received: ESLint.LintResult, ruleId: string) => {
+        const count = received[countKey];
+        const hasMatch = count > 0 && received.messages.some((msg) => msg.ruleId === ruleId);
+
+        if (hasMatch) {
+            return {
+                message: () => `Expected lint result not to have ${type} for rule "${ruleId}"`,
+                pass: true,
+            };
+        }
+
+        const rulesList = getUniqueRulesList(received.messages);
+        return {
+            message: () =>
+                `Expected lint result to have ${type} for rule "${ruleId}", but it didn't. ` +
+                `Found ${count} ${type}(s) with rule(s): ${rulesList}`,
+            pass: false,
+        };
+    };
+
 expect.extend({
-    toHaveRuleError(received: ESLint.LintResult, ruleId: string) {
-        const { errorCount, messages } = received;
-        const hasError = errorCount > 0 && messages.some((msg) => msg.ruleId === ruleId);
-
-        if (hasError) {
-            return {
-                message: () => `Expected lint result not to have error for rule "${ruleId}"`,
-                pass: true,
-            };
-        }
-
-        return {
-            message: () =>
-                `Expected lint result to have error for rule "${ruleId}", but it didn't. Found ${errorCount} error(s) with rules: ${messages
-                    .map((m) => m.ruleId)
-                    .filter(Boolean)
-                    .join(', ')}`,
-            pass: false,
-        };
-    },
-
-    toHaveRuleWarning(received: ESLint.LintResult, ruleId: string) {
-        const { warningCount, messages } = received;
-        const hasWarning = warningCount > 0 && messages.some((msg) => msg.ruleId === ruleId);
-
-        if (hasWarning) {
-            return {
-                message: () => `Expected lint result not to have warning for rule "${ruleId}"`,
-                pass: true,
-            };
-        }
-
-        return {
-            message: () =>
-                `Expected lint result to have warning for rule "${ruleId}", but it didn't. Found ${warningCount} warning(s) with rules: ${messages
-                    .map((m) => m.ruleId)
-                    .filter(Boolean)
-                    .join(', ')}`,
-            pass: false,
-        };
-    },
-
+    toHaveRuleError: createMatcher('errorCount', 'error'),
+    toHaveRuleWarning: createMatcher('warningCount', 'warning'),
     toHaveNoRuleError(received: ESLint.LintResult, ruleId: string) {
-        const { messages } = received;
-        const hasError = messages.some((msg) => msg.ruleId === ruleId);
-
-        if (!hasError) {
-            return {
-                message: () => `Expected lint result to have error for rule "${ruleId}"`,
-                pass: true,
-            };
-        }
-
+        const hasError = received.messages.some((msg) => msg.ruleId === ruleId);
         return {
-            message: () => `Expected lint result not to have error for rule "${ruleId}", but it did.`,
-            pass: false,
+            message: () =>
+                hasError
+                    ? `Expected lint result not to have error for rule "${ruleId}", but it did.`
+                    : `Expected lint result to have error for rule "${ruleId}"`,
+            pass: !hasError,
         };
     },
 });

@@ -204,8 +204,7 @@ describe('typescript-eslint.configs.recommendedTypeChecked rules', () => {
         expect(await lintWithDefaultConfig(code)).toHaveRuleError('@typescript-eslint/no-unsafe-argument');
     });
 
-    // TODO (@eniko1556, 2025-11-20): Fix this, broke with refactor
-    it.skip('should enforce @typescript-eslint/no-unsafe-assignment', async () => {
+    it('should enforce @typescript-eslint/no-unsafe-assignment', async () => {
         const code = dedent`
             const x = 1 as any,
               y = 1 as any;

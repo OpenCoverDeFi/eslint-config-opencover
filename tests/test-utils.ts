@@ -1,5 +1,4 @@
-import { dirname, join } from 'path';
-import { fileURLToPath } from 'url';
+import { dirname, join, resolve } from 'path';
 import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
 import type { Linter } from 'eslint';
@@ -10,7 +9,7 @@ import reactConfig from '@/react.js';
 
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
 
-const __filename = fileURLToPath(import.meta.url);
+const __filename = resolve(process.cwd(), 'src', 'index.ts');
 
 const DEFAULT_PROJECT_SERVICE_CONFIG = {
     languageOptions: {
