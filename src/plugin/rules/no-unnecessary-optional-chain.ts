@@ -1,7 +1,7 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import { AST_NODE_TYPES } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '@/utils.js';
+import { getParserServices, getTypeFromESTreeNode, isTypeNullable } from '../utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryOptionalChain';

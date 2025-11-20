@@ -2,7 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 import type { TypeChecker, Type, Expression } from 'typescript';
 import { isAsExpression, isStringLiteral, isNumericLiteral, isExpression } from 'typescript';
-import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '@/utils.js';
+import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryAsAssertion';
