@@ -4,6 +4,6 @@ This section documents the ESLint Stylistic plugin rules that are enabled and co
 
 ## Enabled Rules
 
-| Rule Name                                    | Description                                           | Severity | Configuration                                                              |
-| -------------------------------------------- | ----------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
+| Rule Name                                   | Description                                           | Severity | Configuration                                                              |
+| ------------------------------------------- | ----------------------------------------------------- | -------- | -------------------------------------------------------------------------- |
 | `stylistic/padding-line-between-statements` | Requires blank lines between specific statement types | error    | Multiple configurations for functions, classes, exports, and if statements |

@@ -81,7 +81,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary optional chaining',
-            url: 'https://opencover.com/rules/no-unnecessary-optional-chain',
+            url: 'https://dev.opencover.com/rules/no-unnecessary-optional-chain',
         },
         messages: {
             unnecessaryOptionalChain: 'Unnecessary optional chain - the value is not nullable',

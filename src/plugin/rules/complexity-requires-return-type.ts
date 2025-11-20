@@ -4,7 +4,7 @@ import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@es
 
 type RuleOptions = [
     {
-        maxComplexity: number;
+        maxComplexity?: number;
     },
 ];
 const MessageIds = 'missingReturnType';
@@ -18,16 +18,20 @@ type FunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression |
 const DEFAULT_MAX_COMPLEXITY = 10;
 
 // NOTE (@eniko1556, 2025-11-19): null as that comes from the typing inherited
-function traverse(node: TSESTree.Node | null): number {
+function traverse(node: TSESTree.Node | null, skipNestedFunctions: boolean = true): number {
     if (!node) return 0;
 
-    // NOTE (@eniko1556, 2025-11-19): function is here because callstack will be too deep otherwise
     function traverseAll(nodes: (TSESTree.Node | null)[]): number {
-        return nodes.reduce((sum, n) => sum + traverse(n), 0);
+        return nodes.reduce((sum, n) => sum + traverse(n, skipNestedFunctions), 0);
     }
 
     switch (node.type) {
-        // Complexity-adding control flow (each adds 1 + children)
+        // Skip nested function declarations (they have their own complexity)
+        case AST_NODE_TYPES.FunctionDeclaration:
+        case AST_NODE_TYPES.FunctionExpression:
+            return skipNestedFunctions ? 0 : traverse((node as TSESTree.FunctionDeclaration).body);
+
+        // Complexity-adding control flow (each adds 1 + complexity of conditions/children)
         case AST_NODE_TYPES.IfStatement:
             return 1 + traverse(node.test) + traverse(node.consequent) + traverse(node.alternate);
         case AST_NODE_TYPES.ForStatement:
@@ -41,15 +45,32 @@ function traverse(node: TSESTree.Node | null): number {
         case AST_NODE_TYPES.ConditionalExpression:
             return 1 + traverse(node.test) + traverse(node.consequent) + traverse(node.alternate);
         case AST_NODE_TYPES.LogicalExpression:
-            return (
-                (node.operator === '||' || node.operator === '&&' ? 1 : 0) + traverse(node.left) + traverse(node.right)
+            // Every logical operator adds complexity (standard cyclomatic complexity)
+            return 1 + traverse(node.left) + traverse(node.right);
+        case AST_NODE_TYPES.SwitchStatement: {
+            // Switch itself adds 1, each case adds 1 (default case also adds 1)
+            const caseComplexity = node.cases.reduce(
+                (sum, c) => sum + 1 + (c.test ? traverse(c.test) : 0) + traverseAll(c.consequent),
+                0
             );
-        case AST_NODE_TYPES.SwitchStatement:
-            return (
-                traverse(node.discriminant) +
-                node.cases.reduce((sum, c) => sum + 1 + (c.test ? traverse(c.test) : 0) + traverseAll(c.consequent), 0)
-            );
-        // Passthrough nodes (just traverse children)
+            return 1 + traverse(node.discriminant) + caseComplexity;
+        }
+
+        // Try-catch-finally (catch adds 1 for the branch)
+        case AST_NODE_TYPES.TryStatement: {
+            let complexity = traverse(node.block);
+
+            if (node.handler) {
+                // Catch clause itself adds complexity
+                complexity += 1 + traverse(node.handler.param) + traverse(node.handler.body);
+            }
+
+            complexity += traverse(node.finalizer);
+
+            return complexity;
+        }
+
+        // Pass-through nodes (just traverse children, no complexity added)
         case AST_NODE_TYPES.BlockStatement:
             return traverseAll(node.body);
         case AST_NODE_TYPES.ExpressionStatement:
@@ -58,19 +79,12 @@ function traverse(node: TSESTree.Node | null): number {
             return node.argument ? traverse(node.argument) : 0;
         case AST_NODE_TYPES.VariableDeclaration:
             return traverseAll(node.declarations.map((d) => d.init));
-        case AST_NODE_TYPES.TryStatement: {
-            let complexity = traverse(node.block);
+        case AST_NODE_TYPES.LabeledStatement:
+            return traverse(node.body);
+        case AST_NODE_TYPES.WithStatement:
+            return traverse(node.object) + traverse(node.body);
 
-            if (node.handler) {
-                complexity += traverse(node.handler.param);
-                complexity += traverse(node.handler.body);
-            }
-
-            complexity += traverse(node.finalizer);
-
-            return complexity;
-        }
-        // Expression nodes (traverse operands)
+        // Expression nodes (traverse operands without adding complexity)
         case AST_NODE_TYPES.AssignmentExpression:
         case AST_NODE_TYPES.BinaryExpression:
             return traverse(node.left) + traverse(node.right);
@@ -89,26 +103,30 @@ function traverse(node: TSESTree.Node | null): number {
             );
         case AST_NODE_TYPES.SequenceExpression:
             return traverseAll(node.expressions);
-        case AST_NODE_TYPES.LabeledStatement:
-            return traverse(node.body);
-        case AST_NODE_TYPES.WithStatement:
-            return traverse(node.object) + traverse(node.body);
+
+        // Modern JS features
+        case AST_NODE_TYPES.ChainExpression:
+            return traverse(node.expression);
+
+        // Default: no complexity
         default:
             return 0;
     }
 }
 
 function calculateComplexity(node: FunctionNode, context: RuleContext<Options>, maxComplexity: number): void {
-    // Skip if already has return type
+    // Skip if already has return type annotation
     if (node.returnType) return;
 
-    const complexity = traverse(node.body) + 1;
+    // Calculate complexity: base of 1 + all branching complexity in body
+    const bodyComplexity = traverse(node.body as TSESTree.Node, true);
+    const totalComplexity = 1 + bodyComplexity;
 
-    if (complexity > maxComplexity) {
+    if (totalComplexity > maxComplexity) {
         context.report({
             node,
             messageId: MessageIds,
-            data: { complexity: complexity.toString() },
+            data: { complexity: totalComplexity.toString() },
         });
     }
 }
@@ -135,11 +153,17 @@ export const rule: RuleDefinition<Options> = {
     meta: {
         type: 'suggestion' as const,
         docs: {
-            description: 'Require explicit return types for complex functions',
-            url: 'https://opencover.com/rules/complexity-requires-return-type',
+            description:
+                'Require explicit return types for functions with high cyclomatic complexity. ' +
+                'Complexity is calculated as: 1 (base) + 1 for each branching construct ' +
+                '(if/for/while/switch case/catch/logical operator/ternary). ' +
+                'Nested functions are not counted toward parent complexity.',
+            url: 'https://dev.opencover.com/rules/complexity-requires-return-type',
         },
         messages: {
-            missingReturnType: 'Complex function (complexity: {{complexity}}) must have an explicit return type',
+            missingReturnType:
+                'Function has cyclomatic complexity of {{complexity}} (max: {{maxComplexity}}). ' +
+                'Functions with high complexity must have an explicit return type annotation.',
         },
         schema: [
             {
@@ -147,7 +171,9 @@ export const rule: RuleDefinition<Options> = {
                 properties: {
                     maxComplexity: {
                         type: 'number',
-                        default: 10,
+                        default: DEFAULT_MAX_COMPLEXITY,
+                        minimum: 1,
+                        description: 'Maximum allowed cyclomatic complexity',
                     },
                 },
                 additionalProperties: false,

@@ -108,7 +108,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary "as" type assertions',
-            url: 'https://opencover.com/rules/no-unnecessary-as-assertion',
+            url: 'https://dev.opencover.com/rules/no-unnecessary-as-assertion',
         },
         messages: {
             unnecessaryAsAssertion: 'Unnecessary "as" type assertion - the expression is already of this type',

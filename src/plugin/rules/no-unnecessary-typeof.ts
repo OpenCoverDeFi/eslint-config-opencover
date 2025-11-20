@@ -114,7 +114,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary typeof checks when TypeScript already knows the type',
-            url: 'https://opencover.com/rules/no-unnecessary-typeof',
+            url: 'https://dev.opencover.com/rules/no-unnecessary-typeof',
         },
         messages: {
             unnecessaryTypeof: 'Unnecessary typeof check - TypeScript already knows this type',
