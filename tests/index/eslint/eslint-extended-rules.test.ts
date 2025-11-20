@@ -1,313 +1,296 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault, expectRuleError, expectRuleWarning, expectNoRuleError } from '@tests/test-utils.js';
+import { lintDefault } from '@tests/test-utils.js';
 
 describe('extended ESLint rules', () => {
     describe('block-spacing', () => {
         it('should enforce block spacing', async () => {
-            const code = 'function test(){return true;}';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'block-spacing');
+            expect(await lintDefault('function test(){return true;}')).toHaveRuleError('block-spacing');
         });
     });
 
     describe('capitalized-comments', () => {
         it('should enforce capitalized comments', async () => {
-            const code = dedent`
-                const fn = (x) => x; //an uncapitalized comment without a space before it
-                // This comment is valid since it has the correct capitalization.
-                // this comment is ignored since it follows another comment,
-                // and this one as well because it follows yet another comment.
-            `;
-
-            const result = await lintDefault(code);
-            expectRuleWarning(result, 'capitalized-comments');
+            expect(
+                await lintDefault(dedent`
+                    const fn = (x) => x; //an uncapitalized comment without a space before it
+                    // This comment is valid since it has the correct capitalization.
+                    // this comment is ignored since it follows another comment,
+                    // and this one as well because it follows yet another comment.
+                `)
+            ).toHaveRuleWarning('capitalized-comments');
         });
     });
 
     describe('comma-spacing', () => {
         it('should enforce comma spacing', async () => {
-            const code = dedent`
-                const arr = [1,2,3];
-                const obj = {a:1,b:2};
-            `;
-
-            const result = await lintDefault(code);
-            expectRuleError(result, 'comma-spacing');
+            expect(
+                await lintDefault(dedent`
+                    const arr = [1,2,3];
+                    const obj = {a:1,b:2};
+                `)
+            ).toHaveRuleError('comma-spacing');
         });
     });
 
     describe('key-spacing', () => {
         it('should enforce key spacing', async () => {
-            const code = dedent`
-                const fn = (x) => x;
-                fn({a:1});
-            `;
-
-            const result = await lintDefault(code);
-            expectRuleWarning(result, 'key-spacing');
+            expect(
+                await lintDefault(dedent`
+                    const fn = (x) => x;
+                    fn({a:1});
+                `)
+            ).toHaveRuleWarning('key-spacing');
         });
     });
 
     describe('keyword-spacing', () => {
         it('should enforce keyword spacing', async () => {
-            const code = 'if(true){return;}';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'keyword-spacing');
+            expect(await lintDefault('if(true){return;}')).toHaveRuleError('keyword-spacing');
         });
     });
 
     describe('no-multi-spaces', () => {
         it('should enforce no multiple spaces', async () => {
-            const code = 'const x = 1;  const y = 2;';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-multi-spaces');
+            expect(await lintDefault('const x = 1;  const y = 2;')).toHaveRuleError('no-multi-spaces');
         });
     });
 
     describe('no-multiple-empty-lines', () => {
         it('should throw error for multiple empty lines', async () => {
-            const code = dedent`
+            expect(
+                await lintDefault(dedent`
             const x = 1;
 
 
-            const y = 2;`;
-            const result = await lintDefault(code);
-            expectRuleWarning(result, 'no-multiple-empty-lines');
+            const y = 2;`)
+            ).toHaveRuleWarning('no-multiple-empty-lines');
         });
     });
 
     describe('object-curly-spacing', () => {
         it('should enforce object curly spacing', async () => {
-            const code = dedent`
-                const fn = (x) => x;
-                fn({a:1});
-            `;
-            const result = await lintDefault(code);
-            expectRuleWarning(result, 'object-curly-spacing');
+            expect(
+                await lintDefault(dedent`
+                    const fn = (x) => x;
+                    fn({a:1});
+                `)
+            ).toHaveRuleWarning('object-curly-spacing');
         });
     });
 
     describe('quote-props', () => {
         it('should enforce quote props as needed', async () => {
-            const code = "const obj = {'prop': 1, 'valid-prop': 2};";
-            const result = await lintDefault(code);
-            expectRuleWarning(result, 'quote-props');
+            expect(await lintDefault("const obj = {'prop': 1, 'valid-prop': 2};")).toHaveRuleWarning('quote-props');
         });
     });
 
     describe('quotes', () => {
         it('should enforce single quotes', async () => {
-            const code = 'const notUsed = "5";';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'quotes');
+            expect(await lintDefault('const notUsed = "5";')).toHaveRuleError('quotes');
         });
     });
 
     describe('semi', () => {
         it('should enforce semicolons', async () => {
-            const code = dedent`
-                const x = 1
-                const y = 2
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'semi');
+            expect(
+                await lintDefault(dedent`
+                    const x = 1
+                    const y = 2
+                `)
+            ).toHaveRuleError('semi');
         });
     });
 
     describe('space-before-blocks', () => {
         it('should enforce space before blocks', async () => {
-            const code = 'function test(){return true;}';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'space-before-blocks');
+            expect(await lintDefault('function test(){return true;}')).toHaveRuleError('space-before-blocks');
         });
     });
 
     describe('space-in-parens', () => {
         it('should enforce no space in parens', async () => {
-            const code = dedent`
-                const result = ( 1 + 2 );
-                function test( x ) { return x; }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'space-in-parens');
+            expect(
+                await lintDefault(dedent`
+                    const result = ( 1 + 2 );
+                    function test( x ) { return x; }
+                `)
+            ).toHaveRuleError('space-in-parens');
         });
     });
 
     describe('space-infix-ops', () => {
         it('should enforce space around infix operators', async () => {
-            const code = dedent`
-                const x = 1+2;
-                const y = 3*4;
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'space-infix-ops');
+            expect(
+                await lintDefault(dedent`
+                    const x = 1+2;
+                    const y = 3*4;
+                `)
+            ).toHaveRuleError('space-infix-ops');
         });
     });
 
     describe('spaced-comment', () => {
         it('should enforce spaced comments', async () => {
-            const code = 'const fn = (x) => x; //an uncapitalized comment without a space before it';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'spaced-comment');
+            expect(
+                await lintDefault('const fn = (x) => x; //an uncapitalized comment without a space before it')
+            ).toHaveRuleError('spaced-comment');
         });
     });
 
     describe('no-unneeded-ternary', () => {
         it('should enforce no unneeded ternary', async () => {
-            const code = 'const value = x === 2 ? true : false;';
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-unneeded-ternary');
+            expect(await lintDefault('const value = x === 2 ? true : false;')).toHaveRuleError('no-unneeded-ternary');
         });
     });
 
     describe('no-use-before-define', () => {
         it('should enforce no use before define', async () => {
-            const code = dedent`
-                console.log(x);
-                const x = 5;
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-use-before-define');
+            expect(
+                await lintDefault(dedent`
+                    console.log(x);
+                    const x = 5;
+                `)
+            ).toHaveRuleError('no-use-before-define');
         });
     });
 
     describe('no-restricted-syntax', () => {
         it('should throw error for numeric enum', async () => {
-            const code = dedent`
-                enum Status {
-                    Active,
-                    Inactive,
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    enum Status {
+                        Active,
+                        Inactive,
+                    }
+                `)
+            ).toHaveRuleError('no-restricted-syntax');
         });
 
         it('should throw error for string enum', async () => {
-            const code = dedent`
-                enum Color {
-                    Red = 'red',
-                    Green = 'green',
-                    Blue = 'blue',
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    enum Color {
+                        Red = 'red',
+                        Green = 'green',
+                        Blue = 'blue',
+                    }
+                `)
+            ).toHaveRuleError('no-restricted-syntax');
         });
 
         it('should throw error for const enum', async () => {
-            const code = dedent`
-                const enum Direction {
-                    Up,
-                    Down,
-                    Left,
-                    Right,
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    const enum Direction {
+                        Up,
+                        Down,
+                        Left,
+                        Right,
+                    }
+                `)
+            ).toHaveRuleError('no-restricted-syntax');
         });
 
         it('should throw error for enum with mixed values', async () => {
-            const code = dedent`
-                enum Mixed {
-                    First = 1,
-                    Second = 'second',
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    enum Mixed {
+                        First = 1,
+                        Second = 'second',
+                    }
+                `)
+            ).toHaveRuleError('no-restricted-syntax');
         });
 
         it('should not throw error for union type (alternative to enum)', async () => {
-            const code = dedent`
-                type Status = 'active' | 'inactive';
-            `;
-            const result = await lintDefault(code);
-            expectNoRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    type Status = 'active' | 'inactive';
+                `)
+            ).toHaveNoRuleError('no-restricted-syntax');
         });
 
         it('should not throw error for const object (alternative to enum)', async () => {
-            const code = dedent`
-                const Status = {
-                    Active: 'active',
-                    Inactive: 'inactive',
-                } as const;
-            `;
-            const result = await lintDefault(code);
-            expectNoRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    const Status = {
+                        Active: 'active',
+                        Inactive: 'inactive',
+                    } as const;
+                `)
+            ).toHaveNoRuleError('no-restricted-syntax');
         });
 
         it('should not throw error for regular code without enums', async () => {
-            const code = dedent`
-                function getStatus(): string {
-                    return 'active';
-                }
-            `;
-            const result = await lintDefault(code);
-            expectNoRuleError(result, 'no-restricted-syntax');
+            expect(
+                await lintDefault(dedent`
+                    function getStatus(): string {
+                        return 'active';
+                    }
+                `)
+            ).toHaveNoRuleError('no-restricted-syntax');
         });
     });
 
     describe('lines-between-class-members', () => {
         it('should enforce blank lines between class members', async () => {
-            const code = dedent`
-                class MyClass {
-                    public methodOne() {
-                        return 1;
+            expect(
+                await lintDefault(dedent`
+                    class MyClass {
+                        public methodOne() {
+                            return 1;
+                        }
+                        public methodTwo() {
+                            return 2;
+                        }
                     }
-                    public methodTwo() {
-                        return 2;
-                    }
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'lines-between-class-members');
+                `)
+            ).toHaveRuleError('lines-between-class-members');
         });
 
         it('should allow single-line members without blank line after', async () => {
-            const code = dedent`
-                class MyClass {
-                    public prop = 1;
-                    public method() {}
-                }
-            `;
-            const result = await lintDefault(code);
-            expectNoRuleError(result, 'lines-between-class-members');
+            expect(
+                await lintDefault(dedent`
+                    class MyClass {
+                        public prop = 1;
+                        public method() {}
+                    }
+                `)
+            ).toHaveNoRuleError('lines-between-class-members');
         });
 
         it('should enforce blank line between multi-line members', async () => {
-            const code = dedent`
-                class MyClass {
-                    public methodOne() {
-                        return 1;
+            expect(
+                await lintDefault(dedent`
+                    class MyClass {
+                        public methodOne() {
+                            return 1;
+                        }
+                        public methodTwo() {
+                            return 2;
+                        }
                     }
-                    public methodTwo() {
-                        return 2;
-                    }
-                }
-            `;
-            const result = await lintDefault(code);
-            expectRuleError(result, 'lines-between-class-members');
+                `)
+            ).toHaveRuleError('lines-between-class-members');
         });
 
         it('should not throw error when blank lines are present', async () => {
-            const code = dedent`
-                class MyClass {
-                    public prop = 1;
+            expect(
+                await lintDefault(dedent`
+                    class MyClass {
+                        public prop = 1;
 
-                    public methodOne() {
-                        return 1;
-                    }
+                        public methodOne() {
+                            return 1;
+                        }
 
-                    public methodTwo() {
-                        return 2;
+                        public methodTwo() {
+                            return 2;
+                        }
                     }
-                }
-            `;
-            const result = await lintDefault(code);
-            expectNoRuleError(result, 'lines-between-class-members');
+                `)
+            ).toHaveNoRuleError('lines-between-class-members');
         });
     });
 });

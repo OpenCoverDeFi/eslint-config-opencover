@@ -4,7 +4,6 @@ import { writeFileSync, mkdirSync } from 'fs';
 import type { RulesConfig } from '@eslint/core';
 import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
-import { expect } from 'vitest';
 import { tempDir } from './global-setup.js';
 import defaultConfig from '@/index.js';
 
@@ -66,18 +65,4 @@ export const lintText = async (config: Config, code: string, filePath?: string):
 
 export const lintDefault = async (code: string, filePath?: string) => {
     return await lintText(defaultConfig, code, filePath);
-};
-
-export const expectRuleError = (result: ESLint.LintResult, ruleId: string) => {
-    expect(result.errorCount).toBeGreaterThan(0);
-    expect(result.messages).toContainEqual(expect.objectContaining({ ruleId }));
-};
-
-export const expectRuleWarning = (result: ESLint.LintResult, ruleId: string) => {
-    expect(result.warningCount).toBeGreaterThan(0);
-    expect(result.messages).toContainEqual(expect.objectContaining({ ruleId }));
-};
-
-export const expectNoRuleError = (result: ESLint.LintResult, ruleId: string) => {
-    expect(result.messages).not.toContainEqual(expect.objectContaining({ ruleId }));
 };

@@ -1,5 +1,5 @@
-import { describe, it } from 'vitest';
-import { createTempFile, lintFilePath, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import { describe, it, expect } from 'vitest';
+import { createTempFile, lintFilePath } from '@tests/test-utils.js';
 import defaultConfig from '@/index.js';
 
 const ruleName = '@opencover-eslint/filename-no-dots';
@@ -7,37 +7,31 @@ const ruleName = '@opencover-eslint/filename-no-dots';
 describe(ruleName, () => {
     it('should throw error for filename with dot (file.name.ts)', async () => {
         const filePath = createTempFile('file.name.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for filename with multiple dots (some.file.name.ts)', async () => {
         const filePath = createTempFile('some.file.name.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for filename with dot before test (file.name.test.ts)', async () => {
         const filePath = createTempFile('file.name.test.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for kebab-case.test.ts filename', async () => {
         const filePath = createTempFile('kebab-case.test.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectNoRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for regular kebab-case filename', async () => {
         const filePath = createTempFile('kebab-case.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectNoRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for single word filename', async () => {
         const filePath = createTempFile('file.ts');
-        const result = await lintFilePath(defaultConfig, filePath);
-        expectNoRuleError(result, ruleName);
+        expect(await lintFilePath(defaultConfig, filePath)).toHaveNoRuleError(ruleName);
     });
 });

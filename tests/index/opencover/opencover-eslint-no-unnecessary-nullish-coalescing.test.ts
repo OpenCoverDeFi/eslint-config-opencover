@@ -1,6 +1,6 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import { lintDefault } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-nullish-coalescing';
 
@@ -10,8 +10,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value ?? null;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary ?? undefined with non-nullable value', async () => {
@@ -19,8 +18,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value ?? undefined;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for ?? null with nullable value', async () => {
@@ -31,8 +29,7 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value ?? null;
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error for ?? undefined with optional value', async () => {
@@ -43,7 +40,6 @@ describe(ruleName, () => {
             const value = getValue();
             const result = value ?? undefined;
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 });

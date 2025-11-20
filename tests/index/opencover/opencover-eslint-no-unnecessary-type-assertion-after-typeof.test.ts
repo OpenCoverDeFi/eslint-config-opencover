@@ -1,6 +1,6 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import { lintDefault } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-typeof';
 
@@ -11,8 +11,7 @@ describe(ruleName, () => {
                 return typeof value === 'string' && someCondition(value);
             }
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary typeof check for number', async () => {
@@ -21,8 +20,7 @@ describe(ruleName, () => {
                 return typeof value === 'number' && value > 0;
             }
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary typeof check for boolean', async () => {
@@ -33,8 +31,7 @@ describe(ruleName, () => {
                 }
             }
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error when typeof is needed for union type', async () => {
@@ -47,8 +44,7 @@ describe(ruleName, () => {
                 return typeof request.id === 'string' && REQUEST_ID_PATTERN.test(request.id);
             }
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error when typeof is needed for unknown', async () => {
@@ -57,8 +53,7 @@ describe(ruleName, () => {
                 return typeof value === 'string' && value;
             }
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should not throw error when typeof is needed for any', async () => {
@@ -67,7 +62,6 @@ describe(ruleName, () => {
                 return typeof value === 'string' && value;
             }
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 });

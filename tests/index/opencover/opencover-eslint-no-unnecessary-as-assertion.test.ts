@@ -1,6 +1,6 @@
-import { describe, it } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { lintDefault, expectRuleError, expectNoRuleError } from '@tests/test-utils.js';
+import { lintDefault } from '@tests/test-utils.js';
 
 const ruleName = '@opencover-eslint/no-unnecessary-as-assertion';
 
@@ -10,8 +10,7 @@ describe(ruleName, () => {
             const value: string = 'hello';
             const result = value as string;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on number literal', async () => {
@@ -19,8 +18,7 @@ describe(ruleName, () => {
             const value: number = 42;
             const result = value as number;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on object', async () => {
@@ -29,8 +27,7 @@ describe(ruleName, () => {
             const ex: Example = { value: true };
             const result = ex as Example;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on array', async () => {
@@ -38,8 +35,7 @@ describe(ruleName, () => {
             const arr: string[] = ['a', 'b'];
             const result = arr as string[];
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion when types are equivalent', async () => {
@@ -48,8 +44,7 @@ describe(ruleName, () => {
             const value: A = 'test';
             const result = value as A;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on function return type', async () => {
@@ -59,8 +54,7 @@ describe(ruleName, () => {
             }
             const result = getString() as string;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on interface', async () => {
@@ -71,8 +65,7 @@ describe(ruleName, () => {
             const person: Person = { name: 'John' };
             const result = person as Person;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error when assertion is actually needed from unknown', async () => {
@@ -82,8 +75,7 @@ describe(ruleName, () => {
             }
             const result = getValue() as string;
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on union when type can be inferred', async () => {
@@ -91,8 +83,7 @@ describe(ruleName, () => {
             const value: string | number = 'hello';
             const result = value as string;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary type assertion on discriminated union', async () => {
@@ -102,8 +93,7 @@ describe(ruleName, () => {
             const value: A | B = { type: 'a', value: 'test' };
             const result = value as A;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error when assertion is needed for any type', async () => {
@@ -113,8 +103,7 @@ describe(ruleName, () => {
             }
             const result = getValue() as string;
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 
     it('should throw error for unnecessary assertion on readonly array', async () => {
@@ -122,8 +111,7 @@ describe(ruleName, () => {
             const arr: readonly string[] = ['a', 'b'];
             const result = arr as readonly string[];
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should throw error for unnecessary assertion with type alias', async () => {
@@ -132,8 +120,7 @@ describe(ruleName, () => {
             const id: Id = '123';
             const result = id as Id;
         `;
-        const result = await lintDefault(code);
-        expectRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveRuleError(ruleName);
     });
 
     it('should not throw error for "as const" assertion', async () => {
@@ -142,7 +129,6 @@ describe(ruleName, () => {
             const obj = { key: 'value' } as const;
             const arr = [1, 2, 3] as const;
         `;
-        const result = await lintDefault(code);
-        expectNoRuleError(result, ruleName);
+        expect(await lintDefault(code)).toHaveNoRuleError(ruleName);
     });
 });
