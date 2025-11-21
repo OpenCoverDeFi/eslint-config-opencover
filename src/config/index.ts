@@ -9,6 +9,7 @@ const config = defineConfig([
     globalIgnores(GLOBAL_IGNORE_PATTERNS),
     eslint.configs.recommended,
     ...tseslint.configs.recommendedTypeChecked,
+    // TODO (@eniko1556, 2025-11-21): we want to introduce  ...tseslint.configs.strictTypeChecked at some point
     baseConfig,
     testConfig,
 ]);
