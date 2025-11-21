@@ -1,5 +1,5 @@
 ---
-title: todo-note-comment-style
+title: todo-format
 rule_type: suggestion
 related_rules: []
 further_reading:
@@ -30,7 +30,7 @@ Examples of **incorrect** code for this rule:
 :::incorrect
 
 ```typescript
-/*eslint opencover/todo-note-comment-style: "error"*/
+/*eslint opencover/todo-format: "error"*/
 
 // TODO fix this
 const x = 1;
@@ -64,7 +64,7 @@ Examples of **correct** code for this rule:
 :::correct
 
 ```typescript
-/*eslint opencover/todo-note-comment-style: "error"*/
+/*eslint opencover/todo-format: "error"*/
 
 // TODO (@user, 2024-01-01): fix this
 const x = 1;

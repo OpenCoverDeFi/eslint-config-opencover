@@ -1,13 +1,13 @@
 import type { ESLint } from 'eslint';
 import {
-    complexityRequiresReturnTypeRule,
-    filenameNoDotsRule,
+    noComplexWithoutReturnTypeRule,
+    noDotsInFilenameRule,
     noUnnecessaryAsAssertionRule,
     noUnnecessaryLogicalOrRule,
     noUnnecessaryNullishCoalescingRule,
     noUnnecessaryOptionalChainRule,
     noUnnecessaryTypeofRule,
-    todoNoteCommentStyleRule,
+    todoFormatRule,
 } from './rules/index.js';
 
 export default {
@@ -17,12 +17,12 @@ export default {
     },
     rules: {
         'no-unnecessary-optional-chain': noUnnecessaryOptionalChainRule,
-        'filename-no-dots': filenameNoDotsRule,
+        'no-dots-in-filename': noDotsInFilenameRule,
         'no-unnecessary-as-assertion': noUnnecessaryAsAssertionRule,
         'no-unnecessary-typeof': noUnnecessaryTypeofRule,
         'no-unnecessary-logical-or': noUnnecessaryLogicalOrRule,
         'no-unnecessary-nullish-coalescing': noUnnecessaryNullishCoalescingRule,
-        'complexity-requires-return-type': complexityRequiresReturnTypeRule,
-        'todo-note-comment-style': todoNoteCommentStyleRule,
+        'no-complex-without-return-type': noComplexWithoutReturnTypeRule,
+        'todo-format': todoFormatRule,
     },
 } as const satisfies ESLint.Plugin;

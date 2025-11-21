@@ -1,5 +1,5 @@
 ---
-title: filename-no-dots
+title: no-dots-in-filename
 rule_type: problem
 related_rules: []
 further_reading:
@@ -86,7 +86,7 @@ Examples of **correct** code with `ignorePattern` option:
 :::correct
 
 ```typescript
-/*eslint opencover/filename-no-dots: ["error", { "ignorePattern": ["^legacy\\..*\\.ts$"] }]*/
+/*eslint opencover/no-dots-in-filename: ["error", { "ignorePattern": ["^legacy\\..*\\.ts$"] }]*/
 
 // File: legacy.old.code.ts (ignored due to pattern)
 export const legacyCode = {};
@@ -105,3 +105,4 @@ Due to the limits of static analysis, this rule only checks filenames at the tim
 ## When Not To Use It
 
 You can turn this rule off if you are not concerned with consistent filename conventions or if your project uses a different naming convention that includes dots in filenames.
+

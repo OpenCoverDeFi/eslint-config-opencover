@@ -41,7 +41,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Enforce specific style for TODO and NOTE comments',
-            url: 'https://dev.opencover.com/rules/todo-note-comment-style',
+            url: 'https://dev.opencover.com/rules/todo-format',
         },
         messages: {
             invalidTodoNoteFormat:
