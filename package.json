@@ -1,5 +1,5 @@
 {
-  "name": "@opencover/eslint-config-opencover",
+  "name": "@OpenCoverDeFi/eslint",
   "version": "3.0.0",
   "type": "module",
   "private": true,
@@ -82,7 +82,7 @@
     "node": ">=22.20.0"
   },
   "lint-staged": {
-    "**/*.{ts,tsx,js,jsx}": [
+    "**/*.{ts,tsx,js,jsx,mjs}": [
       "tsx ./node_modules/.bin/eslint --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],

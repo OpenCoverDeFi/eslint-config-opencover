@@ -10,9 +10,9 @@ import {
     todoFormatRule,
 } from './rules/index.js';
 
-export default {
+const plugin = {
     meta: {
-        name: 'opencover-eslint',
+        name: 'opencover/eslint/plugin',
         version: '3.0.0',
     },
     rules: {
@@ -25,4 +25,31 @@ export default {
         'no-complex-without-return-type': noComplexWithoutReturnTypeRule,
         'todo-format': todoFormatRule,
     },
+    configs: {
+        // NOTE (@eniko1556, 2025-11-21): we can also export third party rules as part of this plugin
+        recommended: [{
+            rules: {
+                'opencover/no-unnecessary-optional-chain': 'error',
+                'opencover/no-dots-in-filename': [
+                    'error',
+                    {
+                        ignorePattern: ['^.+\\.config\\.[^.]+$'],
+                    },
+                ],
+                'opencover/no-unnecessary-as-assertion': 'error',
+                'opencover/no-unnecessary-typeof': 'error',
+                'opencover/no-unnecessary-logical-or': 'error',
+                'opencover/no-unnecessary-nullish-coalescing': 'error',
+                'opencover/no-complex-without-return-type': [
+                    'error',
+                    {
+                        maxComplexity: 10,
+                    },
+                ],
+                'opencover/todo-format': 'error',
+            },
+        }],
+    },
 } as const satisfies ESLint.Plugin;
+
+export default plugin;

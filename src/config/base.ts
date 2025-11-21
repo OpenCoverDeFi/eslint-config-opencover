@@ -6,6 +6,7 @@ import opencover from '@/plugin/index.js';
 import { baseRules } from '@/rules/index.js';
 
 export const baseConfig = {
+    name: 'opencover/eslint/base',
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
         import: importPlugin,

@@ -1,5 +1,4 @@
 import type { RulesConfig } from '@eslint/core';
-import { opencoverRules } from './opencover.js';
 import { typescriptRules } from './typescript.js';
 import { eslintRules } from './eslint.js';
 import { stylisticRules } from './stylistic.js';
@@ -8,7 +7,6 @@ import { unicornRules } from './unicorn.js';
 import { vitestRules } from './vitest.js';
 
 export const baseRules: Partial<RulesConfig> = {
-    ...opencoverRules,
     ...typescriptRules,
     ...eslintRules,
     ...stylisticRules,

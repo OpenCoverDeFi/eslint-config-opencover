@@ -11,6 +11,7 @@ const config = defineConfig([
     react.configs.flat.recommended,
     reactHooks.configs.flat.recommended,
     {
+        name: 'opencover/eslint/react',
         files: ['**/*.jsx', '**/*.tsx'],
         plugins: {
             react: react,
