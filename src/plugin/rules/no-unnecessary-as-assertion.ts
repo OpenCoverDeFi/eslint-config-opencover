@@ -2,7 +2,7 @@ import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
 import type { TypeChecker, Type, Expression } from 'typescript';
 import { isAsExpression, isStringLiteral, isNumericLiteral, isExpression } from 'typescript';
-import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '../utils.js';
+import { getParserServices, getTypeFromESTreeNode, isAnyOrUnknown } from '@/plugin/utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryAsAssertion';
@@ -22,9 +22,9 @@ function checkUnionNarrowing(
         return false;
     }
 
+    const assertedToString = checker.typeToString(assertedType);
     const isMemberOfUnion = expressionType.types.some((unionMember) => {
         const memberToString = checker.typeToString(unionMember);
-        const assertedToString = checker.typeToString(assertedType);
         return (
             (checker.isTypeAssignableTo(unionMember, assertedType) &&
                 checker.isTypeAssignableTo(assertedType, unionMember)) ||

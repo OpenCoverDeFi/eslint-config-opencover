@@ -1,6 +1,6 @@
 import vitest from '@vitest/eslint-plugin';
-import { testRules } from '../rules/index.js';
 import { LANGUAGE_OPTIONS } from './constants.js';
+import { testRules } from '@/rules/index.js';
 
 export const testConfig = {
     files: ['tests/**/*.ts', 'tests/**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],

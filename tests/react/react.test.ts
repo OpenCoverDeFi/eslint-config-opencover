@@ -1,6 +1,6 @@
 import { beforeAll, describe, it, expect } from 'vitest';
 import dedent from 'dedent';
-import { createTempFile, lintWithReactConfig } from '../test-utils.js';
+import { createTempFile, lintWithReactConfig } from '@tests/test-utils.js';
 
 let filePath: string;
 

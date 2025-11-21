@@ -1,6 +1,6 @@
 import type { TSESTree } from '@typescript-eslint/utils';
 import type { RuleContext, RuleDefinition, RuleDefinitionTypeOptions } from '@eslint/core';
-import { checkUnnecessaryOperator } from '../utils.js';
+import { checkUnnecessaryOperator } from '@/plugin/utils.js';
 
 type RuleOptions = [];
 const MessageIds = 'unnecessaryLogicalOr';
