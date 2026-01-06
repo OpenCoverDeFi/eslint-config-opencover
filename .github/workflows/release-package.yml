@@ -6,29 +6,47 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v6
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v6
         with:
           node-version: 22
-      - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn test
+
+      - name: 📥 Install deps
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: 💊 Run linting
+        run: yarn lint
+
+      - name: 🧪 Run test script
+        run: yarn test
 
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
     if: contains(github.ref, 'refs/tags/')
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v6
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v6
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v6
         with:
           node-version: 22
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Add .npmrc
+      - name: 🔑 Add .npmrc
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NODE_AUTH_TOKEN }}" > ~/.npmrc
 
-      - run: yarn install --frozen-lockfile --non-interactive
-      - run: yarn build
-      - run: yarn publish --access public --non-interactive
+      - name: 📥 Install deps
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: 📦 Build package
+        run: yarn build
+
+      - name: 📦 Publish package to npm
+        run: yarn publish --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{secrets.NODE_AUTH_TOKEN}}
