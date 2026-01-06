@@ -10,7 +10,7 @@ type Options = RuleDefinitionTypeOptions & {
 };
 
 const TODO_NOTE_PATTERN = /^\s+(TODO|NOTE).*/i;
-const VALID_FORMAT_PATTERN = /^\s+(TODO|NOTE)\s+\(([^,]+),\s*(\d{4}-\d{2}-\d{2})\)\s*:/;
+const VALID_FORMAT_PATTERN = /^\s+(TODO|NOTE)\s+\([^,]+,\s*\d{4}-\d{2}-\d{2}\)\s*:/;
 
 function createRuleVisitor(context: RuleContext<Options>) {
     return {
