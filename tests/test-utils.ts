@@ -17,7 +17,7 @@ const DEFAULT_PROJECT_SERVICE_CONFIG = {
             projectService: {
                 // NOTE (@eniko1556, 2025-11-19): we need this as we need to create files
                 // For typescript with projectService: true requires files to be created
-                allowDefaultProject: ['.temp/*.ts', '.temp/*.tsx', '.temp/*.test.ts'],
+                allowDefaultProject: ['.dist/*.ts', '.dist/*.tsx', '.dist/*.test.ts'],
                 maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 10000,
             },
         },

@@ -26,7 +26,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary logical OR with null or undefined',
-            url: 'https://dev.opencover.com/rules/no-unnecessary-logical-or',
+            url: 'https://opencover.com/development/rules/no-unnecessary-logical-or',
         },
         messages: {
             unnecessaryLogicalOr: 'Unnecessary logical OR - the value is not nullable',

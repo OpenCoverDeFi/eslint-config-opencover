@@ -81,7 +81,6 @@ export default defineConfig([
       '**/node_modules/**',
       '**/dist/**',
       '**/coverage/**',
-      '**/.temp/**',
       '**/.git/**',
       '**/yarn.lock',
       '*.js', // Add this if you have .js files that shouldn't be linted

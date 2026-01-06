@@ -27,9 +27,6 @@ export const typescriptRules: Partial<RulesConfig> = {
                 Map: {
                     message: 'Map is not allowed. Use Object instead.',
                 },
-                Set: {
-                    message: 'Set is not allowed. Use Object instead.',
-                },
             },
         },
     ],

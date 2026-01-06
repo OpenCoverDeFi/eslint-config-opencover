@@ -158,7 +158,7 @@ export const rule: RuleDefinition<Options> = {
                 'Complexity is calculated as: 1 (base) + 1 for each branching construct ' +
                 '(if/for/while/switch case/catch/logical operator/ternary). ' +
                 'Nested functions are not counted toward parent complexity.',
-            url: 'https://dev.opencover.com/rules/no-complex-without-return-type',
+            url: 'https://opencover.com/development/rules/no-complex-without-return-type',
         },
         messages: {
             missingReturnType:

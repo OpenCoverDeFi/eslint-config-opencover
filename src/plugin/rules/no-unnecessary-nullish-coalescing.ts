@@ -26,7 +26,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow unnecessary nullish coalescing with null or undefined',
-            url: 'https://dev.opencover.com/rules/no-unnecessary-nullish-coalescing',
+            url: 'https://opencover.com/development/rules/no-unnecessary-nullish-coalescing',
         },
         messages: {
             unnecessaryNullishCoalescing: 'Unnecessary nullish coalescing - the value is not nullable',

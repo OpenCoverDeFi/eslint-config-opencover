@@ -45,7 +45,7 @@ export const rule: RuleDefinition<Options> = {
         type: 'suggestion' as const,
         docs: {
             description: 'Disallow dots in filenames (except .test. in test files)',
-            url: 'https://opencover.com/rules/no-dots-in-filename',
+            url: 'https://opencover.com/development/rules/no-dots-in-filename',
         },
         messages: {
             noDotsInFilename: 'Filename should not contain dots (except .test. in test files)',
