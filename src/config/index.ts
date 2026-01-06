@@ -3,7 +3,7 @@ import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import { GLOBAL_IGNORE_PATTERNS } from './constants.js';
 import { baseConfig } from './base.js';
-import { testConfig } from './vitest.js';
+import { testConfig } from './test.js';
 import opencover from '@/plugin/index.js';
 
 const config = defineConfig([
