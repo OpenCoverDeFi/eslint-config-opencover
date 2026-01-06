@@ -51,7 +51,7 @@ function checkUnionNarrowing(
 function createRuleVisitor(context: RuleContext<Options>) {
     return {
         TSAsExpression(node: TSESTree.TSAsExpression): void {
-            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+            const services = getParserServices(context);
 
             if (!services.program) {
                 return;

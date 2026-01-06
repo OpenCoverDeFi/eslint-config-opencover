@@ -92,7 +92,7 @@ function createRuleVisitor(context: RuleContext<Options>) {
                 return;
             }
 
-            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+            const services = getParserServices(context);
 
             if (!services.program) return;
 

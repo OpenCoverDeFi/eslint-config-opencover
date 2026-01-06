@@ -54,7 +54,7 @@ function getOptionalChainMembers(
 function createRuleVisitor(context: RuleContext<Options>) {
     return {
         ChainExpression(node: TSESTree.ChainExpression) {
-            const services = getParserServices<MessageIds, RuleOptions, Options>(context);
+            const services = getParserServices(context);
 
             if (!services.program) return;
 
