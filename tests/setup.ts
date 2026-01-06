@@ -35,7 +35,7 @@ const createMatcher =
         return {
             message: () =>
                 `Expected lint result to have ${type} for rule "${ruleId}", but it didn't. ` +
-                `Found ${count} ${type}(s) with rule(s): ${rulesList}`,
+                `Found ${count.toString()} ${type}(s) with rule(s): ${rulesList}`,
             pass: false,
         };
     };

@@ -132,7 +132,7 @@ function calculateComplexity(node: FunctionNode, context: RuleContext<Options>, 
 }
 
 function createRuleVisitor(context: RuleContext<Options>) {
-    const { maxComplexity = DEFAULT_MAX_COMPLEXITY } = context.options[0] ?? {};
+    const { maxComplexity = DEFAULT_MAX_COMPLEXITY } = context.options[0];
     return {
         FunctionDeclaration(node: TSESTree.FunctionDeclaration) {
             calculateComplexity(node, context, maxComplexity);

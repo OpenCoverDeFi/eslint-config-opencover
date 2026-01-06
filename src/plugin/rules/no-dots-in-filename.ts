@@ -17,7 +17,7 @@ type Options = RuleDefinitionTypeOptions & {
 };
 
 function createRuleVisitor(context: RuleContext<Options>) {
-    const { ignorePattern = [] } = context.options[0] ?? {};
+    const { ignorePattern = [] } = context.options[0];
     const filename = basename(context.filename);
 
     if (

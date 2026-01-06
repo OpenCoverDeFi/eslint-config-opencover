@@ -32,24 +32,19 @@ export function isAnyOrUnknown(type: Type): boolean {
 
 // UGLY HACK: This is a hack to adapt the context to the type expected by the ESLintUtils.getParserServices function
 // I don't know why they defined their own types, when eslint already has a type for the context
-export function getParserServices<
-    MessageIds extends string,
-    Options extends readonly unknown[],
-    T extends RuleContextTypeOptions,
->(context: RuleContext<T>): ParserServices {
-    return ESLintUtils.getParserServices(context as unknown as Readonly<TSESLintRuleContext<MessageIds, Options>>);
+export function getParserServices<T extends RuleContextTypeOptions>(context: RuleContext<T>): ParserServices {
+    return ESLintUtils.getParserServices(context as unknown as Readonly<TSESLintRuleContext<string, unknown[]>>);
 }
 
 export function checkUnnecessaryOperator<
     MessageIds extends string,
-    RuleOptions extends readonly unknown[],
-    T extends RuleContextTypeOptions & { MessageIds: MessageIds; RuleOptions: RuleOptions },
+    T extends RuleContextTypeOptions & { MessageIds: MessageIds; RuleOptions: unknown[] },
 >(context: RuleContext<T>, node: TSESTree.LogicalExpression, operator: '||' | '??', messageId: MessageIds): void {
     if (node.operator !== operator || !isNullishLiteral(node.right)) {
         return;
     }
 
-    const services = getParserServices<MessageIds, RuleOptions, T>(context);
+    const services = getParserServices<T>(context);
 
     if (!services.program) return;
 
