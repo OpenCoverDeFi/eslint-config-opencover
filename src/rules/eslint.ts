@@ -23,7 +23,7 @@ export const eslintRules: Partial<RulesConfig> = {
         },
     ],
     'no-unneeded-ternary': 'error',
-    'no-use-before-define': ['error', { variables: true, functions: false, classes: true }],
+    'no-use-before-define': ['off'],
     'object-curly-spacing': ['warn', 'always'],
     'quote-props': ['warn', 'as-needed'],
     quotes: ['error', 'single', { avoidEscape: true }],

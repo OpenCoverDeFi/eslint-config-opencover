@@ -148,7 +148,7 @@ describe('extended ESLint rules', () => {
                 console.log(x);
                 const x = 5;
             `;
-            expect(await lintWithDefaultConfig(code)).toHaveRuleError('no-use-before-define');
+            expect(await lintWithDefaultConfig(code)).toHaveNoRuleError('no-use-before-define');
         });
     });
 
