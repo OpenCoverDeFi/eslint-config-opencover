@@ -49,18 +49,19 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@eslint/core": "^0.17.0",
     "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.5.0",
-    "eslint-import-resolver-typescript": "^4.4.4",
     "@typescript-eslint/utils": "^8.52.0",
     "@vitest/eslint-plugin": "^1.6.5",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
+    "tsc-alias": "^1.8.16",
     "tsutils": "^3.21.0",
-    "typescript-eslint": "^8.52.0",
-    "tsc-alias": "^1.8.16"
+    "typescript-eslint": "^8.52.0"
   },
   "peerDependencies": {
     "eslint": "^9.39.1",
