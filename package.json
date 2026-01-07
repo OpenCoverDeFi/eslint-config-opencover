@@ -40,7 +40,7 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "prepare": "husky && pnpm build",
+    "prepare": "([ -d .git ] && husky || true) && pnpm build",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "lint": "tsx ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
