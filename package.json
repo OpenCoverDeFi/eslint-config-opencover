@@ -40,13 +40,13 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "prepare": "husky",
+    "prepare": "husky && pnpm build",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "lint": "tsx ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
+    "typecheck": "tsc --noEmit",
     "format": "tsx ./node_modules/.bin/eslint --fix . && prettier --write .",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "postinstall": "yarn build"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@eslint/js": "^9.39.2",

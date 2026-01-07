@@ -7,7 +7,7 @@
 > Make sure you have already installed `eslint` and `typescript` as they are required packages.
 
 ```console
-yarn add -D eslint-config-opencover
+pnpm add -D eslint-config-opencover
 ```
 
 Then, create an `eslint.config.mjs` file:
@@ -82,7 +82,7 @@ export default defineConfig([
       '**/dist/**',
       '**/coverage/**',
       '**/.git/**',
-      '**/yarn.lock',
+      '**/pnpm-lock.yaml',
       '*.js', // Add this if you have .js files that shouldn't be linted
     ],
   },
