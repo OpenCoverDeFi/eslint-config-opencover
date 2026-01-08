@@ -40,11 +40,12 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "prepare": "([ -d .git ] && husky || true) && pnpm build",
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "lint": "tsx ./node_modules/.bin/eslint --max-warnings=0 . && prettier --check .",
+    "format": "tsx ./node_modules/eslint/bin/eslint.js --fix . && prettier --write .",
+    "lint": "tsx ./node_modules/eslint/bin/eslint.js --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
-    "format": "tsx ./node_modules/.bin/eslint --fix . && prettier --write .",
+    "prepare": "node scripts/git-install.js",
+    "postinstall": "[ -d .git ] && pnpm husky || true",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
@@ -85,7 +86,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
-      "tsx ./node_modules/.bin/eslint --cache --max-warnings=0 --fix",
+      "tsx ./node_modules/eslint/bin/eslint.js --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],
     "*.{json,yml}": "prettier --cache --write",

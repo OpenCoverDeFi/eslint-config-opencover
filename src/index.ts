@@ -13,10 +13,9 @@ const config = defineConfig([
     eslint.configs.recommended,
     ...tseslint.configs.strictTypeChecked,
     ...tseslint.configs.recommendedTypeChecked,
-    // TODO (@eniko1556, 2025-11-21): we want to introduce  ...tseslint.configs.strictTypeChecked at some point
     {
         name: 'opencover/eslint/base',
-        files: ['**/*.ts', '**/*.tsx'],
+        files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
         plugins: {
             import: importPlugin,
             unicorn,

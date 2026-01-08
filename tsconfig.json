@@ -3,15 +3,15 @@
     "target": "es2024",
     "module": "nodenext",
     "strict": true,
-    "preserveConstEnums": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "outDir": "dist",
+    "allowJs": true,
     "paths": {
       "@/*": ["./src/*"],
       "@tests/*": ["./tests/*"]
     }
   },
-  "include": ["src", "tests", "vitest.config.ts"]
+  "include": ["src", "tests", "scripts", "vitest.config.ts"]
 }

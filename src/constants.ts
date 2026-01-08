@@ -7,6 +7,7 @@ export const PARSER_OPTIONS = {
     ecmaVersion: 2024,
     sourceType: 'module' as const,
     projectService: true,
+    tsconfigRootDir: process.cwd(),
 };
 
 export const LANGUAGE_OPTIONS: LanguageOptions = {
