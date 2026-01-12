@@ -1,12 +1,13 @@
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig, globalIgnores } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import type { ESLint } from 'eslint';
-import { PARSER_OPTIONS, GLOBAL_IGNORE_PATTERNS } from './constants.js';
+import gitignore from 'eslint-config-flat-gitignore';
+import { PARSER_OPTIONS } from './constants.js';
 
 const config = defineConfig([
-    globalIgnores(GLOBAL_IGNORE_PATTERNS),
+    gitignore(),
     react.configs.flat.recommended,
     reactHooks.configs.flat.recommended,
     {

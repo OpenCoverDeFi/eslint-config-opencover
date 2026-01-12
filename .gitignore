@@ -62,4 +62,4 @@ typings/
 
 # Only apps should have lockfiles
 .idea
-dist/
+dist

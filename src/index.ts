@@ -1,18 +1,16 @@
-import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import { defineConfig, globalIgnores } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import';
 import unicorn from 'eslint-plugin-unicorn';
 import stylistic from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
-import { GLOBAL_IGNORE_PATTERNS, LANGUAGE_OPTIONS } from './constants.js';
-import { baseRules, testRules } from './rules/index.js';
+import gitignore from 'eslint-config-flat-gitignore';
+import { LANGUAGE_OPTIONS } from './constants.js';
+import { openCoverTypescriptRules, openCoverTestRules } from './rules.js';
 
 const config = defineConfig([
-    globalIgnores(GLOBAL_IGNORE_PATTERNS),
-    eslint.configs.recommended,
-    ...tseslint.configs.strictTypeChecked,
-    ...tseslint.configs.recommendedTypeChecked,
+    gitignore(),
+    tseslint.configs.base, // Define base rules, so plugin is imported correctly
     {
         name: 'opencover/eslint/base',
         files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -22,13 +20,13 @@ const config = defineConfig([
             stylistic,
         },
         languageOptions: LANGUAGE_OPTIONS,
-        rules: baseRules,
+        rules: openCoverTypescriptRules,
     },
     {
-        name: 'opencover/eslint/vitest',
+        name: 'opencover/eslint/test',
         files: ['tests/**/*.ts', 'tests/**/*.tsx', '**/*.test.ts', '**/*.test.tsx'],
         plugins: {
-            '@vitest': vitest,
+            vitest,
         },
         languageOptions: {
             ...LANGUAGE_OPTIONS,
@@ -36,7 +34,7 @@ const config = defineConfig([
                 ...vitest.environments.env.globals,
             },
         },
-        rules: testRules,
+        rules: openCoverTestRules,
         settings: {
             vitest: {
                 typecheck: true,

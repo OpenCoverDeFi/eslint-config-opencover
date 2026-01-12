@@ -44,24 +44,24 @@
     "format": "tsx ./node_modules/eslint/bin/eslint.js --fix . && prettier --write .",
     "lint": "tsx ./node_modules/eslint/bin/eslint.js --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
-    "prepare": "node scripts/git-install.js",
+    "prepare": "node scripts/git-install.ts",
     "postinstall": "[ -d .git ] && pnpm husky || true",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "knip": "knip"
   },
   "dependencies": {
-    "@eslint/core": "^0.17.0",
+    "@eslint/core": "^1.0.0",
     "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.5.0",
-    "@typescript-eslint/utils": "^8.52.0",
     "@vitest/eslint-plugin": "^1.6.5",
+    "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "tsc-alias": "^1.8.16",
-    "tsutils": "^3.21.0",
     "typescript-eslint": "^8.52.0"
   },
   "peerDependencies": {
@@ -69,16 +69,17 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
+    "@types/node": "^22.19.3",
     "@vitest/coverage-v8": "^4.0.0",
     "dedent": "^1.7.1",
     "eslint": "^9.39.2",
     "husky": "^9.1.7",
+    "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
     "prettier": "^3.7.4",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.0"
+    "vitest": "^4.0.16"
   },
   "engines": {
     "node": ">=22.20.0",
@@ -90,7 +91,7 @@
       "prettier --cache --write"
     ],
     "*.{json,yml}": "prettier --cache --write",
-    ".{prettierrc,eslintrc}": "prettier --cache --write"
+    ".prettierrc": "prettier --cache --write"
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@10.28.0"
 }

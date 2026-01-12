@@ -9,8 +9,8 @@ beforeAll(() => {
 });
 
 describe('Vitest Padding Rules', () => {
-    describe('@vitest/padding-around-before-all-blocks', () => {
-        const ruleName = '@vitest/padding-around-before-all-blocks';
+    describe('vitest/padding-around-before-all-blocks', () => {
+        const ruleName = 'vitest/padding-around-before-all-blocks';
 
         it('should throw error when beforeAll has no padding before', async () => {
             const code = dedent`
@@ -55,8 +55,8 @@ describe('Vitest Padding Rules', () => {
         });
     });
 
-    describe('@vitest/padding-around-describe-blocks', () => {
-        const ruleName = '@vitest/padding-around-describe-blocks';
+    describe('vitest/padding-around-describe-blocks', () => {
+        const ruleName = 'vitest/padding-around-describe-blocks';
 
         it('should throw error when describe has no padding before', async () => {
             const code = dedent`
@@ -97,8 +97,8 @@ describe('Vitest Padding Rules', () => {
         });
     });
 
-    describe('@vitest/padding-around-before-each-blocks', () => {
-        const ruleName = '@vitest/padding-around-before-each-blocks';
+    describe('vitest/padding-around-before-each-blocks', () => {
+        const ruleName = 'vitest/padding-around-before-each-blocks';
 
         it('should throw error when beforeEach has no padding before', async () => {
             const code = dedent`
@@ -144,8 +144,8 @@ describe('Vitest Padding Rules', () => {
         });
     });
 
-    describe('@vitest/padding-around-after-all-blocks', () => {
-        const ruleName = '@vitest/padding-around-after-all-blocks';
+    describe('vitest/padding-around-after-all-blocks', () => {
+        const ruleName = 'vitest/padding-around-after-all-blocks';
 
         it('should throw error when afterAll has no padding before', async () => {
             const code = dedent`
@@ -190,8 +190,8 @@ describe('Vitest Padding Rules', () => {
         });
     });
 
-    describe('@vitest/padding-around-after-each-blocks', () => {
-        const ruleName = '@vitest/padding-around-after-each-blocks';
+    describe('vitest/padding-around-after-each-blocks', () => {
+        const ruleName = 'vitest/padding-around-after-each-blocks';
 
         it('should throw error when afterEach has no padding before', async () => {
             const code = dedent`
@@ -236,8 +236,8 @@ describe('Vitest Padding Rules', () => {
         });
     });
 
-    describe('@vitest/padding-around-test-blocks', () => {
-        const ruleName = '@vitest/padding-around-test-blocks';
+    describe('vitest/padding-around-test-blocks', () => {
+        const ruleName = 'vitest/padding-around-test-blocks';
 
         it('should throw error when it/test has no padding before', async () => {
             const code = dedent`

@@ -1,7 +1,8 @@
-export GITHUB_TOKEN=
+#!/bin/sh
 
-# Typecheck code.
-pnpm typecheck
+set -e
+
+export GITHUB_TOKEN=
 
 # Run all tests.
 pnpm test
