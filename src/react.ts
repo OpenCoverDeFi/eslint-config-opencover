@@ -8,8 +8,6 @@ import { PARSER_OPTIONS } from './constants.js';
 
 const config = defineConfig([
     gitignore(),
-    react.configs.flat.recommended,
-    reactHooks.configs.flat.recommended,
     {
         name: 'opencover/eslint/react',
         files: ['**/*.jsx', '**/*.tsx'],
@@ -30,6 +28,10 @@ const config = defineConfig([
             react: {
                 version: 'detect',
             },
+        },
+        rules: {
+            ...react.configs.recommended.rules,
+            ...reactHooks.configs.recommended.rules,
         },
     },
 ]);

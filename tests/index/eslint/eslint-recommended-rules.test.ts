@@ -162,7 +162,7 @@ describe('eslint.configs.recommended rules', () => {
 
     // NOTE (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
     // code is copied from eslint website
-    it.skip('should enforce no-octal', async () => {
+    it.todo('should enforce no-octal', async () => {
         const code = dedent`
             const num = 071;
             const result = 5 + 07;
@@ -308,7 +308,7 @@ describe('eslint.configs.recommended rules', () => {
 
     // TODO (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
     // code is copied from eslint website
-    it.skip('should enforce no-nonoctal-decimal-escape', async () => {
+    it.todo('should enforce no-nonoctal-decimal-escape', async () => {
         const code = dedent`
             "\\8";
             "\\9";

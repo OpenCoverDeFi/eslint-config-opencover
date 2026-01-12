@@ -64,7 +64,7 @@ describe('With React ESLint Rules', () => {
         expect(await lintReact(code)).toHaveRuleError('react/jsx-no-undef');
     });
 
-    it.skip('should enforce react/jsx-uses-react', async () => {
+    it.todo('should enforce react/jsx-uses-react', async () => {
         const code = dedent`
             var React = require('react');
 
@@ -73,7 +73,7 @@ describe('With React ESLint Rules', () => {
         expect(await lintReact(code)).toHaveRuleError('react/jsx-uses-react');
     });
 
-    it.skip('should enforce react/jsx-uses-vars', async () => {
+    it.todo('should enforce react/jsx-uses-vars', async () => {
         const code = dedent`
             var Hello = require('./Hello');
         `;
@@ -152,7 +152,7 @@ describe('With React ESLint Rules', () => {
         expect(await lintReact(code)).toHaveRuleError('react/no-string-refs');
     });
 
-    it.skip('should enforce react/no-unescaped-entities', async () => {
+    it.todo('should enforce react/no-unescaped-entities', async () => {
         const code = dedent`
             <MyComponent
               name="name"
