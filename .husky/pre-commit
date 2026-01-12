@@ -6,4 +6,6 @@ pnpm typecheck
 
 pnpm knip
 
+pnpm exec cspell lint "src/**/*.ts"
+
 GITHUB_TOKEN= pnpm lint-staged

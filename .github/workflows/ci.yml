@@ -33,5 +33,11 @@ jobs:
       - name: 🧪 Run typecheck
         run: pnpm typecheck
 
+      - name: 📝 Run knip
+        run: pnpm knip
+
+      - name: 📝 Run cspell lint
+        run: pnpm exec cspell lint "src/**/*.ts"
+
       - name: 🧪 Run test script
         run: pnpm test
