@@ -6,4 +6,4 @@ pnpm typecheck
 
 pnpm knip
 
-GITHUB_TOKEN= pnpm lint-staged
+pnpm lint-staged

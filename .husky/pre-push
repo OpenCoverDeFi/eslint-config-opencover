@@ -2,7 +2,4 @@
 
 set -e
 
-export GITHUB_TOKEN=
-
-# Run all tests.
 pnpm test

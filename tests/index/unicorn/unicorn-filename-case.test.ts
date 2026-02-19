@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { createTempFile, lintFilePath } from '@tests/test-utils.js';
-import defaultConfig from '@/index.js';
+import { createTempFile, lintFilePath, defaultConfig } from '@tests/test-utils.js';
 
 const ruleName = 'unicorn/filename-case';
 

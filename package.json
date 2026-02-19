@@ -44,11 +44,8 @@
     "format": "tsx ./node_modules/eslint/bin/eslint.js --fix . && prettier --write .",
     "lint": "tsx ./node_modules/eslint/bin/eslint.js --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
-    "prepare": "node scripts/git-install.ts",
-    "postinstall": "[ -d .git ] && pnpm husky || true",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage",
-    "knip": "knip"
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@eslint/core": "^1.0.0",
@@ -73,10 +70,11 @@
     "@vitest/coverage-v8": "^4.0.0",
     "dedent": "^1.7.1",
     "eslint": "^9.39.2",
-    "husky": "^9.1.7",
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
+    "local-pkg": "^1.1.2",
     "prettier": "^3.7.4",
+    "tinyglobby": "^0.2.15",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
@@ -87,7 +85,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
-      "tsx ./node_modules/eslint/bin/eslint.js --cache --max-warnings=0 --fix",
+      "tsx ./node_modules/eslint/bin/eslint.js --cache --max-warnings=0 --fix --no-warn-ignored",
       "prettier --cache --write"
     ],
     "*.{json,yml}": "prettier --cache --write",

@@ -1,39 +1,47 @@
-import tseslint from 'typescript-eslint';
-import react from 'eslint-plugin-react';
-import reactHooks from 'eslint-plugin-react-hooks';
-import { defineConfig } from 'eslint/config';
-import type { ESLint } from 'eslint';
-import gitignore from 'eslint-config-flat-gitignore';
-import { PARSER_OPTIONS } from './constants.js';
+import { opencover } from './factory.js';
 
-const config = defineConfig([
-    gitignore(),
-    {
-        name: 'opencover/eslint/react',
+/**
+ * OpenCover ESLint config with React support.
+ *
+ * @param options Configuration options
+ * @returns ESLint flat config array
+ *
+ * @note TypeScript + React Integration Issue
+ * There's a known issue where TypeScript type-aware rules can conflict with
+ * React JSX code, especially in incomplete code snippets or certain edge cases.
+ * This preset disables `@typescript-eslint/no-misused-promises` for React files
+ * as a workaround.
+ *
+ * TODO: Investigate separating React+JS and React+TypeScript into separate configs
+ * to better handle the different linting requirements:
+ * - `react` - Pure React with JavaScript
+ * - `react-typescript` - React with TypeScript type-aware linting
+ *
+ * This would allow users to opt-in to type-aware rules only when needed and
+ * avoid conflicts in mixed or edge-case scenarios.
+ */
+export default async function opencoverReact(
+    options: {
+        typescript?: boolean;
+        tsconfigPath?: string;
+    } = {}
+) {
+    const config = await opencover({
+        ...options,
+        react: true,
+    });
+
+    // Add React-specific overrides to handle code snippets without full context
+    // NOTE: This is a workaround for TypeScript type-aware rules conflicting with React JSX
+    config.push({
+        name: 'opencover/react/overrides',
         files: ['**/*.jsx', '**/*.tsx'],
-        plugins: {
-            react: react,
-            'react-hooks': reactHooks as ESLint.Plugin,
-        },
-        languageOptions: {
-            parser: tseslint.parser,
-            parserOptions: {
-                ...PARSER_OPTIONS,
-                ecmaFeatures: {
-                    jsx: true,
-                },
-            },
-        },
-        settings: {
-            react: {
-                version: 'detect',
-            },
-        },
         rules: {
-            ...react.configs.recommended.rules,
-            ...reactHooks.configs.recommended.rules,
+            // Disable type-aware rules that don't work well with incomplete React snippets
+            // See note above about potential future separation of JS/TS React configs
+            '@typescript-eslint/no-misused-promises': 'off',
         },
-    },
-]);
+    });
 
-export default config;
+    return config;
+}

@@ -63,3 +63,7 @@ typings/
 # Only apps should have lockfiles
 .idea
 dist
+.notes/
+
+# Test fixtures temporary directory
+_fixtures

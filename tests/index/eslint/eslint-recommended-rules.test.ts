@@ -160,12 +160,14 @@ describe('eslint.configs.recommended rules', () => {
         expect(await lintWithDefaultConfig(code)).toHaveRuleError('no-misleading-character-class');
     });
 
-    // NOTE (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
-    // code is copied from eslint website
-    it.todo('should enforce no-octal', async () => {
+    // NOTE: Cannot test - TypeScript parser rejects octal literals as syntax errors
+    // before ESLint can lint them. The rule is enabled via @eslint/js recommended rules
+    // and would work for plain JavaScript files, but we test with TypeScript parser.
+    // eslint-disable-next-line vitest/no-disabled-tests
+    it.skip('should enforce no-octal', async () => {
         const code = dedent`
-            const num = 071;
-            const result = 5 + 07;
+            var a = 01234;
+            var b = 07;
         `;
         expect(await lintWithDefaultConfig(code)).toHaveRuleError('no-octal');
     });
@@ -306,16 +308,18 @@ describe('eslint.configs.recommended rules', () => {
         expect(await lintWithDefaultConfig(code)).toHaveRuleError('for-direction');
     });
 
-    // TODO (@eniko1556, 2025-11-19): this is a bug, even if you reenable it, it will still fail.
-    // code is copied from eslint website
-    it.todo('should enforce no-nonoctal-decimal-escape', async () => {
-        const code = dedent`
-            "\\8";
-            "\\9";
-            const foo = "w\\8less";
-            const bar = "December 1\\9";
-            const baz = "Don't use \\8 and \\9 escapes.";
-            const quux = "\\0\\8";
+    // NOTE: Cannot test - TypeScript parser rejects these escape sequences as syntax errors
+    // before ESLint can lint them. The rule is enabled via @eslint/js recommended rules
+    // and would work for plain JavaScript files, but we test with TypeScript parser.
+    // eslint-disable-next-line vitest/no-disabled-tests
+    it.skip('should enforce no-nonoctal-decimal-escape', async () => {
+        const code = String.raw`
+            "\8";
+            "\9";
+            const foo = "w\8less";
+            const bar = "December 1\9";
+            const baz = "Don't use \8 and \9 escapes.";
+            const quux = "\0\8";
         `;
         expect(await lintWithDefaultConfig(code)).toHaveRuleError('no-nonoctal-decimal-escape');
     });

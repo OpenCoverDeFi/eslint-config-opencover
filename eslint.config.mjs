@@ -1,2 +1,3 @@
-import react from './src/react.js';
-export { default } from './src/index.js';
+import opencover from './src/index.js';
+
+export default await opencover();

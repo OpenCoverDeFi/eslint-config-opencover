@@ -6,6 +6,32 @@ These rules apply specifically to React files (`**/*.jsx`, `**/*.tsx`).
 
 ---
 
+## ⚠️ Known Issue: TypeScript + React Integration
+
+There is a known compatibility issue between TypeScript type-aware rules and React JSX code. Specifically, `@typescript-eslint/no-misused-promises` can cause parsing errors with certain React patterns or incomplete code snippets.
+
+**Current Workaround:**
+This config currently disables `@typescript-eslint/no-misused-promises` for all React files (`.jsx`, `.tsx`) as a temporary fix.
+
+**Future Investigation Needed:**
+We need to investigate separating React configurations into:
+
+- `react` - Pure React with JavaScript (no TypeScript type-aware rules)
+- `react-typescript` - React with full TypeScript type-aware linting
+
+This would allow:
+
+1. Users to opt-in to type-aware rules only when they need them
+2. Better isolation between React and TypeScript linting concerns
+3. Avoiding conflicts in edge cases or mixed codebases
+
+**Related:**
+
+- See `src/react.ts` for the current workaround implementation
+- TypeScript type-aware rules require proper AST context that may not be available in all React scenarios
+
+---
+
 ## 1. React Recommended Rules
 
 These are the standard **React recommended rules** from `eslint-plugin-react`.

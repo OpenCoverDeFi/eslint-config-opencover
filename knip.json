@@ -4,5 +4,8 @@
     "interface": true,
     "type": true
   },
-  "tags": ["-lintignore"]
+  "ignore": ["tests/fixtures/**"],
+  "tags": ["-lintignore"],
+  "lint-staged": true,
+  "husky": true
 }

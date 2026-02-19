@@ -4,8 +4,12 @@ import type { RulesConfig } from '@eslint/core';
 import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
 import { tempDir } from './global-setup.js';
-import defaultConfig from '@/index.js';
-import reactConfig from '@/react.js';
+import opencover from '@/index.js';
+import opencoverReact from '@/react.js';
+
+export const defaultConfig = await opencover();
+
+const reactConfig = await opencoverReact();
 
 type Config = Linter.Config<RulesConfig> | Linter.Config<RulesConfig>[];
 

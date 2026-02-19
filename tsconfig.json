@@ -13,5 +13,6 @@
       "@tests/*": ["./tests/*"]
     }
   },
-  "include": ["src", "tests", "scripts", "vitest.config.ts"]
+  "include": ["src", "tests", "scripts", "vitest.config.ts"],
+  "exclude": ["tests/fixtures"]
 }
