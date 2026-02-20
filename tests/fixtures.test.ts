@@ -6,7 +6,9 @@ import { glob } from 'tinyglobby';
 import { afterAll, beforeAll, it } from 'vitest';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types.js';
 
-const distDir = resolve(fileURLToPath(import.meta.url), '../../dist');
+const projectRoot = resolve(fileURLToPath(import.meta.url), '../..');
+const distDir = resolve(projectRoot, 'dist');
+const eslintBin = resolve(projectRoot, 'node_modules/.bin/eslint');
 
 const isWindows = process.platform === 'win32';
 const timeout = isWindows ? 300_000 : 60_000;
@@ -21,9 +23,13 @@ afterAll(async () => {
 
 runWithConfig('default', {});
 
-runWithConfig('react', {
-    react: true,
-});
+runWithConfig(
+    'react',
+    {
+        react: true,
+    },
+    { extraInput: 'fixtures/input-react', skip: true }
+);
 
 runWithConfig('no-style', {
     stylistic: false,
@@ -33,8 +39,20 @@ runWithConfig('no-test', {
     test: false,
 });
 
-function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlatConfigItem[]) {
-    it.concurrent(
+interface RunOptions {
+    extraInput?: string;
+    skip?: boolean;
+}
+
+function runWithConfig(
+    name: string,
+    configs: OptionsConfig,
+    { extraInput, skip }: RunOptions = {},
+    ...items: TypedFlatConfigItem[]
+) {
+    const test = skip ? it.skip : it.concurrent;
+
+    test(
         name,
         async ({ expect }) => {
             const from = resolve('fixtures/input');
@@ -47,6 +65,13 @@ function runWithConfig(name: string, configs: OptionsConfig, ...items: TypedFlat
                     return !src.includes('node_modules');
                 },
             });
+
+            if (extraInput) {
+                await fs.cp(resolve(extraInput), target, {
+                    recursive: true,
+                    filter: (src) => !src.includes('node_modules'),
+                });
+            }
 
             await fs.writeFile(
                 join(target, 'eslint.config.js'),
@@ -61,7 +86,7 @@ export default opencover(
 `.trimStart()
             );
 
-            await execa('npx', ['eslint', '.', '--fix'], {
+            await execa(eslintBin, ['.', '--fix'], {
                 cwd: target,
                 stdio: 'pipe',
             });

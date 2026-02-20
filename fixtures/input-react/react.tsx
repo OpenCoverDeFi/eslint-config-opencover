@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Style: unknown property class should become className (react/no-unknown-property)
 function UnknownProp() {
     return <div class="test">Hello</div>;
