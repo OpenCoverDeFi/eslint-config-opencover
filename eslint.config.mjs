@@ -1,3 +1,3 @@
-import opencover from './src/index.js';
+import opencover from './dist/index.js';
 
 export default await opencover();

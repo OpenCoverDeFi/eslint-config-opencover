@@ -7,4 +7,9 @@ export default defineConfig({
             reporter: ['text', 'json', 'html'],
         },
     },
+    resolve: {
+        alias: {
+            '@/': new URL('./src/', import.meta.url).pathname,
+        },
+    },
 });

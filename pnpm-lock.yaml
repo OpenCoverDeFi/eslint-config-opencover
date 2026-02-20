@@ -45,6 +45,9 @@ importers:
         specifier: ^8.52.0
         version: 8.52.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3)
     devDependencies:
+      '@OpenCoverDeFi/eslint':
+        specifier: link:.
+        version: 'link:'
       '@changesets/changelog-github':
         specifier: ^0.5.2
         version: 0.5.2

@@ -1,5 +1,5 @@
 {
-  "name": "@OpenCoverDeFi/eslint",
+  "name": "@opencover/eslint-config",
   "version": "3.0.0",
   "type": "module",
   "private": true,

@@ -1,6 +1,6 @@
 import { it } from 'vitest';
-import type { OptionsConfig, TypedFlatConfigItem } from '../src/types.js';
-import { opencover } from '../src/factory.js';
+import type { OptionsConfig, TypedFlatConfigItem } from '@/types.js';
+import { opencover } from '@/factory.js';
 
 interface Suite {
     name: string;

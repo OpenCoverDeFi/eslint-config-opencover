@@ -1,17 +1,11 @@
 import fs from 'node:fs/promises';
 import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { execa } from 'execa';
 import { glob } from 'tinyglobby';
 import { afterAll, beforeAll, it } from 'vitest';
-import type { OptionsConfig, TypedFlatConfigItem } from '../src/types.js';
+import type { OptionsConfig, TypedFlatConfigItem } from '@/types.js';
 
-const projectRoot = resolve(fileURLToPath(import.meta.url), '../..');
-const distDir = resolve(projectRoot, 'dist');
-const eslintBin = resolve(projectRoot, 'node_modules/.bin/eslint');
-
-const isWindows = process.platform === 'win32';
-const timeout = isWindows ? 300_000 : 60_000;
+const timeout = 60_000;
 
 beforeAll(async () => {
     await fs.rm('_fixtures', { recursive: true, force: true });
@@ -47,7 +41,7 @@ interface RunOptions {
 function runWithConfig(
     name: string,
     configs: OptionsConfig,
-    { extraInput, skip }: RunOptions = {},
+    { skip }: RunOptions = {},
     ...items: TypedFlatConfigItem[]
 ) {
     const test = skip ? it.skip : it.concurrent;
@@ -66,18 +60,11 @@ function runWithConfig(
                 },
             });
 
-            if (extraInput) {
-                await fs.cp(resolve(extraInput), target, {
-                    recursive: true,
-                    filter: (src) => !src.includes('node_modules'),
-                });
-            }
-
             await fs.writeFile(
                 join(target, 'eslint.config.js'),
                 `
 // @eslint-disable
-import opencover from '${join(distDir, 'index.js')}'
+import opencover from '@opencover/eslint-config'
 
 export default opencover(
   ${JSON.stringify(configs)},
@@ -86,7 +73,7 @@ export default opencover(
 `.trimStart()
             );
 
-            await execa(eslintBin, ['.', '--fix'], {
+            await execa('pnpm', ['exec', 'eslint', '.', '--fix'], {
                 cwd: target,
                 stdio: 'pipe',
             });
