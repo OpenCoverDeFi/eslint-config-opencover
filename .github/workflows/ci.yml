@@ -38,3 +38,6 @@ jobs:
 
       - name: 🧪 Run test script
         run: pnpm test
+
+      - name: 🦋 Run changeset check
+        run: pnpm changeset status

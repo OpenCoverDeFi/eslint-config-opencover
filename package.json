@@ -44,6 +44,10 @@
     "format": "tsx ./node_modules/eslint/bin/eslint.js --fix . && prettier --write .",
     "lint": "tsx ./node_modules/eslint/bin/eslint.js --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:release": "pnpm build && changeset publish",
+    "prepare": "husky",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
@@ -66,10 +70,13 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.5.2",
+    "@changesets/cli": "^2.29.8",
     "@types/node": "^22.19.3",
     "@vitest/coverage-v8": "^4.0.0",
     "dedent": "^1.7.1",
     "eslint": "^9.39.2",
+    "husky": "^9.1.7",
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
     "local-pkg": "^1.1.2",
@@ -80,8 +87,8 @@
     "vitest": "^4.0.16"
   },
   "engines": {
-    "node": ">=22.20.0",
-    "pnpm": ">=10.0.0"
+    "node": ">=22",
+    "pnpm": ">=10"
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
@@ -90,6 +97,10 @@
     ],
     "*.{json,yml}": "prettier --cache --write",
     ".prettierrc": "prettier --cache --write"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "packageManager": "pnpm@10.28.0"
 }
