@@ -102,6 +102,7 @@ export async function opencover(
     if (enableReact) {
         configs.push(
             ...reactConfig({
+                typescript: !!enableTypeScript,
                 tsconfigPath,
                 overrides: options.react && typeof options.react === 'object' ? options.react.overrides : {},
             })

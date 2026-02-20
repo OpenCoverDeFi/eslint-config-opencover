@@ -8,13 +8,33 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export function reactConfig(
     options: {
+        typescript?: boolean;
         tsconfigPath?: string;
         overrides?: Partial<RulesConfig>;
     } = {}
 ): TypedFlatConfigItem[] {
-    const { overrides = {} } = options;
+    const { typescript: enableTypeScript = false, tsconfigPath, overrides = {} } = options;
 
     const files = [GLOB_JSX, GLOB_TSX];
+
+    const parserOptions: TypedFlatConfigItem['languageOptions'] = enableTypeScript
+        ? {
+              parser: tseslint.parser,
+              parserOptions: {
+                  ecmaVersion: 2024,
+                  sourceType: 'module',
+                  projectService: tsconfigPath ? { allowDefaultProject: ['*.mjs', '*.js', '*.cjs'] } : true,
+                  tsconfigRootDir: process.cwd(),
+                  ecmaFeatures: { jsx: true },
+              },
+          }
+        : {
+              parserOptions: {
+                  ecmaVersion: 2024,
+                  sourceType: 'module',
+                  ecmaFeatures: { jsx: true },
+              },
+          };
 
     return [
         {
@@ -27,16 +47,7 @@ export function reactConfig(
         {
             name: 'opencover/react/rules',
             files,
-            languageOptions: {
-                parser: tseslint.parser,
-                parserOptions: {
-                    ecmaVersion: 2024,
-                    sourceType: 'module',
-                    ecmaFeatures: {
-                        jsx: true,
-                    },
-                },
-            },
+            languageOptions: parserOptions,
             settings: {
                 react: {
                     version: 'detect',
@@ -45,6 +56,10 @@ export function reactConfig(
             rules: {
                 ...react.configs.flat.recommended.rules,
                 ...reactHooks.configs.recommended.rules,
+
+                // Not needed with the modern JSX transform (React 17+)
+                'react/react-in-jsx-scope': 'off',
+                'react/jsx-uses-react': 'off',
 
                 ...overrides,
             },
