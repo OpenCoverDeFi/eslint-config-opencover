@@ -41,14 +41,14 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "format": "tsx ./node_modules/eslint/bin/eslint.js --fix . && prettier --write .",
-    "lint": "tsx ./node_modules/eslint/bin/eslint.js --max-warnings=0 . && prettier --check .",
+    "format": "pnpm build && eslint --fix . && prettier --write .",
+    "lint": "pnpm build && eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "pnpm build && changeset publish",
     "prepare": "husky",
-    "test": "vitest run",
+    "test": "pnpm build && vitest run",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
