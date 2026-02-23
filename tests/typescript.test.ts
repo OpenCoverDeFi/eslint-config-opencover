@@ -21,11 +21,11 @@ const tester = new RuleTester({
     },
 });
 
-// Plugin registered in the setup config object.
+// Plugin registered in the upstream base config object.
 const tsPlugin = (typescript[0].plugins ?? {})['@typescript-eslint'];
 
-// Rules config object.
-const rules = typescript[2].rules ?? {};
+// Our custom rules live in the last config object.
+const rules = typescript[typescript.length - 1].rules ?? {};
 
 function opts(entry: unknown): unknown[] {
     return Array.isArray(entry) ? entry.slice(1) : [];

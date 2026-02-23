@@ -7,15 +7,12 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const reactConfig: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/react/setup',
+        name: 'opencover/react/rules',
+        files: [GLOB_JSX, GLOB_TSX],
         plugins: {
             react: react,
             'react-hooks': reactHooks as ESLint.Plugin,
         },
-    },
-    {
-        name: 'opencover/react/rules',
-        files: [GLOB_JSX, GLOB_TSX],
         languageOptions: {
             parser: tseslint.parser,
             parserOptions: {

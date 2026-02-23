@@ -4,14 +4,11 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const stylistic: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/stylistic/setup',
+        name: 'opencover/stylistic',
+        files: [GLOB_SRC],
         plugins: {
             stylistic: stylisticPlugin,
         },
-    },
-    {
-        name: 'opencover/stylistic/rules',
-        files: [GLOB_SRC],
         rules: {
             'stylistic/padding-line-between-statements': [
                 'error',

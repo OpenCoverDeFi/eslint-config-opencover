@@ -13,7 +13,7 @@ const tester = new RuleTester({
         ecmaVersion: 2022,
         sourceType: 'module',
         parser: tseslint.parser,
-        globals: test[1].languageOptions?.globals,
+        globals: test[0].languageOptions?.globals,
     },
 });
 

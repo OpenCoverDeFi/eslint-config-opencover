@@ -18,7 +18,7 @@ const tester = new RuleTester({
 });
 
 const importPlugin = (imports[0].plugins ?? {})['import'];
-const rules = imports[1].rules ?? {};
+const rules = imports[0].rules ?? {};
 
 function opts(entry: unknown): unknown[] {
     return Array.isArray(entry) ? entry.slice(1) : [];

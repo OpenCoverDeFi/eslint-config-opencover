@@ -4,14 +4,11 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const imports: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/imports/setup',
+        name: 'opencover/imports',
+        files: [GLOB_SRC],
         plugins: {
             import: importPlugin,
         },
-    },
-    {
-        name: 'opencover/imports/rules',
-        files: [GLOB_SRC],
         rules: {
             'import/order': [
                 'warn',

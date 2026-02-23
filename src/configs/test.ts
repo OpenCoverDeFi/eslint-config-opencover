@@ -4,14 +4,11 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const test: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/test/setup',
+        name: 'opencover/test',
+        files: GLOB_TESTS,
         plugins: {
             vitest,
         },
-    },
-    {
-        name: 'opencover/test/rules',
-        files: GLOB_TESTS,
         languageOptions: {
             globals: {
                 ...vitest.environments.env.globals,

@@ -4,14 +4,11 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const javascript: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/javascript/setup',
+        name: 'opencover/javascript',
+        files: [GLOB_SRC],
         plugins: {
             js,
         },
-    },
-    {
-        name: 'opencover/javascript/rules',
-        files: [GLOB_SRC],
         rules: {
             ...js.configs.recommended.rules,
 

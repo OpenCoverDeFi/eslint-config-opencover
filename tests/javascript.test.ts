@@ -19,7 +19,7 @@ const tester = new RuleTester({
 });
 
 // The rules config object where all our rules live.
-const rules = javascript[1].rules ?? {};
+const rules = javascript[0].rules ?? {};
 
 // Helper: given a rule entry [severity, ...options], return the options slice.
 function opts(entry: unknown): unknown[] {

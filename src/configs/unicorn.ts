@@ -4,14 +4,11 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const unicorn: TypedFlatConfigItem[] = [
     {
-        name: 'opencover/unicorn/setup',
+        name: 'opencover/unicorn',
+        files: [GLOB_SRC],
         plugins: {
             unicorn: unicornPlugin,
         },
-    },
-    {
-        name: 'opencover/unicorn/rules',
-        files: [GLOB_SRC],
         rules: {
             'unicorn/no-array-callback-reference': 'error',
             'unicorn/filename-case': [
