@@ -28,10 +28,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./react": {
-      "types": "./dist/react.d.ts",
-      "default": "./dist/react.js"
     }
   },
   "files": [
@@ -75,13 +71,10 @@
     "@types/node": "^22.19.3",
     "@vitest/coverage-v8": "^4.0.0",
     "eslint": "^9.39.2",
-    "execa": "^9.6.1",
     "husky": "^9.1.7",
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
-    "local-pkg": "^1.1.2",
     "prettier": "^3.7.4",
-    "tinyglobby": "^0.2.15",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"
