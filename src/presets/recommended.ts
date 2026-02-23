@@ -1,10 +1,4 @@
-import { ignores } from '../configs/ignores.js';
-import { javascript } from '../configs/javascript.js';
-import { typescript } from '../configs/typescript.js';
-import { stylistic } from '../configs/stylistic.js';
-import { imports } from '../configs/imports.js';
-import { unicorn } from '../configs/unicorn.js';
-import { test } from '../configs/test.js';
+import { ignores, imports, javascript, stylistic, test, typescript, unicorn } from '../configs/index.js';
 import type { TypedFlatConfigItem } from '../types.js';
 
 /**

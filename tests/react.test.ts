@@ -23,7 +23,7 @@ const tester = new RuleTester({
 });
 
 const reactPlugin = (reactConfig[0].plugins ?? {})['react'];
-const hooksPlugin = (reactConfig[0].plugins ?? {})['react-hooks'];
+const hooksPlugin = (reactConfig[1].plugins ?? {})['react-hooks'];
 
 describe('react config rules', () => {
     it('react/jsx-key: requires key prop on list elements', () => {
