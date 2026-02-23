@@ -1,53 +1,16 @@
-import { RuleTester } from 'eslint';
-import { describe, it } from 'vitest';
-import { imports } from '@/configs/imports.js';
+import { describe, it, expect } from 'vitest';
+import { lint } from './setup.js';
 
-/**
- * Tests for the imports config layer.
- * Rules are pulled from the imports config's plugin reference.
- */
+describe('import/order', () => {
+    it('allows node: imports before external', () => {
+        const messages = lint(["import fs from 'node:fs';", "import path from 'node:path';"].join('\n'), 'test.ts');
 
-const tester = new RuleTester({
-    languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-    },
-    settings: {
-        'import/resolver': { node: true },
-    },
-});
-
-const importPlugin = (imports[0].plugins ?? {})['import'];
-const rules = imports[0].rules ?? {};
-
-function opts(entry: unknown): unknown[] {
-    return Array.isArray(entry) ? entry.slice(1) : [];
-}
-
-describe('imports config rules', () => {
-    it('import/order: warns on unordered imports', () => {
-        tester.run('import/order', importPlugin.rules['order'], {
-            valid: [
-                {
-                    code: ["import fs from 'node:fs';", "import path from 'node:path';"].join('\n'),
-                    options: opts(rules['import/order']),
-                },
-            ],
-            invalid: [
-                {
-                    code: ["import express from 'express';", "import fs from 'node:fs';"].join('\n'),
-                    options: opts(rules['import/order']),
-                    output: ["import fs from 'node:fs';", "import express from 'express';", ''].join('\n'),
-                    errors: [{ message: '`node:fs` import should occur before import of `express`' }],
-                },
-            ],
-        });
+        expect(messages.filter((m) => m.ruleId === 'import/order')).toHaveLength(0);
     });
 
-    it('import/prefer-default-export: is off — sole named export is allowed', () => {
-        tester.run('import/prefer-default-export', importPlugin.rules['prefer-default-export'], {
-            valid: [{ code: 'export const foo = 1; export const bar = 2;' }],
-            invalid: [],
-        });
+    it('requires node: imports before external', () => {
+        const messages = lint(["import express from 'express';", "import fs from 'node:fs';"].join('\n'), 'test.ts');
+
+        expect(messages.some((m) => m.ruleId === 'import/order')).toBe(true);
     });
 });

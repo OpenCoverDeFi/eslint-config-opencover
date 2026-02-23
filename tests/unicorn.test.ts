@@ -1,72 +1,36 @@
-import { RuleTester } from 'eslint';
-import { describe, it } from 'vitest';
-import { unicorn } from '@/configs/unicorn.js';
+import { describe, it, expect } from 'vitest';
+import { lint } from './setup.js';
 
-/**
- * Tests for the unicorn config layer.
- * Rules are pulled from the unicorn config's plugin reference.
- */
+describe('unicorn/no-array-callback-reference', () => {
+    it('allows inline arrow functions', () => {
+        const messages = lint('const result = arr.filter((x) => isValid(x));', 'test.ts');
 
-const tester = new RuleTester({
-    languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-    },
-});
-
-const unicornPlugin = (unicorn[0].plugins ?? {})['unicorn'];
-
-describe('unicorn config rules', () => {
-    it('unicorn/no-array-callback-reference: disallows passing user-defined functions directly as callbacks', () => {
-        tester.run('unicorn/no-array-callback-reference', unicornPlugin.rules['no-array-callback-reference'], {
-            valid: [
-                { code: 'const result = arr.filter((x) => isValid(x));' },
-                { code: 'const result = arr.filter(Boolean);' },
-            ],
-            invalid: [
-                {
-                    code: 'const result = arr.filter(isValid);',
-                    errors: [
-                        {
-                            messageId: 'error-with-name',
-                            suggestions: [
-                                {
-                                    messageId: 'replace-with-name',
-                                    output: 'const result = arr.filter((element) => isValid(element));',
-                                },
-                                {
-                                    messageId: 'replace-with-name',
-                                    output: 'const result = arr.filter((element, index) => isValid(element, index));',
-                                },
-                                {
-                                    messageId: 'replace-with-name',
-                                    output: 'const result = arr.filter((element, index, array) => isValid(element, index, array));',
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        });
+        expect(messages.filter((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toHaveLength(0);
     });
 
-    it('unicorn/filename-case: enforces kebab-case filenames', () => {
-        tester.run('unicorn/filename-case', unicornPlugin.rules['filename-case'], {
-            valid: [
-                {
-                    code: '// valid',
-                    filename: 'my-component.ts',
-                    options: [{ case: 'kebabCase' }],
-                },
-            ],
-            invalid: [
-                {
-                    code: '// invalid',
-                    filename: 'MyComponent.ts',
-                    options: [{ case: 'kebabCase' }],
-                    errors: [{ messageId: 'filename-case' }],
-                },
-            ],
-        });
+    it('allows builtin Boolean reference', () => {
+        const messages = lint('const result = arr.filter(Boolean);', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toHaveLength(0);
+    });
+
+    it('bans user-defined function passed directly', () => {
+        const messages = lint('const result = arr.filter(isValid);', 'test.ts');
+
+        expect(messages.some((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toBe(true);
+    });
+});
+
+describe('unicorn/filename-case', () => {
+    it('allows kebab-case filenames', () => {
+        const messages = lint('// ok', 'my-component.ts');
+
+        expect(messages.filter((m) => m.ruleId === 'unicorn/filename-case')).toHaveLength(0);
+    });
+
+    it('bans PascalCase filenames', () => {
+        const messages = lint('// ok', 'MyComponent.ts');
+
+        expect(messages.some((m) => m.ruleId === 'unicorn/filename-case')).toBe(true);
     });
 });

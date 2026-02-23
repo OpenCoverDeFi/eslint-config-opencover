@@ -55,15 +55,23 @@
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "tsc-alias": "^1.8.16",
     "typescript-eslint": "^8.52.0"
   },
   "peerDependencies": {
     "eslint": "^9.39.1",
+    "eslint-plugin-react": "^7",
+    "eslint-plugin-react-hooks": "^7",
     "typescript": "^5.9.3"
+  },
+  "peerDependenciesMeta": {
+    "eslint-plugin-react": {
+      "optional": true
+    },
+    "eslint-plugin-react-hooks": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
@@ -71,6 +79,8 @@
     "@types/node": "^22.19.3",
     "@vitest/coverage-v8": "^4.0.0",
     "eslint": "^9.39.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
@@ -90,6 +100,12 @@
     ],
     "*.{json,yml}": "prettier --cache --write",
     ".prettierrc": "prettier --cache --write"
+  },
+  "knip": {
+    "ignoreDependencies": [
+      "eslint-plugin-react",
+      "eslint-plugin-react-hooks"
+    ]
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

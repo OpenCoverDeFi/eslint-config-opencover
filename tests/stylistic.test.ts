@@ -1,89 +1,22 @@
-import { RuleTester } from 'eslint';
-import { describe, it } from 'vitest';
-import { stylistic } from '@/configs/stylistic.js';
+import { describe, it, expect } from 'vitest';
+import { lint } from './setup.js';
 
-/**
- * Tests for the stylistic config layer.
- * Rules are pulled from the stylistic config's plugin reference.
- */
+describe('padding-line-between-statements', () => {
+    it('requires blank line before function', () => {
+        const messages = lint('const x = 1;\nfunction foo() {}', 'test.ts');
 
-const tester = new RuleTester({
-    languageOptions: {
-        ecmaVersion: 2022,
-        sourceType: 'module',
-    },
-});
-
-const styPlugin = (stylistic[0].plugins ?? {})['stylistic'];
-const rule = styPlugin.rules['padding-line-between-statements'];
-
-describe('stylistic config rules', () => {
-    it('padding-line-between-statements: requires blank line before function declarations', () => {
-        tester.run('stylistic/padding-line-between-statements', rule, {
-            valid: [
-                {
-                    code: 'const x = 1;\n\nfunction foo() {}',
-                    options: [
-                        { blankLine: 'always', prev: '*', next: 'function' },
-                        { blankLine: 'always', prev: 'function', next: '*' },
-                    ],
-                },
-            ],
-            invalid: [
-                {
-                    code: 'const x = 1;\nfunction foo() {}',
-                    output: 'const x = 1;\n\nfunction foo() {}',
-                    options: [
-                        { blankLine: 'always', prev: '*', next: 'function' },
-                        { blankLine: 'always', prev: 'function', next: '*' },
-                    ],
-                    errors: [{ messageId: 'expectedBlankLine' }],
-                },
-            ],
-        });
+        expect(messages.some((m) => m.ruleId === 'stylistic/padding-line-between-statements')).toBe(true);
     });
 
-    it('padding-line-between-statements: requires blank line after function declarations', () => {
-        tester.run('stylistic/padding-line-between-statements', rule, {
-            valid: [
-                {
-                    code: 'function foo() {}\n\nconst x = 1;',
-                    options: [
-                        { blankLine: 'always', prev: 'function', next: '*' },
-                        { blankLine: 'always', prev: '*', next: 'function' },
-                    ],
-                },
-            ],
-            invalid: [
-                {
-                    code: 'function foo() {}\nconst x = 1;',
-                    output: 'function foo() {}\n\nconst x = 1;',
-                    options: [
-                        { blankLine: 'always', prev: 'function', next: '*' },
-                        { blankLine: 'always', prev: '*', next: 'function' },
-                    ],
-                    errors: [{ messageId: 'expectedBlankLine' }],
-                },
-            ],
-        });
+    it('requires blank line after function', () => {
+        const messages = lint('function foo() {}\nconst x = 1;', 'test.ts');
+
+        expect(messages.some((m) => m.ruleId === 'stylistic/padding-line-between-statements')).toBe(true);
     });
 
-    it('padding-line-between-statements: requires blank line before if statements', () => {
-        tester.run('stylistic/padding-line-between-statements', rule, {
-            valid: [
-                {
-                    code: 'const x = 1;\n\nif (x) {}',
-                    options: [{ blankLine: 'always', prev: '*', next: 'if' }],
-                },
-            ],
-            invalid: [
-                {
-                    code: 'const x = 1;\nif (x) {}',
-                    output: 'const x = 1;\n\nif (x) {}',
-                    options: [{ blankLine: 'always', prev: '*', next: 'if' }],
-                    errors: [{ messageId: 'expectedBlankLine' }],
-                },
-            ],
-        });
+    it('requires blank line before if', () => {
+        const messages = lint('const x = 1;\nif (x) {}', 'test.ts');
+
+        expect(messages.some((m) => m.ruleId === 'stylistic/padding-line-between-statements')).toBe(true);
     });
 });
