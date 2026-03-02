@@ -2,8 +2,6 @@
   "name": "@opencover/eslint-config",
   "version": "3.0.0",
   "type": "module",
-  "private": true,
-  "main": "dist/index.js",
   "description": "ESLint Typescript shareable config for OpenCover's coding style.",
   "author": {
     "name": "OpenCover",
@@ -28,6 +26,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/configs/react.d.ts",
+      "default": "./dist/configs/react.js"
     }
   },
   "files": [
@@ -48,15 +50,12 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@eslint/core": "^1.0.0",
     "@eslint/js": "^9.39.2",
     "@stylistic/eslint-plugin": "^5.5.0",
     "@vitest/eslint-plugin": "^1.6.5",
     "eslint-config-flat-gitignore": "^2.1.0",
-    "eslint-import-resolver-typescript": "^4.4.4",
-    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-unicorn": "^62.0.0",
-    "tsc-alias": "^1.8.16",
     "typescript-eslint": "^8.52.0"
   },
   "peerDependencies": {
@@ -76,6 +75,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
+    "@eslint/core": "^1.0.0",
     "@types/node": "^22.19.3",
     "@vitest/coverage-v8": "^4.0.0",
     "eslint": "^9.39.2",
@@ -85,6 +85,7 @@
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
     "prettier": "^3.7.4",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"

@@ -1,41 +1,29 @@
 import { describe, it, expect, beforeAll } from 'vitest';
-import { Linter } from 'eslint';
-import { recommended } from '@/index.js';
+import { createLinter } from './setup.js';
 import { reactConfig } from '@/configs/react.js';
-import type { TypedFlatConfigItem } from '@/types.js';
 
-let config: Linter.Config[];
+let lint: ReturnType<typeof createLinter>;
 
 beforeAll(async () => {
     const react = await reactConfig();
-    config = [
-        ...recommended,
+    lint = createLinter([
         ...react,
         {
             settings: { react: { version: '18' } },
             languageOptions: {
                 parserOptions: {
-                    projectService: {
-                        allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-                    },
                     ecmaFeatures: { jsx: true },
                 },
             },
         },
-    ] satisfies TypedFlatConfigItem[];
+    ]);
 });
-
-const linter = new Linter({ configType: 'flat' });
-
-function lint(code: string, filename: string): Linter.LintMessage[] {
-    return linter.verify(code, config, { filename });
-}
 
 describe('react/jsx-key', () => {
     it('requires key prop in mapped JSX', () => {
         const messages = lint('const el = [1,2].map((x) => <div />);', 'test.tsx');
 
-        expect(messages.some((m) => m.ruleId === 'react/jsx-key')).toBe(true);
+        expect(messages.filter((m) => m.ruleId === 'react/jsx-key')).toHaveLength(1);
     });
 });
 
@@ -43,7 +31,7 @@ describe('react/no-deprecated', () => {
     it('bans deprecated React APIs', () => {
         const messages = lint("import React from 'react'; React.render(<div />, document.body);", 'test.tsx');
 
-        expect(messages.some((m) => m.ruleId === 'react/no-deprecated')).toBe(true);
+        expect(messages.filter((m) => m.ruleId === 'react/no-deprecated')).toHaveLength(1);
     });
 });
 
@@ -59,7 +47,7 @@ describe('react-hooks/rules-of-hooks', () => {
             'test.tsx'
         );
 
-        expect(messages.some((m) => m.ruleId === 'react-hooks/rules-of-hooks')).toBe(true);
+        expect(messages.filter((m) => m.ruleId === 'react-hooks/rules-of-hooks')).toHaveLength(1);
     });
 });
 
@@ -75,6 +63,6 @@ describe('react-hooks/exhaustive-deps', () => {
             'test.tsx'
         );
 
-        expect(messages.some((m) => m.ruleId === 'react-hooks/exhaustive-deps')).toBe(true);
+        expect(messages.filter((m) => m.ruleId === 'react-hooks/exhaustive-deps')).toHaveLength(1);
     });
 });

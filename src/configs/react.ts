@@ -35,7 +35,6 @@ export async function reactConfig(): Promise<TypedFlatConfigItem[]> {
                 parser: tseslint.parser,
                 parserOptions: {
                     projectService: true,
-                    tsconfigRootDir: process.cwd(),
                     ecmaFeatures: { jsx: true },
                 },
             },

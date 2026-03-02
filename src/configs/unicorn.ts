@@ -10,6 +10,9 @@ export const unicorn: TypedFlatConfigItem[] = [
             unicorn: unicornPlugin,
         },
         rules: {
+            ...unicornPlugin.configs['recommended'].rules,
+
+            // Keep our existing overrides
             'unicorn/no-array-callback-reference': 'error',
             'unicorn/filename-case': [
                 'error',
@@ -17,6 +20,12 @@ export const unicorn: TypedFlatConfigItem[] = [
                     case: 'kebabCase',
                 },
             ],
+
+            // Disable rules that are too noisy or conflict with team style
+            'unicorn/prevent-abbreviations': 'off',
+            'unicorn/no-array-for-each': 'off',
+            'unicorn/no-array-reduce': 'off',
+            'unicorn/no-null': 'off',
         },
     },
 ];

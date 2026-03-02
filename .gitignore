@@ -67,3 +67,7 @@ dist
 
 # Test fixtures temporary directory
 _fixtures
+
+# ai related
+.claude
+.cursor

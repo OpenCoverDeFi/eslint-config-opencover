@@ -13,7 +13,6 @@ export const typescript: TypedFlatConfigItem[] = [
         languageOptions: {
             parserOptions: {
                 projectService: true,
-                tsconfigRootDir: process.cwd(),
             },
         },
         rules: {
@@ -44,6 +43,9 @@ export const typescript: TypedFlatConfigItem[] = [
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            // Ban Map in favor of plain objects/Records: they are serializable,
+            // have simpler equality semantics, and integrate better with
+            // TypeScript's Record type in our DeFi/insurance domain.
             '@typescript-eslint/no-restricted-types': [
                 'error',
                 {
