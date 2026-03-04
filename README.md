@@ -1,6 +1,6 @@
 # eslint-config-opencover
 
-> ESLint Typescript shareable config for OpenCover's coding style
+> ESLint TypeScript shareable config for OpenCover's coding style
 
 ## Install
 
@@ -13,72 +13,105 @@ pnpm add -D eslint-config-opencover
 Then, create an `eslint.config.mjs` file:
 
 ```mjs
-export { default } from '@opencover/eslint-config-opencover';
+import { defineConfig } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
+
+export default defineConfig(...opencoverConfig);
 ```
 
-### Usage for React
+### React
 
-You can use the React config standalone:
+Install the required peer dependencies:
+
+```console
+pnpm add -D eslint-plugin-react eslint-plugin-react-hooks
+```
+
+Then add the React config after the base config:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
+import { opencoverConfig } from 'eslint-config-opencover';
+import { reactConfig } from 'eslint-config-opencover/react';
 
-export default defineConfig([...openCoverReactConfig]);
+const react = await reactConfig();
+
+export default defineConfig({ ...opencoverConfig, ...react });
 ```
 
-Or combine both the default and React configs together:
+### Overriding rules
+
+Add a config object after the preset to override any rule:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import opencoverConfig from '@opencover/eslint-config-opencover';
-import opencoverReactConfig from '@opencover/eslint-config-opencover/react';
+import { opencoverConfig } from 'eslint-config-opencover';
 
-export default defineConfig([...opencoverConfig, ...opencoverReactConfig]);
-```
-
-## Rules
-
-This package configures ESLint with a comprehensive set of rules for TypeScript projects.
-
-### Ignore certain files
-
-Add files to ignore in your `eslint.config.ts`:
-
-```ts
-import { defineConfig } from 'eslint/config';
-import opencoverConfig from '@opencover/eslint-config-opencover';
-
-export default defineConfig([
-  {
-    ignores: ['*.css', '*.svg'],
+export default defineConfig(...opencoverConfig, {
+  files: ['**/*.ts', '**/*.tsx'],
+  rules: {
+    '@typescript-eslint/no-non-null-assertion': 'off',
   },
-  ...opencoverConfig,
-]);
+});
 ```
+
+### Overriding a named config
+
+Each config object has a `name` field (`opencover`, `opencover/typescript`, `opencover/test`). When using `defineConfig` from `eslint/config`, you can target a named config and override any of its properties — `files`, `rules`, `settings`, etc.:
+
+```mjs
+import { defineConfig } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
+
+export default defineConfig(...opencoverConfig, {
+  name: 'opencover/test',
+  files: ['**/e2e/**/*.ts', '**/*.spec.ts'],
+  rules: {
+    'vitest/expect-expect': 'off',
+  },
+});
+```
+
+This targets the `opencover/test` config and overrides both its file globs and rules. The same approach works for any named config (`opencover`, `opencover/typescript`, etc.).
+
+### Ignoring files globally
+
+Use `globalIgnores` to exclude files from all rules:
+
+```mjs
+import { defineConfig, globalIgnores } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
+
+export default defineConfig(globalIgnores(['**/generated/**', '*.css', '*.svg']), ...opencoverConfig);
+```
+
+### Ignoring files per rule
+
+Use `ignores` inside a config object to skip specific rules for certain files:
+
+```mjs
+import { defineConfig } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
+
+export default defineConfig(...opencoverConfig, {
+  files: ['**/scripts/**'],
+  rules: {
+    'no-console': 'off',
+  },
+});
+```
+
+## What's included
+
+| Config                 | Scope            | Description                                          |
+| ---------------------- | ---------------- | ---------------------------------------------------- |
+| `opencover`            | All source files | Core JS rules, stylistic, import-x, unicorn          |
+| `opencover/typescript` | `*.ts`, `*.tsx`  | typescript-eslint strict type-checked + custom rules |
+| `opencover/test`       | Test files       | Vitest recommended + padding rules                   |
+| `opencover/react`      | `*.jsx`, `*.tsx` | React + React Hooks (optional)                       |
 
 ## Troubleshooting
 
-### Error: "You have used a rule which requires type information, but don't have parserOptions set to generate type information for this file"
+### "You have used a rule which requires type information..."
 
-If you encounter this error, it typically means ESLint is trying to lint a non-TypeScript file (e.g., `.js`, `.json`, `.md`, `.css`, etc.) with TypeScript-specific rules that require type information.
-
-**Solution:** Check your ignore patterns. The error message will show the filename that's causing the issue. Add that file or file pattern to your `ignores` array in `eslint.config.ts`.
-
-For example, if you see this error for a `.js` file:
-
-```ts
-export default defineConfig([
-  {
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-      '**/coverage/**',
-      '**/.git/**',
-      '**/pnpm-lock.yaml',
-      '*.js', // Add this if you have .js files that shouldn't be linted
-    ],
-  },
-  ...opencoverConfig,
-]);
-```
+This means ESLint is trying to lint a non-TypeScript file with type-aware rules. Check the error message for the filename and add it to your `ignores` array.

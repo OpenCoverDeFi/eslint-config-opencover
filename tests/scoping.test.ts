@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { createLinter, lint } from './setup.js';
-import { reactConfig } from '@/configs/react.js';
+import { reactConfig } from '@/react.js';
 
 describe('typescript scoping', () => {
     it('does not apply TypeScript rules to .js files', () => {

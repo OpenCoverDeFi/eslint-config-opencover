@@ -1,12 +1,12 @@
 import { Linter } from 'eslint';
-import { recommended } from '@/index.js';
+import { opencoverConfig } from '@/index.js';
 import type { TypedFlatConfigItem } from '@/types.js';
 
 const linter = new Linter({ configType: 'flat' });
 
 function buildConfig(extraConfigs: TypedFlatConfigItem[] = []): Linter.Config[] {
     return [
-        ...recommended,
+        ...opencoverConfig,
         ...extraConfigs,
         {
             languageOptions: {
