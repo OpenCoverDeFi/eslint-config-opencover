@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-opencover",
-  "version": "3.0.0",
+  "version": "2.0.5",
   "type": "module",
   "description": "ESLint Typescript shareable config for OpenCover's coding style.",
   "author": {
