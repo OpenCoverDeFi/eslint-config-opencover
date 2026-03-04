@@ -1,5 +1,5 @@
 ---
-'@opencover/eslint-config': major
+'eslint-config-opencover': major
 ---
 
 Migrate from ESLint 8 legacy config to ESLint 9 flat config.
