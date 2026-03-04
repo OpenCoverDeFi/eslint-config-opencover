@@ -1,6 +1,6 @@
 import tseslint from 'typescript-eslint';
-import { GLOB_JSX, GLOB_TSX } from '../globs.js';
-import type { TypedFlatConfigItem } from '../types.js';
+import { GLOB_JSX, GLOB_TSX } from './globs.js';
+import type { TypedFlatConfigItem } from './types.js';
 
 /**
  * React ESLint config.
@@ -30,6 +30,7 @@ export async function reactConfig(): Promise<TypedFlatConfigItem[]> {
         // OpenCover react overrides.
         {
             name: 'opencover/react',
+            // Default files, users can overwrite this.
             files: [GLOB_JSX, GLOB_TSX],
             languageOptions: {
                 parser: tseslint.parser,
@@ -42,10 +43,6 @@ export async function reactConfig(): Promise<TypedFlatConfigItem[]> {
                 react: { version: 'detect' },
             },
             rules: {
-                // Not needed with the modern JSX transform (React 17+)
-                'react/react-in-jsx-scope': 'off',
-                'react/jsx-uses-react': 'off',
-
                 // Disable type-aware rule that conflicts with React JSX event handlers
                 '@typescript-eslint/no-misused-promises': 'off',
             },

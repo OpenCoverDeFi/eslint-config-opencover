@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest';
 import { createLinter } from './setup.js';
-import { reactConfig } from '@/configs/react.js';
+import { reactConfig } from '@/react.js';
 
 let lint: ReturnType<typeof createLinter>;
 

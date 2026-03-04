@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { lint } from './setup.js';
-import { recommended } from '@/index.js';
+import { opencoverConfig } from '@/index.js';
 
 describe('integration', () => {
     it('lints a realistic TypeScript module with zero errors', () => {
@@ -41,22 +41,17 @@ describe('integration', () => {
     });
 });
 
-describe('recommended preset', () => {
+describe('opencover preset', () => {
     it('contains all expected named configs', () => {
-        const names = recommended.map((c) => c.name).filter(Boolean);
+        const names = opencoverConfig.map((c) => c.name).filter(Boolean);
 
-        expect(names).toContain('opencover/javascript');
-        expect(names).toContain('opencover/typescript/setup');
+        expect(names).toContain('opencover');
         expect(names).toContain('opencover/typescript');
-        expect(names).toContain('opencover/stylistic');
-        expect(names).toContain('opencover/imports');
-        expect(names).toContain('opencover/unicorn');
         expect(names).toContain('opencover/test');
     });
 
     it('has a reasonable number of config objects', () => {
-        // Ignores (gitignore + globalIgnores) + javascript + typescript (setup + rules) +
-        // stylistic + imports + unicorn + test = at least 9
-        expect(recommended.length).toBeGreaterThanOrEqual(9);
+        // Ignores (gitignore + globalIgnores) + base + typescript (setup + rules) + test = at least 5
+        expect(opencoverConfig.length).toBeGreaterThanOrEqual(5);
     });
 });

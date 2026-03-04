@@ -8,47 +8,36 @@ The package has been rewritten from the ground up. It now exports plain synchron
 
 **Migration from v2 (ESLint 8)**
 
-Delete your `.eslintrc.js` (or `.eslintrc.cjs`, etc.) and create an `eslint.config.js` instead:
+Delete your `.eslintrc.js` (or `.eslintrc.cjs`, etc.) and create an `eslint.config.mjs` instead:
 
-```js
-// eslint.config.js
-import { recommended } from '@opencover/eslint-config';
+```mjs
+import { defineConfig } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
 
-export default [
-  ...recommended,
-  // your overrides go here (last-wins)
-];
+export default defineConfig(...opencoverConfig);
 ```
 
-For React projects, spread `reactConfig` after `recommended`:
+For React projects, install `eslint-plugin-react` and `eslint-plugin-react-hooks`, then:
 
-```js
-import { recommended, reactConfig } from '@opencover/eslint-config';
+```mjs
+import { defineConfig } from 'eslint/config';
+import { opencoverConfig } from 'eslint-config-opencover';
+import { reactConfig } from 'eslint-config-opencover/react';
 
-export default [...recommended, ...reactConfig];
+const react = await reactConfig();
+
+export default defineConfig(...opencoverConfig, ...react);
 ```
 
 **New API**
 
-Everything is exported from the single entry point. Use the `recommended` preset or compose individual layers:
+`opencoverConfig` is the composed preset (ignores + opencover + opencover/typescript + opencover/test).
 
-```js
-import {
-  recommended,
-  reactConfig,
-  ignores,
-  javascript,
-  typescript,
-  stylistic,
-  imports,
-  unicorn,
-  test,
-} from '@opencover/eslint-config';
-```
+React is a separate subpath export at `eslint-config-opencover/react`.
 
-`recommended` = ignores + javascript + typescript + stylistic + imports + unicorn + test (no React).
+Each named config (`opencover`, `opencover/typescript`, `opencover/test`) can be overridden via `defineConfig` using the `name` field.
 
 **Other breaking changes**
 
-- Requires ESLint 9 and TypeScript 5. ESLint 8 is no longer supported.
+- Requires ESLint 10 and TypeScript 5. ESLint 8 is no longer supported.
 - TypeScript rules always use `projectService: true`; point ESLint at your project root instead of passing a tsconfig path.

@@ -16,7 +16,7 @@
     "react",
     "node"
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
@@ -28,8 +28,8 @@
       "default": "./dist/index.js"
     },
     "./react": {
-      "types": "./dist/configs/react.d.ts",
-      "default": "./dist/configs/react.js"
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
     }
   },
   "files": [
@@ -38,7 +38,7 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
     "format": "pnpm build && eslint --fix . && prettier --write .",
     "lint": "pnpm build && eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
@@ -46,7 +46,7 @@
     "changeset:version": "changeset version",
     "changeset:release": "pnpm build && changeset publish",
     "prepare": "husky",
-    "test": "pnpm build && vitest run",
+    "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -85,6 +85,7 @@
     "knip": "^5.84.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
+    "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
