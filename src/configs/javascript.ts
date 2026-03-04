@@ -6,14 +6,9 @@ export const javascript: TypedFlatConfigItem[] = [
     {
         name: 'opencover/javascript',
         files: [GLOB_SRC],
-        plugins: {
-            js,
-        },
         rules: {
             ...js.configs.recommended.rules,
 
-            // Custom OpenCover rules
-            'block-spacing': ['error', 'always'],
             'capitalized-comments': [
                 'warn',
                 'always',
@@ -21,12 +16,7 @@ export const javascript: TypedFlatConfigItem[] = [
                     ignoreConsecutiveComments: true,
                 },
             ],
-            'comma-spacing': ['error', { before: false, after: true }],
-            'key-spacing': ['warn', { mode: 'strict' }],
-            'keyword-spacing': ['error', { before: true }],
             'no-console': ['error', { allow: ['warn', 'error'] }],
-            'no-multi-spaces': 'error',
-            'no-multiple-empty-lines': ['warn', { max: 1, maxEOF: 1 }],
             'no-restricted-syntax': [
                 'error',
                 {
@@ -36,29 +26,6 @@ export const javascript: TypedFlatConfigItem[] = [
             ],
             'no-unneeded-ternary': 'error',
             'no-use-before-define': ['off'],
-            'object-curly-spacing': ['warn', 'always'],
-            'quote-props': ['warn', 'as-needed'],
-            quotes: ['error', 'single', { avoidEscape: true }],
-            semi: ['error', 'always'],
-            'space-before-blocks': ['error', 'always'],
-            'space-in-parens': ['error', 'never'],
-            'space-infix-ops': 'error',
-            'spaced-comment': [
-                'error',
-                'always',
-                {
-                    block: {
-                        balanced: true,
-                    },
-                },
-            ],
-            'lines-between-class-members': [
-                'error',
-                'always',
-                {
-                    exceptAfterSingleLine: true,
-                },
-            ],
         },
     },
 ];

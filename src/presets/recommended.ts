@@ -9,7 +9,7 @@ import type { TypedFlatConfigItem } from '../types.js';
  * For React projects, spread the `react` config after this preset:
  * @example
  * import { recommended, react } from '@opencover/eslint-config';
- * export default [...recommended, ...react];
+ * export default [...recommended, ...(await react())];
  */
 export const recommended: TypedFlatConfigItem[] = [
     ...ignores,

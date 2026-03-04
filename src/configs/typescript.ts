@@ -4,7 +4,7 @@ import type { TypedFlatConfigItem } from '../types.js';
 
 export const typescript: TypedFlatConfigItem[] = [
     // Global: plugin + parser registration (no files scope).
-    tseslint.configs.strictTypeChecked[0],
+    { ...tseslint.configs.strictTypeChecked[0], name: 'opencover/typescript/setup' },
 
     // TS/TSX only: all rule sets + projectService + OpenCover custom rules.
     {

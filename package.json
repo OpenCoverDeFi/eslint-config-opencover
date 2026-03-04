@@ -38,7 +38,7 @@
     "dist/**/*.d.ts.map"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json",
     "format": "pnpm build && eslint --fix . && prettier --write .",
     "lint": "pnpm build && eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
@@ -85,7 +85,6 @@
     "knip": "^5.80.2",
     "lint-staged": "^16.2.6",
     "prettier": "^3.7.4",
-    "tsc-alias": "^1.8.16",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.16"

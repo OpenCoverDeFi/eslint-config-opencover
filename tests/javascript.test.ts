@@ -15,34 +15,6 @@ describe('no-console', () => {
     });
 });
 
-describe('quotes', () => {
-    it('enforces single quotes', () => {
-        const messages = lint('const x = "hello";', 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'quotes')).toHaveLength(1);
-    });
-
-    it('allows single quotes', () => {
-        const messages = lint("const _x = 'hello';", 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'quotes')).toHaveLength(0);
-    });
-});
-
-describe('semi', () => {
-    it('requires semicolons', () => {
-        const messages = lint('const x = 1', 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'semi')).toHaveLength(1);
-    });
-
-    it('allows semicolons', () => {
-        const messages = lint('const _x = 1;', 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'semi')).toHaveLength(0);
-    });
-});
-
 describe('no-restricted-syntax', () => {
     it('bans TS enums', () => {
         const messages = lint('enum Direction { Up, Down }', 'test.ts');
@@ -72,20 +44,6 @@ describe('no-unneeded-ternary', () => {
     });
 });
 
-describe('spaced-comment', () => {
-    it('requires space after //', () => {
-        const messages = lint('//not fine', 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'spaced-comment')).toHaveLength(1);
-    });
-
-    it('allows space after //', () => {
-        const messages = lint('// Fine', 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'spaced-comment')).toHaveLength(0);
-    });
-});
-
 describe('capitalized-comments', () => {
     it('warns on lowercase comments', () => {
         const messages = lint('// not capitalized', 'test.ts');
@@ -97,30 +55,5 @@ describe('capitalized-comments', () => {
         const messages = lint('// Fine comment', 'test.ts');
 
         expect(messages.filter((m) => m.ruleId === 'capitalized-comments')).toHaveLength(0);
-    });
-});
-
-describe('lines-between-class-members', () => {
-    it('requires blank line between multi-line class members', () => {
-        const code = [
-            'class Foo {',
-            '  public a(): void {',
-            '    return;',
-            '  }',
-            '  public b(): void {',
-            '    return;',
-            '  }',
-            '}',
-        ].join('\n');
-        const messages = lint(code, 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'lines-between-class-members')).toHaveLength(1);
-    });
-
-    it('allows single-line class members without blank line', () => {
-        const code = ['class Foo {', '  public a = 1;', '  public b = 2;', '}'].join('\n');
-        const messages = lint(code, 'test.ts');
-
-        expect(messages.filter((m) => m.ruleId === 'lines-between-class-members')).toHaveLength(0);
     });
 });

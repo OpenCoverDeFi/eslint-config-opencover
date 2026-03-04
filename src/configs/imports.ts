@@ -11,7 +11,6 @@ export const imports: TypedFlatConfigItem[] = [
         },
         rules: {
             'import-x/order': ['warn'],
-            'import-x/prefer-default-export': 'off',
         },
     },
 ];
