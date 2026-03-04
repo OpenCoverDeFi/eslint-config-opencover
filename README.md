@@ -14,9 +14,9 @@ Then, create an `eslint.config.mjs` file:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(...opencoverConfig);
+export default defineConfig([...opencover]);
 ```
 
 ### React
@@ -31,12 +31,12 @@ Then add the React config after the base config:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 import { reactConfig } from 'eslint-config-opencover/react';
 
 const react = await reactConfig();
 
-export default defineConfig({ ...opencoverConfig, ...react });
+export default defineConfig([...opencover, ...react]);
 ```
 
 ### Overriding rules
@@ -45,14 +45,17 @@ Add a config object after the preset to override any rule:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(...opencoverConfig, {
-  files: ['**/*.ts', '**/*.tsx'],
-  rules: {
-    '@typescript-eslint/no-non-null-assertion': 'off',
+export default defineConfig([
+  ...opencover,
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    rules: {
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
   },
-});
+]);
 ```
 
 ### Overriding a named config
@@ -61,15 +64,18 @@ Each config object has a `name` field (`opencover`, `opencover/typescript`, `ope
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(...opencoverConfig, {
-  name: 'opencover/test',
-  files: ['**/e2e/**/*.ts', '**/*.spec.ts'],
-  rules: {
-    'vitest/expect-expect': 'off',
+export default defineConfig([
+  ...opencover,
+  {
+    name: 'opencover/test',
+    files: ['**/e2e/**/*.ts', '**/*.spec.ts'],
+    rules: {
+      'vitest/expect-expect': 'off',
+    },
   },
-});
+]);
 ```
 
 This targets the `opencover/test` config and overrides both its file globs and rules. The same approach works for any named config (`opencover`, `opencover/typescript`, etc.).
@@ -80,9 +86,12 @@ Use `globalIgnores` to exclude files from all rules:
 
 ```mjs
 import { defineConfig, globalIgnores } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(globalIgnores(['**/generated/**', '*.css', '*.svg']), ...opencoverConfig);
+export default defineConfig([
+  globalIgnores(['**/generated/**', '*.css', '*.svg']),
+  ...opencover,
+]);
 ```
 
 ### Ignoring files per rule
@@ -91,14 +100,17 @@ Use `ignores` inside a config object to skip specific rules for certain files:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(...opencoverConfig, {
-  files: ['**/scripts/**'],
-  rules: {
-    'no-console': 'off',
+export default defineConfig([
+  ...opencover,
+  {
+    files: ['**/scripts/**'],
+    rules: {
+      'no-console': 'off',
+    },
   },
-});
+]);
 ```
 
 ## What's included

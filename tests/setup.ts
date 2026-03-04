@@ -1,12 +1,12 @@
 import { Linter } from 'eslint';
-import { opencoverConfig } from '@/index.js';
+import opencover from '@/index.js';
 import type { TypedFlatConfigItem } from '@/types.js';
 
 const linter = new Linter({ configType: 'flat' });
 
 function buildConfig(extraConfigs: TypedFlatConfigItem[] = []): Linter.Config[] {
     return [
-        ...opencoverConfig,
+        ...opencover,
         ...extraConfigs,
         {
             languageOptions: {
@@ -17,7 +17,7 @@ function buildConfig(extraConfigs: TypedFlatConfigItem[] = []): Linter.Config[] 
                 },
             },
         },
-    ];
+    ] as Linter.Config[];
 }
 
 export function createLinter(extraConfigs: TypedFlatConfigItem[] = []) {

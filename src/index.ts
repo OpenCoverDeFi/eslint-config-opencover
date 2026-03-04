@@ -6,10 +6,13 @@ import { globalIgnores } from 'eslint/config';
 import importPlugin from 'eslint-plugin-import-x';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
+import prettier from 'eslint-config-prettier/flat';
 import { GLOB_EXCLUDE, GLOB_SRC, GLOB_TESTS, GLOB_TS, GLOB_TSX } from './globs.js';
 import type { TypedFlatConfigItem } from './types.js';
 
-export const opencover: TypedFlatConfigItem[] = [
+const config = [
+    gitignore({ name: 'opencover/gitignore', strict: false }),
+    globalIgnores(GLOB_EXCLUDE),
     {
         name: 'opencover',
         files: [GLOB_SRC],
@@ -143,13 +146,7 @@ export const opencover: TypedFlatConfigItem[] = [
             vitest: { typecheck: true },
         },
     },
-];
+    prettier,
+] satisfies TypedFlatConfigItem[];
 
-const ignores: TypedFlatConfigItem[] = [
-    gitignore({ name: 'opencover/gitignore', strict: false }),
-    globalIgnores(GLOB_EXCLUDE) as TypedFlatConfigItem,
-];
-
-export const opencoverConfig = [...ignores, ...opencover] satisfies TypedFlatConfigItem[];
-
-export type { TypedFlatConfigItem } from './types.js';
+export default config;

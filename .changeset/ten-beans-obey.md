@@ -12,26 +12,26 @@ Delete your `.eslintrc.js` (or `.eslintrc.cjs`, etc.) and create an `eslint.conf
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 
-export default defineConfig(...opencoverConfig);
+export default defineConfig([...opencover]);
 ```
 
 For React projects, install `eslint-plugin-react` and `eslint-plugin-react-hooks`, then:
 
 ```mjs
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from 'eslint-config-opencover';
+import opencover from 'eslint-config-opencover';
 import { reactConfig } from 'eslint-config-opencover/react';
 
 const react = await reactConfig();
 
-export default defineConfig(...opencoverConfig, ...react);
+export default defineConfig([...opencover, ...react]);
 ```
 
 **New API**
 
-`opencoverConfig` is the composed preset (ignores + opencover + opencover/typescript + opencover/test).
+The default export is the composed preset (ignores + opencover + opencover/typescript + opencover/test).
 
 React is a separate subpath export at `eslint-config-opencover/react`.
 

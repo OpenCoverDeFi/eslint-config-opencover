@@ -1,4 +1,4 @@
 import { defineConfig } from 'eslint/config';
-import { opencoverConfig } from './dist/index.js';
+import opencover from './dist/index.js';
 
-export default defineConfig(...opencoverConfig);
+export default defineConfig(...opencover);
