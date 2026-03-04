@@ -10,7 +10,7 @@ import prettier from 'eslint-config-prettier/flat';
 import { GLOB_EXCLUDE, GLOB_SRC, GLOB_TESTS, GLOB_TS, GLOB_TSX } from './globs.js';
 import type { TypedFlatConfigItem } from './types.js';
 
-const config = [
+const config: TypedFlatConfigItem[] = [
     gitignore({ name: 'opencover/gitignore', strict: false }),
     globalIgnores(GLOB_EXCLUDE),
     {
@@ -147,6 +147,6 @@ const config = [
         },
     },
     prettier,
-] satisfies TypedFlatConfigItem[];
+];
 
 export default config;
