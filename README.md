@@ -88,10 +88,7 @@ Use `globalIgnores` to exclude files from all rules:
 import { defineConfig, globalIgnores } from 'eslint/config';
 import opencover from 'eslint-config-opencover';
 
-export default defineConfig([
-  globalIgnores(['**/generated/**', '*.css', '*.svg']),
-  ...opencover,
-]);
+export default defineConfig([globalIgnores(['**/generated/**', '*.css', '*.svg']), ...opencover]);
 ```
 
 ### Ignoring files per rule

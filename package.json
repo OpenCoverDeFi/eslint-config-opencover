@@ -100,7 +100,7 @@
       "tsx ./node_modules/eslint/bin/eslint.js --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],
-    "*.{json,yml}": "prettier --cache --write",
+    "*.{json,yml,md}": "prettier --cache --write",
     ".prettierrc": "prettier --cache --write"
   },
   "knip": {
