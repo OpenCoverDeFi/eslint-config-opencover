@@ -30,7 +30,9 @@
   "files": [
     "dist/**/*.js",
     "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map"
+    "dist/**/*.d.ts.map",
+    "tsconfig.build.json",
+    "src"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
@@ -40,7 +42,8 @@
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "pnpm build && changeset publish",
-    "prepare": "husky",
+    "prepare": "pnpm build",
+    "postinstall": "husky",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
