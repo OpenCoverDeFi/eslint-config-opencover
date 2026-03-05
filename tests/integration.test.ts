@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
 import opencover from '@/index.js';
+import { lint } from './setup.js';
 
 describe('integration', () => {
     it('lints a realistic TypeScript module with zero errors', () => {
