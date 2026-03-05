@@ -105,6 +105,7 @@ const config: Linter.Config[] = [
             sourceType: 'module',
             parserOptions: {
                 projectService: true,
+                tsconfigRootDir: process.cwd(),
             },
         },
         rules: {
