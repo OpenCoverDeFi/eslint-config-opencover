@@ -1,6 +1,5 @@
-import { describe, it, expect, beforeAll } from 'vitest';
-import { createLinter, lint } from './setup.js';
-import { reactConfig } from '@/react.js';
+import { describe, it, expect } from 'vitest';
+import { lint } from './setup.js';
 
 describe('typescript scoping', () => {
     it('does not apply TypeScript rules to .js files', () => {
@@ -27,36 +26,5 @@ describe('test config scoping', () => {
         const messages = lint('const _x = 1;', 'foo.ts');
 
         expect(messages.filter((m) => m.ruleId?.startsWith('vitest/'))).toHaveLength(0);
-    });
-});
-
-describe('react scoping', () => {
-    let reactLint: ReturnType<typeof createLinter>;
-
-    beforeAll(async () => {
-        const react = await reactConfig();
-        reactLint = createLinter([
-            ...react,
-            {
-                settings: { react: { version: '18' } },
-                languageOptions: {
-                    parserOptions: {
-                        ecmaFeatures: { jsx: true },
-                    },
-                },
-            },
-        ]);
-    });
-
-    it('applies React rules to .tsx files', () => {
-        const messages = reactLint('const _el = [1, 2].map((x) => <div />);', 'file.tsx');
-
-        expect(messages.filter((m) => m.ruleId === 'react/jsx-key')).toHaveLength(1);
-    });
-
-    it('does not apply React rules to .ts files', () => {
-        const messages = reactLint('const _x = 1;', 'file.ts');
-
-        expect(messages.filter((m) => m.ruleId?.startsWith('react/'))).toHaveLength(0);
     });
 });

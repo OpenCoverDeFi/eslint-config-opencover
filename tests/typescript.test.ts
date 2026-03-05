@@ -66,6 +66,81 @@ describe('explicit-member-accessibility', () => {
 
         expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')).toHaveLength(0);
     });
+
+    it('allows constructors without access modifier', () => {
+        const messages = lint('class Foo { constructor() {} }', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')).toHaveLength(0);
+    });
+});
+
+describe('explicit-function-return-type', () => {
+    it('requires return type on function declarations', () => {
+        const messages = lint('export function foo() { return 1; }', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(1);
+    });
+
+    it('requires return type on arrow functions', () => {
+        const messages = lint('export const foo = () => 1;', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(1);
+    });
+
+    it('allows functions with explicit return types', () => {
+        const messages = lint('export function foo(): number { return 1; }', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(0);
+    });
+});
+
+describe('explicit-module-boundary-types', () => {
+    it('requires return type on exported functions', () => {
+        const messages = lint('export function foo() { return 1; }', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
+            1
+        );
+    });
+
+    it('requires return type on exported arrow functions', () => {
+        const messages = lint('export const foo = () => 1;', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
+            1
+        );
+    });
+
+    it('allows exported functions with explicit return types', () => {
+        const messages = lint('export function foo(): number { return 1; }', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
+            0
+        );
+    });
+});
+
+describe('prefer-nullish-coalescing', () => {
+    it('allows || in conditional tests', () => {
+        const messages = lint(
+            'declare const a: string | undefined; declare const b: string | undefined; if (a || b) {}',
+            'test.ts'
+        );
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
+    });
+
+    it('allows || with booleans', () => {
+        const messages = lint('declare const a: boolean; const _x: boolean = a || false;', 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
+    });
+
+    it('flags || for nullable string assignment', () => {
+        const messages = lint("declare const a: string | undefined; const _x: string = a || 'fallback';", 'test.ts');
+
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(1);
+    });
 });
 
 describe('member-ordering', () => {

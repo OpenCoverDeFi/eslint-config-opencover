@@ -1,10 +1,9 @@
 import { Linter } from 'eslint';
 import opencover from '@/index.js';
-import type { TypedFlatConfigItem } from '@/types.js';
 
 const linter = new Linter({ configType: 'flat' });
 
-function buildConfig(extraConfigs: TypedFlatConfigItem[] = []): Linter.Config[] {
+function buildConfig(extraConfigs: Linter.Config[] = []): Linter.Config[] {
     return [
         ...opencover,
         ...extraConfigs,
@@ -20,7 +19,7 @@ function buildConfig(extraConfigs: TypedFlatConfigItem[] = []): Linter.Config[] 
     ] as Linter.Config[];
 }
 
-export function createLinter(extraConfigs: TypedFlatConfigItem[] = []) {
+export function createLinter(extraConfigs: Linter.Config[] = []) {
     const config = buildConfig(extraConfigs);
 
     return function lint(code: string, filename: string): Linter.LintMessage[] {
@@ -28,10 +27,10 @@ export function createLinter(extraConfigs: TypedFlatConfigItem[] = []) {
     };
 }
 
-export function createFixLinter(extraConfigs: TypedFlatConfigItem[] = []) {
+export function createFixLinter(extraConfigs: Linter.Config[] = []) {
     const config = buildConfig(extraConfigs);
 
-    return function lintAndFix(code: string, filename: string) {
+    return function lintAndFix(code: string, filename: string): Linter.FixReport {
         return linter.verifyAndFix(code, config, { filename });
     };
 }

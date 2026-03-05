@@ -1,4 +1,4 @@
-import js from '@eslint/js';
+import eslint from '@eslint/js';
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
 import gitignore from 'eslint-config-flat-gitignore';
@@ -7,10 +7,10 @@ import importPlugin from 'eslint-plugin-import-x';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier/flat';
+import { type Linter, type ESLint } from 'eslint';
 import { GLOB_EXCLUDE, GLOB_SRC, GLOB_TESTS, GLOB_TS, GLOB_TSX } from './globs.js';
-import type { TypedFlatConfigItem } from './types.js';
 
-const config: TypedFlatConfigItem[] = [
+const config: Linter.Config[] = [
     gitignore({ name: 'opencover/gitignore', strict: false }),
     globalIgnores(GLOB_EXCLUDE),
     {
@@ -18,11 +18,11 @@ const config: TypedFlatConfigItem[] = [
         files: [GLOB_SRC],
         plugins: {
             stylistic: stylisticPlugin,
-            'import-x': importPlugin,
+            'import-x': importPlugin as unknown as ESLint.Plugin,
             unicorn: unicornPlugin,
         },
         rules: {
-            ...js.configs.recommended.rules,
+            ...eslint.configs.recommended.rules,
 
             'capitalized-comments': [
                 'warn',
@@ -66,7 +66,23 @@ const config: TypedFlatConfigItem[] = [
             'stylistic/space-infix-ops': 'error',
             'stylistic/spaced-comment': ['error', 'always', { block: { balanced: true } }],
 
-            'import-x/order': ['warn'],
+            'import-x/order': [
+                'warn',
+                {
+                    pathGroups: [
+                        {
+                            pattern: '@/**',
+                            group: 'parent',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@tests/**',
+                            group: 'parent',
+                            position: 'before',
+                        },
+                    ],
+                },
+            ],
 
             ...unicornPlugin.configs['recommended'].rules,
             'unicorn/no-array-callback-reference': 'error',
@@ -95,13 +111,23 @@ const config: TypedFlatConfigItem[] = [
             ...(Object.assign(
                 {},
                 ...tseslint.configs.strictTypeChecked.map((c) => c.rules).filter(Boolean)
-            ) as TypedFlatConfigItem['rules']),
+            ) as Linter.RulesRecord),
 
             '@typescript-eslint/consistent-type-imports': [
                 'error',
                 { prefer: 'type-imports', disallowTypeAnnotations: false },
             ],
-            '@typescript-eslint/explicit-member-accessibility': 'error',
+            '@typescript-eslint/explicit-function-return-type': 'error',
+            '@typescript-eslint/explicit-member-accessibility': [
+                'error',
+                {
+                    accessibility: 'explicit',
+                    overrides: {
+                        constructors: 'off',
+                    },
+                },
+            ],
+            '@typescript-eslint/explicit-module-boundary-types': 'error',
             '@typescript-eslint/member-ordering': 'error',
             '@typescript-eslint/no-non-null-assertion': 'error',
             '@typescript-eslint/no-unused-vars': [
@@ -113,6 +139,17 @@ const config: TypedFlatConfigItem[] = [
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            '@typescript-eslint/prefer-nullish-coalescing': [
+                'error',
+                {
+                    ignoreConditionalTests: true,
+                    ignoreIfStatements: true,
+                    ignorePrimitives: {
+                        boolean: true,
+                    },
+                },
+            ],
+            'require-await': 'off',
             '@typescript-eslint/no-restricted-types': [
                 'error',
                 {

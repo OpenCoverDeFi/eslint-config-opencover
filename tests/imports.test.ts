@@ -13,4 +13,40 @@ describe('import-x/order', () => {
 
         expect(messages.filter((m) => m.ruleId === 'import-x/order')).toHaveLength(1);
     });
+
+    it('allows @/ alias imports before parent imports', () => {
+        const messages = lint(
+            ["import { foo } from '@/utils/foo';", "import { bar } from '../bar';"].join('\n'),
+            'test.ts'
+        );
+
+        expect(messages.filter((m) => m.ruleId === 'import-x/order')).toHaveLength(0);
+    });
+
+    it('warns when parent imports come before @/ alias imports', () => {
+        const messages = lint(
+            ["import { bar } from '../bar';", "import { foo } from '@/utils/foo';"].join('\n'),
+            'test.ts'
+        );
+
+        expect(messages.filter((m) => m.ruleId === 'import-x/order')).toHaveLength(1);
+    });
+
+    it('allows @tests/ alias imports before parent imports', () => {
+        const messages = lint(
+            ["import { setup } from '@tests/setup';", "import { bar } from '../bar';"].join('\n'),
+            'test.ts'
+        );
+
+        expect(messages.filter((m) => m.ruleId === 'import-x/order')).toHaveLength(0);
+    });
+
+    it('warns when parent imports come before @tests/ alias imports', () => {
+        const messages = lint(
+            ["import { bar } from '../bar';", "import { setup } from '@tests/setup';"].join('\n'),
+            'test.ts'
+        );
+
+        expect(messages.filter((m) => m.ruleId === 'import-x/order')).toHaveLength(1);
+    });
 });

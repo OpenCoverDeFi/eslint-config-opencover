@@ -13,7 +13,6 @@
     "eslintconfig",
     "config",
     "styleguide",
-    "react",
     "node"
   ],
   "license": "MIT",
@@ -26,10 +25,6 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    },
-    "./react": {
-      "types": "./dist/react.d.ts",
-      "default": "./dist/react.js"
     }
   },
   "files": [
@@ -60,28 +55,15 @@
   },
   "peerDependencies": {
     "eslint": "^10.0.1",
-    "eslint-plugin-react": "^7",
-    "eslint-plugin-react-hooks": "^7",
     "typescript": "^5.9.3"
-  },
-  "peerDependenciesMeta": {
-    "eslint-plugin-react": {
-      "optional": true
-    },
-    "eslint-plugin-react-hooks": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.2",
     "@changesets/cli": "^2.29.8",
-    "@eslint/core": "^1.1.0",
     "@types/node": "^22.19.11",
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^10.0.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
     "knip": "^5.84.0",
     "lint-staged": "^16.2.7",
@@ -102,12 +84,6 @@
     ],
     "*.{json,yml,md}": "prettier --cache --write",
     ".prettierrc": "prettier --cache --write"
-  },
-  "knip": {
-    "ignoreDependencies": [
-      "eslint-plugin-react",
-      "eslint-plugin-react-hooks"
-    ]
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
