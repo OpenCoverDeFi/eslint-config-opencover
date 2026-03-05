@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('consistent-type-imports', () => {
     it('requires import type for type-only imports', () => {

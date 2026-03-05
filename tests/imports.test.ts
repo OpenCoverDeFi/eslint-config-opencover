@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('import-x/order', () => {
     it('allows node: imports before external', () => {

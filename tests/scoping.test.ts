@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('typescript scoping', () => {
     it('does not apply TypeScript rules to .js files', () => {

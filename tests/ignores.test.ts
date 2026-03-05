@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('ignores', () => {
     it('produces no lint errors for files in node_modules', () => {

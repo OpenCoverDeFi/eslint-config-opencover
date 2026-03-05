@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('vitest/expect-expect', () => {
     it('requires assertions in tests', () => {

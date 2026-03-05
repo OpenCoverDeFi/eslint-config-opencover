@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lintAndFix } from './setup.js';
+import { lintAndFix } from './lint.js';
 
 describe('autofix', () => {
     it('fixes double quotes to single quotes', () => {

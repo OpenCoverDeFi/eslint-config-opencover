@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './setup.js';
+import { lint } from './lint.js';
 
 describe('unicorn/no-array-callback-reference', () => {
     it('allows inline arrow functions', () => {
