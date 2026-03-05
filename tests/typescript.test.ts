@@ -127,27 +127,13 @@ describe('prefer-nullish-coalescing', () => {
             'test.ts'
         );
 
-        const nullishMessages = messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
-
-        if (nullishMessages.length > 0) {
-            console.warn('DEBUG conditional test messages:', JSON.stringify(nullishMessages, null, 2));
-            console.warn('DEBUG all messages:', JSON.stringify(messages, null, 2));
-        }
-
-        expect(nullishMessages).toHaveLength(0);
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
     });
 
     it('allows || with booleans', () => {
         const messages = lint('declare const a: boolean; const _x: boolean = a || false;', 'test.ts');
 
-        const nullishMessages = messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
-
-        if (nullishMessages.length > 0) {
-            console.warn('DEBUG boolean test messages:', JSON.stringify(nullishMessages, null, 2));
-            console.warn('DEBUG all messages:', JSON.stringify(messages, null, 2));
-        }
-
-        expect(nullishMessages).toHaveLength(0);
+        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
     });
 
     it('flags || for nullable string assignment', () => {

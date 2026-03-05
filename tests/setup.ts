@@ -1,5 +1,9 @@
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 import { Linter } from 'eslint';
 import opencover from '@/index.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const linter = new Linter({ configType: 'flat' });
 
@@ -13,6 +17,7 @@ function buildConfig(extraConfigs: Linter.Config[] = []): Linter.Config[] {
                     projectService: {
                         allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.test.ts', '*.test.tsx'],
                     },
+                    tsconfigRootDir: path.resolve(__dirname, '..'),
                 },
             },
         },
