@@ -69,7 +69,6 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "tsc-alias": "^1.8.16",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
@@ -79,10 +78,10 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
-      "tsx ./node_modules/eslint/bin/eslint.js --cache --max-warnings=0 --fix",
+      "eslint --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],
-    "*.{json,yml,md}": "prettier --cache --write",
+    "*.{json,yml,yaml,md}": "prettier --cache --write",
     ".prettierrc": "prettier --cache --write"
   },
   "publishConfig": {

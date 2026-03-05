@@ -10,6 +10,13 @@ updates:
       default-days: 14
       exclude:
         - '@OpenCoverDeFi/*'
+    groups:
+      minor-and-patch:
+        patterns:
+          - '*'
+        update-types:
+          - 'patch'
+          - 'minor'
     ignore:
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
