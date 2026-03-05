@@ -16,6 +16,7 @@ function buildConfig(extraConfigs: Linter.Config[] = []): Linter.Config[] {
                 parserOptions: {
                     projectService: {
                         allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.test.ts', '*.test.tsx'],
+                        defaultProject: 'tsconfig.json',
                     },
                     tsconfigRootDir: path.resolve(__dirname, '..'),
                 },

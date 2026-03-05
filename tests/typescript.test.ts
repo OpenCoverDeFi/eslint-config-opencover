@@ -127,13 +127,21 @@ describe('prefer-nullish-coalescing', () => {
             'test.ts'
         );
 
-        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
+        const nullishMessages = messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
+        // eslint-disable-next-line no-console
+        console.log('nullish-coalescing messages (condition):', JSON.stringify(nullishMessages, null, 2));
+
+        expect(nullishMessages).toHaveLength(0);
     });
 
     it('allows || with booleans', () => {
         const messages = lint('declare const a: boolean; const _x: boolean = a || false;', 'test.ts');
 
-        expect(messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(0);
+        const nullishMessages = messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
+        // eslint-disable-next-line no-console
+        console.log('nullish-coalescing messages (boolean):', JSON.stringify(nullishMessages, null, 2));
+
+        expect(nullishMessages).toHaveLength(0);
     });
 
     it('flags || for nullable string assignment', () => {
