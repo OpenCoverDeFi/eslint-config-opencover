@@ -7,40 +7,25 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const linter = new Linter({ configType: 'flat' });
 
-function buildConfig(extraConfigs: Linter.Config[] = []): Linter.Config[] {
-    return [
-        ...opencover,
-        ...extraConfigs,
-        {
-            languageOptions: {
-                parserOptions: {
-                    projectService: {
-                        allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.test.ts', '*.test.tsx'],
-                        defaultProject: 'tsconfig.json',
-                    },
-                    tsconfigRootDir: path.resolve(__dirname, '..'),
+const config: Linter.Config[] = [
+    ...opencover,
+    {
+        languageOptions: {
+            parserOptions: {
+                projectService: {
+                    allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.test.ts', '*.test.tsx'],
+                    defaultProject: 'tsconfig.json',
                 },
+                tsconfigRootDir: path.resolve(__dirname, '..'),
             },
         },
-    ] as Linter.Config[];
+    },
+] as Linter.Config[];
+
+export function lint(code: string, filename: string): Linter.LintMessage[] {
+    return linter.verify(code, config, { filename });
 }
 
-export function createLinter(extraConfigs: Linter.Config[] = []) {
-    const config = buildConfig(extraConfigs);
-
-    return function lint(code: string, filename: string): Linter.LintMessage[] {
-        return linter.verify(code, config, { filename });
-    };
+export function lintAndFix(code: string, filename: string): Linter.FixReport {
+    return linter.verifyAndFix(code, config, { filename });
 }
-
-export function createFixLinter(extraConfigs: Linter.Config[] = []) {
-    const config = buildConfig(extraConfigs);
-
-    return function lintAndFix(code: string, filename: string): Linter.FixReport {
-        return linter.verifyAndFix(code, config, { filename });
-    };
-}
-
-export const lint = createLinter();
-
-export const lintAndFix = createFixLinter();
