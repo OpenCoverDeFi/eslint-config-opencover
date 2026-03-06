@@ -25,6 +25,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "default": "./dist/react.js"
     }
   },
   "files": [
@@ -36,24 +40,27 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "format": "pnpm build && eslint --fix . && prettier --write .",
-    "lint": "pnpm build && eslint --max-warnings=0 . && prettier --check .",
+    "format": "NODE_OPTIONS='--import tsx' eslint --fix . && prettier --write .",
+    "lint": "NODE_OPTIONS='--import tsx' eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "pnpm build && changeset publish",
     "prepare": "pnpm build",
-    "postinstall": "husky",
+    "postinstall": "husky || true",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@eslint/compat": "^2.0.2",
     "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.8.0",
     "@vitest/eslint-plugin": "^1.6.9",
     "eslint-config-flat-gitignore": "^2.1.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-unicorn": "^62.0.0",
     "typescript-eslint": "^8.56.0"
   },
@@ -72,6 +79,7 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "tsc-alias": "^1.8.16",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
@@ -81,7 +89,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
-      "eslint --cache --max-warnings=0 --fix",
+      "sh -c 'NODE_OPTIONS=\"--import tsx\" eslint --cache --max-warnings=0 --fix \"$@\"' --",
       "prettier --cache --write"
     ],
     "*.{json,yml,yaml,md}": "prettier --cache --write",

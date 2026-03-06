@@ -1,4 +1,3 @@
-import { defineConfig } from 'eslint/config';
-import opencover from './dist/index.js';
+const { default: opencover } = await import('./src/index.ts');
 
-export default defineConfig(...opencover);
+export default opencover;

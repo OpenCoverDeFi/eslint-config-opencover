@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
@@ -18,7 +19,7 @@ const config: Linter.Config[] = [
         files: [GLOB_SRC],
         plugins: {
             stylistic: stylisticPlugin,
-            'import-x': importPlugin as unknown as ESLint.Plugin,
+            'import-x': fixupPluginRules(importPlugin as unknown as ESLint.Plugin),
             unicorn: unicornPlugin,
         },
         rules: {

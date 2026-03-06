@@ -73,4 +73,4 @@ Each named config (`opencover`, `opencover/typescript`, `opencover/test`) can be
 
 - Requires ESLint 10 and TypeScript 5. ESLint 8 is no longer supported.
 - TypeScript rules always use `projectService: true`; point ESLint at your project root instead of passing a tsconfig path.
-- Removed standalone React config (`eslint-config-opencover/react`). Use Next.js ESLint configs directly for React projects.
+- Standalone React config available via `eslint-config-opencover/react`. Includes `eslint-plugin-react` and `eslint-plugin-react-hooks` as dependencies.

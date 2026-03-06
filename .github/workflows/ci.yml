@@ -42,5 +42,5 @@ jobs:
         run: pnpm test
 
       - name: 🦋 Run changeset check
-        if: ${{ !startsWith(github.head_ref, 'renovate/') }}
+        if: ${{ !startsWith(github.head_ref, 'renovate/') }} or ${{ startsWith(github.head_ref, 'dependabot/') }}
         run: pnpm changeset status

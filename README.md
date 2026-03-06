@@ -19,6 +19,16 @@ import opencover from 'eslint-config-opencover';
 export default [...opencover];
 ```
 
+### React project
+
+```typescript
+// eslint.config.ts
+import opencover from 'eslint-config-opencover';
+import react from 'eslint-config-opencover/react';
+
+export default [...opencover, ...react];
+```
+
 ### Next.js project
 
 Install Next.js ESLint config alongside this package:
