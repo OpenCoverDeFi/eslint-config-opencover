@@ -121,7 +121,7 @@ describe('explicit-module-boundary-types', () => {
 });
 
 describe('prefer-nullish-coalescing', () => {
-    it.todo('allows || in conditional tests', () => {
+    it('allows || in conditional tests', () => {
         const messages = lint(
             'declare const a: string | undefined; declare const b: string | undefined; if (a || b) {}',
             'test.ts'

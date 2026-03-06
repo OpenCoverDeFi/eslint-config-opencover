@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat';
 import eslint from '@eslint/js';
 import stylisticPlugin from '@stylistic/eslint-plugin';
 import vitest from '@vitest/eslint-plugin';
@@ -8,7 +7,7 @@ import importPlugin from 'eslint-plugin-import-x';
 import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier/flat';
-import { type Linter, type ESLint } from 'eslint';
+import type { Linter, ESLint } from 'eslint';
 import { GLOB_EXCLUDE, GLOB_SRC, GLOB_TESTS, GLOB_TS, GLOB_TSX } from './globs.js';
 
 const config: Linter.Config[] = [
@@ -19,7 +18,7 @@ const config: Linter.Config[] = [
         files: [GLOB_SRC],
         plugins: {
             stylistic: stylisticPlugin,
-            'import-x': fixupPluginRules(importPlugin as unknown as ESLint.Plugin),
+            'import-x': importPlugin as unknown as ESLint.Plugin,
             unicorn: unicornPlugin,
         },
         rules: {
@@ -78,6 +77,11 @@ const config: Linter.Config[] = [
                         },
                         {
                             pattern: '@tests/**',
+                            group: 'parent',
+                            position: 'before',
+                        },
+                        {
+                            pattern: '@data/**',
                             group: 'parent',
                             position: 'before',
                         },

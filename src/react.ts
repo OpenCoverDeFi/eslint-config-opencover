@@ -1,4 +1,3 @@
-import { fixupPluginRules } from '@eslint/compat';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import tseslint from 'typescript-eslint';
@@ -11,7 +10,7 @@ const reactConfig: Linter.Config[] = [
         files: [GLOB_JSX, GLOB_TSX],
         plugins: {
             react,
-            'react-hooks': fixupPluginRules(reactHooks as unknown as ESLint.Plugin),
+            'react-hooks': reactHooks as unknown as ESLint.Plugin,
         },
         languageOptions: {
             parser: tseslint.parser,
