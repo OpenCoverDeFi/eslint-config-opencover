@@ -1,9 +1,9 @@
 import { Linter } from 'eslint';
 import opencover from '@/index.js';
 
-const linter = new Linter({ configType: 'flat' });
-
 export function lint(code: string, filename: string): Linter.LintMessage[] {
+    const linter = new Linter({ configType: 'flat' });
+
     const config: Linter.Config[] = [
         ...opencover,
         {
@@ -23,6 +23,8 @@ export function lint(code: string, filename: string): Linter.LintMessage[] {
 }
 
 export function lintAndFix(code: string, filename: string): Linter.FixReport {
+    const linter = new Linter({ configType: 'flat' });
+
     const config: Linter.Config[] = [
         ...opencover,
         {
