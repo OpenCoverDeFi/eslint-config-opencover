@@ -19,9 +19,13 @@ const config: Linter.Config[] = [
 ] as Linter.Config[];
 
 export function lint(code: string, filename: string): Linter.LintMessage[] {
+    // eslint-disable-next-line no-console
+    console.log('tsconfigRootDir', config.at(-1));
     return linter.verify(code, config, { filename });
 }
 
 export function lintAndFix(code: string, filename: string): Linter.FixReport {
+    // eslint-disable-next-line no-console
+    console.log('tsconfigRootDir', config.at(-1));
     return linter.verifyAndFix(code, config, { filename });
 }
