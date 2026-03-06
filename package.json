@@ -48,7 +48,7 @@
     "changeset:release": "pnpm build && changeset publish",
     "prepare": "pnpm build",
     "postinstall": "husky || true",
-    "test": "vitest run",
+    "test": "vitest run --maxWorkers=1",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
