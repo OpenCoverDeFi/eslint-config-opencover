@@ -10,7 +10,9 @@ describe('typescript', () => {
             );
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/consistent-type-imports')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/consistent-type-imports')
+                ).toHaveLength(1);
             });
         });
     });
@@ -20,7 +22,9 @@ describe('typescript', () => {
             const results = await lint('const x = foo!.bar;', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-non-null-assertion')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-non-null-assertion')
+                ).toHaveLength(1);
             });
         });
 
@@ -28,7 +32,9 @@ describe('typescript', () => {
             const results = await lint('const _x = foo?.bar;', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-non-null-assertion')).toHaveLength(0);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-non-null-assertion')
+                ).toHaveLength(0);
             });
         });
     });
@@ -56,10 +62,12 @@ describe('typescript', () => {
             const results = await lint('const x: Map<string, number> = new Map();', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-restricted-types')).toHaveLength(1);
-                expect(result.messages.find((m) => m.ruleId === '@typescript-eslint/no-restricted-types')?.message).toContain(
-                    'Map is not allowed'
-                );
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-restricted-types')
+                ).toHaveLength(1);
+                expect(
+                    result.messages.find((m) => m.ruleId === '@typescript-eslint/no-restricted-types')?.message
+                ).toContain('Map is not allowed');
             });
         });
 
@@ -67,7 +75,9 @@ describe('typescript', () => {
             const results = await lint('const _x: Record<string, number> = {};', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-restricted-types')).toHaveLength(0);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-restricted-types')
+                ).toHaveLength(0);
             });
         });
     });
@@ -77,7 +87,9 @@ describe('typescript', () => {
             const results = await lint('class Foo { name: string = ""; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')
+                ).toHaveLength(1);
             });
         });
 
@@ -85,7 +97,9 @@ describe('typescript', () => {
             const results = await lint('class Foo { public name: string = ""; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')).toHaveLength(0);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')
+                ).toHaveLength(0);
             });
         });
 
@@ -93,7 +107,9 @@ describe('typescript', () => {
             const results = await lint('class Foo { constructor() {} }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')).toHaveLength(0);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-member-accessibility')
+                ).toHaveLength(0);
             });
         });
     });
@@ -103,7 +119,9 @@ describe('typescript', () => {
             const results = await lint('export function foo() { return 1; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')
+                ).toHaveLength(1);
             });
         });
 
@@ -111,7 +129,9 @@ describe('typescript', () => {
             const results = await lint('export const foo = () => 1;', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')
+                ).toHaveLength(1);
             });
         });
 
@@ -119,7 +139,9 @@ describe('typescript', () => {
             const results = await lint('export function foo(): number { return 1; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')).toHaveLength(0);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-function-return-type')
+                ).toHaveLength(0);
             });
         });
     });
@@ -129,9 +151,9 @@ describe('typescript', () => {
             const results = await lint('export function foo() { return 1; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
-                    1
-                );
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')
+                ).toHaveLength(1);
             });
         });
 
@@ -139,9 +161,9 @@ describe('typescript', () => {
             const results = await lint('export const foo = () => 1;', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
-                    1
-                );
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')
+                ).toHaveLength(1);
             });
         });
 
@@ -149,9 +171,9 @@ describe('typescript', () => {
             const results = await lint('export function foo(): number { return 1; }', 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')).toHaveLength(
-                    0
-                );
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/explicit-module-boundary-types')
+                ).toHaveLength(0);
             });
         });
     });
@@ -164,16 +186,23 @@ describe('typescript', () => {
             );
 
             results.forEach((result) => {
-                const nullishMessages = result.messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
+                const nullishMessages = result.messages.filter(
+                    (m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing'
+                );
                 expect(nullishMessages).toHaveLength(0);
             });
         });
 
         it.todo('allows || with booleans', async () => {
-            const results = await lint('declare const a: boolean; const _x: boolean = a || false;', 'tests/typescript.test.ts');
+            const results = await lint(
+                'declare const a: boolean; const _x: boolean = a || false;',
+                'tests/typescript.test.ts'
+            );
 
             results.forEach((result) => {
-                const nullishMessages = result.messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing');
+                const nullishMessages = result.messages.filter(
+                    (m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing'
+                );
                 expect(nullishMessages).toHaveLength(0);
             });
         });
@@ -185,20 +214,28 @@ describe('typescript', () => {
             );
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')).toHaveLength(1);
+                expect(
+                    result.messages.filter((m) => m.ruleId === '@typescript-eslint/prefer-nullish-coalescing')
+                ).toHaveLength(1);
             });
         });
     });
 
     describe('member-ordering', () => {
         it('enforces member ordering in classes', async () => {
-            const code = ['class Foo {', '  public method(): void { return; }', '', '  public static field = 1;', '}'].join(
-                '\n'
-            );
+            const code = [
+                'class Foo {',
+                '  public method(): void { return; }',
+                '',
+                '  public static field = 1;',
+                '}',
+            ].join('\n');
             const results = await lint(code, 'tests/typescript.test.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/member-ordering')).toHaveLength(1);
+                expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/member-ordering')).toHaveLength(
+                    1
+                );
             });
         });
     });
