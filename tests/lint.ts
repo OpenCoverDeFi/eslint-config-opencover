@@ -8,6 +8,7 @@ export async function lint(code: string, filename: string): Promise<ESLint.LintR
                     projectService: {
                         allowDefaultProject: ['*.ts'],
                     },
+                    debugLevel: true,
                 },
             },
         },
