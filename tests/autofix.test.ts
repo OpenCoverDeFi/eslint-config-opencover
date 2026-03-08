@@ -1,33 +1,39 @@
 import { describe, it, expect } from 'vitest';
-import { lintAndFix } from './lint.js';
+import { lint, lintAndFix } from './lint.js';
 
 describe('autofix', () => {
-    it('fixes double quotes to single quotes', () => {
-        const result = lintAndFix('const _x = "hello";', 'autofix-1.test.ts');
+    it('fixes double quotes to single quotes', async () => {
+        const results = await lintAndFix('const _x = "hello";', 'tests/autofix.test.ts');
 
-        expect(result.fixed).toBe(true);
-        expect(result.output).toBe("const _x = 'hello';");
+        results.forEach((result) => {
+            expect(result.errorCount).toBe(0);
+            expect(result.output).toBe("const _x = 'hello';");
+        });
     });
 
-    it('fixes missing semicolons', () => {
-        const result = lintAndFix('const _x = 1', 'autofix-2.test.ts');
+    it('fixes missing semicolons', async () => {
+        const results = await lintAndFix('const _x = 1', 'tests/autofix.test.ts');
 
-        expect(result.fixed).toBe(true);
-        expect(result.output).toBe('const _x = 1;');
+        results.forEach((result) => {
+            expect(result.errorCount).toBe(0);
+            expect(result.output).toBe('const _x = 1;');
+        });
     });
 
-    it('fixes unspaced comments', () => {
-        const result = lintAndFix('//Comment', 'autofix-2.test.ts');
+    it('fixes unspaced comments', async () => {
+        const results = await lintAndFix(['//Comment', 'const _x = 0;'].join('\n'), 'tests/autofix.test.ts');
 
-        expect(result.fixed).toBe(true);
-        expect(result.output).toBe('// Comment');
+        results.forEach((result) => {
+            expect(result.errorCount).toBe(0);
+            expect(result.output).toBe(['// Comment', 'const _x = 0;'].join('\n'));
+        });
     });
 
-    it('does not modify already-correct code', () => {
-        const code = "const _x = 'hello';";
-        const result = lintAndFix(code, 'autofix-3.test.ts');
+    it('does not modify already-correct code', async () => {
+        const results = await lint("const _x = 'hello';", 'tests/autofix.test.ts');
 
-        expect(result.fixed).toBe(false);
-        expect(result.output).toBe(code);
+        results.forEach((result) => {
+            expect(result.errorCount).toBe(0);
+        });
     });
 });

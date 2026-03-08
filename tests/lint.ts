@@ -1,27 +1,19 @@
-import { Linter } from 'eslint';
-import opencover from '@/index.js';
+import { ESLint } from 'eslint';
 
-const linter = new Linter({ configType: 'flat' });
-
-const config: Linter.Config[] = [
-    ...opencover,
-    {
-        languageOptions: {
-            parserOptions: {
-                projectService: {
-                    allowDefaultProject: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.test.ts', '*.test.tsx'],
-                    defaultProject: 'tsconfig.json',
+export async function lint(code: string, filename: string): Promise<ESLint.LintResult[]> {
+    return new ESLint({
+        overrideConfig: {
+            languageOptions: {
+                parserOptions: {
+                    projectService: {
+                        allowDefaultProject: ['*.ts'],
+                    },
                 },
-                tsconfigRootDir: process.cwd(),
             },
         },
-    },
-] as Linter.Config[];
-
-export function lint(code: string, filename: string): Linter.LintMessage[] {
-    return linter.verify(code, config, { filename });
+    }).lintText(code, { filePath: filename });
 }
 
-export function lintAndFix(code: string, filename: string): Linter.FixReport {
-    return linter.verifyAndFix(code, config, { filename });
+export async function lintAndFix(code: string, filename: string): Promise<ESLint.LintResult[]> {
+    return new ESLint({ fix: true }).lintText(code, { filePath: filename });
 }

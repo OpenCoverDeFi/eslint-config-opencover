@@ -3,7 +3,7 @@ import opencover from '@/index.js';
 import { lint } from './lint.js';
 
 describe('integration', () => {
-    it('lints a realistic TypeScript module with zero errors', () => {
+    it('lints a realistic TypeScript module with zero errors', async () => {
         const code = [
             'interface Config {',
             '  readonly name: string;',
@@ -34,10 +34,11 @@ describe('integration', () => {
             'export { Service, createService };',
         ].join('\n');
 
-        const messages = lint(code, 'my-service.ts');
-        const errors = messages.filter((m) => m.severity === 2);
-
-        expect(errors).toHaveLength(0);
+        const results = await lint(code, 'tests/integration.test.ts');
+        results.forEach((result) => {
+            const errors = result.messages.filter((m) => m.severity === 2);
+            expect(errors).toHaveLength(0);
+        });
     });
 });
 

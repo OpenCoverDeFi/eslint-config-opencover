@@ -74,6 +74,7 @@
     "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.3",
     "husky": "^9.1.7",
+    "jiti": "^2.6.1",
     "knip": "^5.84.0",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
@@ -88,7 +89,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,jsx,mjs}": [
-      "sh -c 'NODE_OPTIONS=\"--import tsx\" eslint --cache --max-warnings=0 --fix \"$@\"' --",
+      "eslint --cache --max-warnings=0 --fix",
       "prettier --cache --write"
     ],
     "*.{json,yml,yaml,md}": "prettier --cache --write",

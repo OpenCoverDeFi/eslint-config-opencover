@@ -14,5 +14,5 @@
       "@tests/*": ["./tests/*"]
     }
   },
-  "include": ["src", "tests", "vitest.config.ts"]
+  "include": ["src", "tests", "vitest.config.ts", "eslint.config.ts"]
 }
