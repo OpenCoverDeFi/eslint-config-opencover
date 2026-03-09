@@ -6,9 +6,8 @@ export async function lint(code: string, filename: string): Promise<ESLint.LintR
             languageOptions: {
                 parserOptions: {
                     projectService: {
-                        allowDefaultProject: ['*.ts'],
+                        allowDefaultProject: ['my-component.ts', 'MyComponent.ts'],
                     },
-                    debugLevel: true,
                 },
             },
         },

@@ -193,7 +193,7 @@ describe('typescript', () => {
             });
         });
 
-        it.todo('allows || with booleans', async () => {
+        it('allows || with booleans', async () => {
             const results = await lint(
                 'declare const a: boolean; const _x: boolean = a || false;',
                 'tests/typescript.test.ts'

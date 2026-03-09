@@ -29,25 +29,6 @@ jobs:
       - name: 📥 Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Patch prefer-nullish-coalescing.js with debug logs
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          file="$(find . -name 'prefer-nullish-coalescing.js' -exec grep -l 'const isStrictNullChecks = ' {} + | head -n 1)"
-          echo "Patching: $file"
-
-          tmp="$(mktemp)"
-          awk '
-            { print }
-            /const isStrictNullChecks = / {
-              print "console.log(\"compilerOptions = \", compilerOptions);"
-              print "console.log(\"isStrictNullChecks = \", isStrictNullChecks);"
-            }
-          ' "$file" > "$tmp"
-
-          mv "$tmp" "$file"
-
       - name: 💊 Run linting
         run: pnpm lint
 
@@ -60,8 +41,8 @@ jobs:
       - name: 🧪 Run test script
         run: pnpm test
         env:
-          # Prevent typescript-eslint from inferring a singleRun on CI to create an isolated TS program with default TS config,
-          # See https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/parseSettings/inferSingleRun.ts#L36
+          # Prevent typescript-eslint from inferring a singleRun on CI to create an isolated TS program with default TS config breaking some tests,
+          # see https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/parseSettings/inferSingleRun.ts#L36
           TSESTREE_SINGLE_RUN: false
 
       - name: 🦋 Run changeset check
