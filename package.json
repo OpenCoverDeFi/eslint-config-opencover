@@ -2,7 +2,7 @@
   "name": "eslint-config-opencover",
   "version": "2.0.5",
   "type": "module",
-  "description": "ESLint Typescript shareable config for OpenCover's coding style.",
+  "description": "OpenCover specific linting rules for ESLint",
   "author": {
     "name": "OpenCover",
     "email": "team@opencover.com",
@@ -11,15 +11,15 @@
   "keywords": [
     "eslint",
     "eslintconfig",
-    "config",
-    "styleguide",
-    "node"
+    "eslint-config",
+    "opencover"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
   },
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
@@ -32,23 +32,18 @@
     }
   },
   "files": [
-    "dist/**/*.js",
-    "dist/**/*.d.ts",
-    "dist/**/*.d.ts.map",
-    "tsconfig.build.json",
-    "src"
+    "dist"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
-    "format": "NODE_OPTIONS='--import tsx' eslint --fix . && prettier --write .",
-    "lint": "NODE_OPTIONS='--import tsx' eslint --max-warnings=0 . && prettier --check .",
+    "format": "eslint --fix . && prettier --write .",
+    "lint": "eslint --max-warnings=0 . && prettier --check .",
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "changeset:version": "changeset version",
     "changeset:release": "pnpm build && changeset publish",
-    "prepare": "pnpm build",
-    "postinstall": "husky || true",
-    "test": "vitest run --maxWorkers=1",
+    "prepare": "husky",
+    "test": "vitest run",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
@@ -64,7 +59,7 @@
     "typescript-eslint": "^8.56.0"
   },
   "peerDependencies": {
-    "eslint": "^9",
+    "eslint": "^9.0.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
@@ -79,7 +74,6 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "tsc-alias": "^1.8.16",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },

@@ -11,7 +11,7 @@ describe('typescript scoping', () => {
     });
 
     it('applies TypeScript rules to .ts files', async () => {
-        const results = await lint('const unused = 1;', 'tests/scoping.test.ts');
+        const results = await lint('const unused = 1;', 'file.ts');
 
         results.forEach((result) => {
             expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-unused-vars')).toHaveLength(1);
@@ -21,7 +21,7 @@ describe('typescript scoping', () => {
 
 describe('test config scoping', () => {
     it('applies vitest rules to test files', async () => {
-        const results = await lint("it('no assertion', () => { const x = 1; });", 'tests/scoping.test.ts');
+        const results = await lint("it('no assertion', () => { const x = 1; });", 'foo.test.ts');
 
         results.forEach((result) => {
             expect(result.messages.some((m) => m.ruleId?.startsWith('vitest/'))).toBe(true);

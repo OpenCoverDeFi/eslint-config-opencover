@@ -77,3 +77,4 @@ Available config names:
 | `opencover`            | Base rules (stylistic, imports, etc) |
 | `opencover/typescript` | TypeScript-specific rules            |
 | `opencover/test`       | Test file rules (vitest)             |
+| `opencover/react`      | React-specific rules                 |

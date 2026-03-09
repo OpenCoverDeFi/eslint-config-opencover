@@ -4,10 +4,7 @@ import { lint } from './lint.js';
 describe('typescript', () => {
     describe('consistent-type-imports', () => {
         it('requires import type for type-only imports', async () => {
-            const results = await lint(
-                "import { Foo } from './foo'; const x: Foo = 1 as unknown as Foo;",
-                'tests/typescript.test.ts'
-            );
+            const results = await lint("import { Foo } from './foo'; const x: Foo = 1 as unknown as Foo;", 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -19,7 +16,7 @@ describe('typescript', () => {
 
     describe('no-non-null-assertion', () => {
         it('bans non-null assertions', async () => {
-            const results = await lint('const x = foo!.bar;', 'tests/typescript.test.ts');
+            const results = await lint('const x = foo!.bar;', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -29,7 +26,7 @@ describe('typescript', () => {
         });
 
         it('allows safe property access', async () => {
-            const results = await lint('const _x = foo?.bar;', 'tests/typescript.test.ts');
+            const results = await lint('const _x = foo?.bar;', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -41,7 +38,7 @@ describe('typescript', () => {
 
     describe('no-unused-vars', () => {
         it('allows underscore-prefixed unused vars', async () => {
-            const results = await lint('const _unused = 1;', 'tests/typescript.test.ts');
+            const results = await lint('const _unused = 1;', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-unused-vars')).toHaveLength(0);
@@ -49,7 +46,7 @@ describe('typescript', () => {
         });
 
         it('bans unused vars without underscore prefix', async () => {
-            const results = await lint('const unused = 1;', 'tests/typescript.test.ts');
+            const results = await lint('const unused = 1;', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/no-unused-vars')).toHaveLength(1);
@@ -59,7 +56,7 @@ describe('typescript', () => {
 
     describe('no-restricted-types', () => {
         it('bans Map type', async () => {
-            const results = await lint('const x: Map<string, number> = new Map();', 'tests/typescript.test.ts');
+            const results = await lint('const x: Map<string, number> = new Map();', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -72,7 +69,7 @@ describe('typescript', () => {
         });
 
         it('allows Record type', async () => {
-            const results = await lint('const _x: Record<string, number> = {};', 'tests/typescript.test.ts');
+            const results = await lint('const _x: Record<string, number> = {};', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -84,7 +81,7 @@ describe('typescript', () => {
 
     describe('explicit-member-accessibility', () => {
         it('requires access modifiers on class members', async () => {
-            const results = await lint('class Foo { name: string = ""; }', 'tests/typescript.test.ts');
+            const results = await lint('class Foo { name: string = ""; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -94,7 +91,7 @@ describe('typescript', () => {
         });
 
         it('allows members with explicit access modifiers', async () => {
-            const results = await lint('class Foo { public name: string = ""; }', 'tests/typescript.test.ts');
+            const results = await lint('class Foo { public name: string = ""; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -104,7 +101,7 @@ describe('typescript', () => {
         });
 
         it('allows constructors without access modifier', async () => {
-            const results = await lint('class Foo { constructor() {} }', 'tests/typescript.test.ts');
+            const results = await lint('class Foo { constructor() {} }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -116,7 +113,7 @@ describe('typescript', () => {
 
     describe('explicit-function-return-type', () => {
         it('requires return type on function declarations', async () => {
-            const results = await lint('export function foo() { return 1; }', 'tests/typescript.test.ts');
+            const results = await lint('export function foo() { return 1; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -126,7 +123,7 @@ describe('typescript', () => {
         });
 
         it('requires return type on arrow functions', async () => {
-            const results = await lint('export const foo = () => 1;', 'tests/typescript.test.ts');
+            const results = await lint('export const foo = () => 1;', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -136,7 +133,7 @@ describe('typescript', () => {
         });
 
         it('allows functions with explicit return types', async () => {
-            const results = await lint('export function foo(): number { return 1; }', 'tests/typescript.test.ts');
+            const results = await lint('export function foo(): number { return 1; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -148,7 +145,7 @@ describe('typescript', () => {
 
     describe('explicit-module-boundary-types', () => {
         it('requires return type on exported functions', async () => {
-            const results = await lint('export function foo() { return 1; }', 'tests/typescript.test.ts');
+            const results = await lint('export function foo() { return 1; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -158,7 +155,7 @@ describe('typescript', () => {
         });
 
         it('requires return type on exported arrow functions', async () => {
-            const results = await lint('export const foo = () => 1;', 'tests/typescript.test.ts');
+            const results = await lint('export const foo = () => 1;', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -168,7 +165,7 @@ describe('typescript', () => {
         });
 
         it('allows exported functions with explicit return types', async () => {
-            const results = await lint('export function foo(): number { return 1; }', 'tests/typescript.test.ts');
+            const results = await lint('export function foo(): number { return 1; }', 'file.ts');
 
             results.forEach((result) => {
                 expect(
@@ -182,7 +179,7 @@ describe('typescript', () => {
         it('allows || in conditional tests', async () => {
             const results = await lint(
                 'declare const a: string | undefined; declare const b: string | undefined; if (a || b) {}',
-                'tests/typescript.test.ts'
+                'file.ts'
             );
 
             results.forEach((result) => {
@@ -194,10 +191,7 @@ describe('typescript', () => {
         });
 
         it('allows || with booleans', async () => {
-            const results = await lint(
-                'declare const a: boolean; const _x: boolean = a || false;',
-                'tests/typescript.test.ts'
-            );
+            const results = await lint('declare const a: boolean; const _x: boolean = a || false;', 'file.ts');
 
             results.forEach((result) => {
                 const nullishMessages = result.messages.filter(
@@ -210,7 +204,7 @@ describe('typescript', () => {
         it('flags || for nullable string assignment', async () => {
             const results = await lint(
                 "declare const a: string | undefined; const _x: string = a || 'fallback';",
-                'tests/typescript.test.ts'
+                'file.ts'
             );
 
             results.forEach((result) => {
@@ -230,7 +224,8 @@ describe('typescript', () => {
                 '  public static field = 1;',
                 '}',
             ].join('\n');
-            const results = await lint(code, 'tests/typescript.test.ts');
+
+            const results = await lint(code, 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === '@typescript-eslint/member-ordering')).toHaveLength(

@@ -5,7 +5,7 @@ describe('import-x/order', () => {
     it('allows node: imports before external', async () => {
         const results = await lint(
             ["import fs from 'node:fs';", "import path from 'node:path';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {
@@ -16,7 +16,7 @@ describe('import-x/order', () => {
     it('requires node: imports before external', async () => {
         const results = await lint(
             ["import express from 'express';", "import fs from 'node:fs';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {
@@ -27,7 +27,7 @@ describe('import-x/order', () => {
     it('allows @/ alias imports before parent imports', async () => {
         const results = await lint(
             ["import { foo } from '@/utils/foo';", "import { bar } from '../bar';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {
@@ -38,7 +38,7 @@ describe('import-x/order', () => {
     it('warns when parent imports come before @/ alias imports', async () => {
         const results = await lint(
             ["import { bar } from '../bar';", "import { foo } from '@/utils/foo';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {
@@ -49,7 +49,7 @@ describe('import-x/order', () => {
     it('allows @tests/ alias imports before parent imports', async () => {
         const results = await lint(
             ["import { setup } from '@tests/setup';", "import { bar } from '../bar';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {
@@ -60,7 +60,7 @@ describe('import-x/order', () => {
     it('warns when parent imports come before @tests/ alias imports', async () => {
         const results = await lint(
             ["import { bar } from '../bar';", "import { setup } from '@tests/setup';"].join('\n'),
-            'tests/imports.test.ts'
+            'file.ts'
         );
 
         results.forEach((result) => {

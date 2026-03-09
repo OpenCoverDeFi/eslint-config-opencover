@@ -8,8 +8,6 @@ updates:
       interval: 'weekly'
     cooldown:
       default-days: 14
-      exclude:
-        - '@OpenCoverDeFi/*'
     groups:
       minor-and-patch:
         patterns:

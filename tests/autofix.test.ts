@@ -3,7 +3,7 @@ import { lint, lintAndFix } from './lint.js';
 
 describe('autofix', () => {
     it('fixes double quotes to single quotes', async () => {
-        const results = await lintAndFix('const _x = "hello";', 'tests/autofix.test.ts');
+        const results = await lintAndFix('const _x = "hello";', 'file.ts');
 
         results.forEach((result) => {
             expect(result.errorCount).toBe(0);
@@ -12,7 +12,7 @@ describe('autofix', () => {
     });
 
     it('fixes missing semicolons', async () => {
-        const results = await lintAndFix('const _x = 1', 'tests/autofix.test.ts');
+        const results = await lintAndFix('const _x = 1', 'file.ts');
 
         results.forEach((result) => {
             expect(result.errorCount).toBe(0);
@@ -21,7 +21,7 @@ describe('autofix', () => {
     });
 
     it('fixes unspaced comments', async () => {
-        const results = await lintAndFix(['//Comment', 'const _x = 0;'].join('\n'), 'tests/autofix.test.ts');
+        const results = await lintAndFix(['//Comment', 'const _x = 0;'].join('\n'), 'file.ts');
 
         results.forEach((result) => {
             expect(result.errorCount).toBe(0);
@@ -30,7 +30,7 @@ describe('autofix', () => {
     });
 
     it('does not modify already-correct code', async () => {
-        const results = await lint("const _x = 'hello';", 'tests/autofix.test.ts');
+        const results = await lint("const _x = 'hello';", 'file.ts');
 
         results.forEach((result) => {
             expect(result.errorCount).toBe(0);

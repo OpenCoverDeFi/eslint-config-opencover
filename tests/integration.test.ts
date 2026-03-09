@@ -34,7 +34,7 @@ describe('integration', () => {
             'export { Service, createService };',
         ].join('\n');
 
-        const results = await lint(code, 'tests/integration.test.ts');
+        const results = await lint(code, 'file.ts');
         results.forEach((result) => {
             const errors = result.messages.filter((m) => m.severity === 2);
             expect(errors).toHaveLength(0);

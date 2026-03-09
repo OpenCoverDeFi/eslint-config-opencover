@@ -4,7 +4,7 @@ import { lint } from './lint.js';
 describe('javascript', () => {
     describe('no-console', () => {
         it('allows console.warn and console.error', async () => {
-            const results = await lint('console.warn("ok"); console.error("ok");', 'tests/javascript.test.ts');
+            const results = await lint('console.warn("ok"); console.error("ok");', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-console')).toHaveLength(0);
@@ -12,7 +12,7 @@ describe('javascript', () => {
         });
 
         it('disallows console.log', async () => {
-            const results = await lint('console.log("not ok");', 'tests/javascript.test.ts');
+            const results = await lint('console.log("not ok");', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-console')).toHaveLength(1);
@@ -22,7 +22,7 @@ describe('javascript', () => {
 
     describe('no-restricted-syntax', () => {
         it('bans TS enums', async () => {
-            const results = await lint('enum Direction { Up, Down }', 'tests/javascript.test.ts');
+            const results = await lint('enum Direction { Up, Down }', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-restricted-syntax')).toHaveLength(1);
@@ -33,7 +33,7 @@ describe('javascript', () => {
         });
 
         it('allows union types as enum alternatives', async () => {
-            const results = await lint("type Direction = 'up' | 'down';", 'tests/javascript.test.ts');
+            const results = await lint("type Direction = 'up' | 'down';", 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-restricted-syntax')).toHaveLength(0);
@@ -43,7 +43,7 @@ describe('javascript', () => {
 
     describe('no-unneeded-ternary', () => {
         it('bans boolean ternaries', async () => {
-            const results = await lint('const x = a ? true : false;', 'tests/javascript.test.ts');
+            const results = await lint('const x = a ? true : false;', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-unneeded-ternary')).toHaveLength(1);
@@ -51,7 +51,7 @@ describe('javascript', () => {
         });
 
         it('allows non-trivial ternaries', async () => {
-            const results = await lint("const _x = a ? 'yes' : 'no';", 'tests/javascript.test.ts');
+            const results = await lint("const _x = a ? 'yes' : 'no';", 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'no-unneeded-ternary')).toHaveLength(0);
@@ -61,7 +61,7 @@ describe('javascript', () => {
 
     describe('capitalized-comments', () => {
         it('warns on lowercase comments', async () => {
-            const results = await lint('// not capitalized', 'tests/javascript.test.ts');
+            const results = await lint('// not capitalized', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'capitalized-comments')).toHaveLength(1);
@@ -69,7 +69,7 @@ describe('javascript', () => {
         });
 
         it('allows capitalized comments', async () => {
-            const results = await lint('// Fine comment', 'tests/javascript.test.ts');
+            const results = await lint('// Fine comment', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'capitalized-comments')).toHaveLength(0);

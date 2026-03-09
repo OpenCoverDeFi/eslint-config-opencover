@@ -4,7 +4,7 @@ import { lint } from './lint.js';
 describe('unicorn', () => {
     describe('unicorn/no-array-callback-reference', () => {
         it('allows inline arrow functions', async () => {
-            const results = await lint('const result = arr.filter((x) => isValid(x));', 'tests/unicorn.test.ts');
+            const results = await lint('const result = arr.filter((x) => isValid(x));', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toHaveLength(
@@ -14,7 +14,7 @@ describe('unicorn', () => {
         });
 
         it('allows builtin Boolean reference', async () => {
-            const results = await lint('const result = arr.filter(Boolean);', 'tests/unicorn.test.ts');
+            const results = await lint('const result = arr.filter(Boolean);', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toHaveLength(
@@ -24,7 +24,7 @@ describe('unicorn', () => {
         });
 
         it('bans user-defined function passed directly', async () => {
-            const results = await lint('const result = arr.filter(isValid);', 'tests/unicorn.test.ts');
+            const results = await lint('const result = arr.filter(isValid);', 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/no-array-callback-reference')).toHaveLength(
@@ -54,7 +54,7 @@ describe('unicorn', () => {
 
     describe('unicorn/prefer-node-protocol', () => {
         it('requires node: protocol for builtins', async () => {
-            const results = await lint("import fs from 'fs';", 'tests/unicorn.test.ts');
+            const results = await lint("import fs from 'fs';", 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/prefer-node-protocol')).toHaveLength(1);
@@ -62,7 +62,7 @@ describe('unicorn', () => {
         });
 
         it('allows node: protocol', async () => {
-            const results = await lint("import fs from 'node:fs';", 'tests/unicorn.test.ts');
+            const results = await lint("import fs from 'node:fs';", 'file.ts');
 
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/prefer-node-protocol')).toHaveLength(0);

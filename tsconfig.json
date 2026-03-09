@@ -8,10 +8,8 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "outDir": "dist",
-    "allowJs": true,
     "paths": {
-      "@/*": ["./src/*"],
-      "@tests/*": ["./tests/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src", "tests", "vitest.config.ts", "eslint.config.ts"]

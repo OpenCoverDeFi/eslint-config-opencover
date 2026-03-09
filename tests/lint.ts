@@ -1,19 +1,24 @@
+import type { Linter } from 'eslint';
 import { ESLint } from 'eslint';
 
-export async function lint(code: string, filename: string): Promise<ESLint.LintResult[]> {
-    return new ESLint({
-        overrideConfig: {
-            languageOptions: {
-                parserOptions: {
-                    projectService: {
-                        allowDefaultProject: ['my-component.ts', 'MyComponent.ts'],
-                    },
-                },
+const config: Linter.Config = {
+    languageOptions: {
+        parserOptions: {
+            projectService: {
+                allowDefaultProject: ['*.js', '*.jsx', '*.ts', '*.tsx'],
+                defaultProject: 'tsconfig.json',
             },
         },
-    }).lintText(code, { filePath: filename });
+    },
+};
+
+const linter = new ESLint({ overrideConfig: config });
+const fixer = new ESLint({ fix: true, overrideConfig: config });
+
+export async function lint(code: string, filePath: string): Promise<ESLint.LintResult[]> {
+    return linter.lintText(code, { filePath });
 }
 
-export async function lintAndFix(code: string, filename: string): Promise<ESLint.LintResult[]> {
-    return new ESLint({ fix: true }).lintText(code, { filePath: filename });
+export async function lintAndFix(code: string, filePath: string): Promise<ESLint.LintResult[]> {
+    return fixer.lintText(code, { filePath });
 }
