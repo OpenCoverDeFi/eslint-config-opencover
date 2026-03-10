@@ -13,7 +13,14 @@ const reactConfig: Linter.Config[] = [
             },
         },
         rules: {
-            '@typescript-eslint/no-misused-promises': 'off',
+            '@typescript-eslint/no-misused-promises': [
+                'error',
+                {
+                    checksVoidReturn: {
+                        attributes: false,
+                    },
+                },
+            ],
         },
     },
 ];
