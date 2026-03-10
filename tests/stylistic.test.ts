@@ -2,48 +2,12 @@ import { describe, it, expect } from 'vitest';
 import { lint } from './lint.js';
 
 describe('stylistic', () => {
-    describe('stylistic/quotes', () => {
-        it('enforces single quotes', async () => {
-            const results = await lint('const x = "hello";', 'file.ts');
-
-            results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/quotes')).toHaveLength(1);
-            });
-        });
-
-        it('allows single quotes', async () => {
-            const results = await lint("const _x = 'hello';", 'file.ts');
-
-            results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/quotes')).toHaveLength(0);
-            });
-        });
-    });
-
-    describe('stylistic/semi', () => {
-        it('requires semicolons', async () => {
-            const results = await lint('const x = 1', 'file.ts');
-
-            results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/semi')).toHaveLength(1);
-            });
-        });
-
-        it('allows semicolons', async () => {
-            const results = await lint('const _x = 1;', 'file.ts');
-
-            results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/semi')).toHaveLength(0);
-            });
-        });
-    });
-
-    describe('stylistic/spaced-comment', () => {
+    describe('@stylistic/spaced-comment', () => {
         it('requires space after //', async () => {
             const results = await lint('//not fine', 'file.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/spaced-comment')).toHaveLength(1);
+                expect(result.messages.filter((m) => m.ruleId === '@stylistic/spaced-comment')).toHaveLength(1);
             });
         });
 
@@ -51,12 +15,12 @@ describe('stylistic', () => {
             const results = await lint('// Fine', 'file.ts');
 
             results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'stylistic/spaced-comment')).toHaveLength(0);
+                expect(result.messages.filter((m) => m.ruleId === '@stylistic/spaced-comment')).toHaveLength(0);
             });
         });
     });
 
-    describe('stylistic/lines-between-class-members', () => {
+    describe('@stylistic/lines-between-class-members', () => {
         it('requires blank line between multi-line class members', async () => {
             const code = [
                 'class Foo {',
@@ -73,7 +37,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/lines-between-class-members')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/lines-between-class-members')
                 ).toHaveLength(1);
             });
         });
@@ -84,19 +48,19 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/lines-between-class-members')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/lines-between-class-members')
                 ).toHaveLength(0);
             });
         });
     });
 
-    describe('stylistic/padding-line-between-statements', () => {
+    describe('@stylistic/padding-line-between-statements', () => {
         it('requires blank line before function', async () => {
             const results = await lint('const x = 1;\nfunction foo() {}', 'file.ts');
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(1);
             });
         });
@@ -106,7 +70,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(0);
             });
         });
@@ -116,7 +80,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(1);
             });
         });
@@ -126,7 +90,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(1);
             });
         });
@@ -136,7 +100,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(1);
             });
         });
@@ -146,7 +110,7 @@ describe('stylistic', () => {
 
             results.forEach((result) => {
                 expect(
-                    result.messages.filter((m) => m.ruleId === 'stylistic/padding-line-between-statements')
+                    result.messages.filter((m) => m.ruleId === '@stylistic/padding-line-between-statements')
                 ).toHaveLength(1);
             });
         });

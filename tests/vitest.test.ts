@@ -34,7 +34,7 @@ describe('vitest', () => {
 
     describe('vitest/padding-around-describe-blocks', () => {
         it('requires blank line before describe block', async () => {
-            const results = await lint(['const x = 1;', "describe('suite', () => {});"].join('\n'), 'foo.test.ts');
+            const results = await lint(['const x = 1;', 'describe("suite", () => {});'].join('\n'), 'foo.test.ts');
 
             results.forEach((result) => {
                 expect(result.messages.some((m) => m.ruleId === 'vitest/padding-around-describe-blocks')).toBe(true);

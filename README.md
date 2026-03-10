@@ -12,8 +12,8 @@ pnpm add -D eslint-config-opencover eslint typescript
 
 ### TypeScript project
 
-```typescript
-// eslint.config.ts
+```javascript
+// eslint.config.mjs
 import opencover from 'eslint-config-opencover';
 
 export default [...opencover];
@@ -21,8 +21,8 @@ export default [...opencover];
 
 ### React project
 
-```typescript
-// eslint.config.ts
+```javascript
+// eslint.config.mjs
 import opencover from 'eslint-config-opencover';
 import react from 'eslint-config-opencover/react';
 
@@ -37,8 +37,8 @@ Install Next.js ESLint config alongside this package:
 pnpm add -D eslint-config-next
 ```
 
-```typescript
-// eslint.config.ts
+```javascript
+// eslint.config.mjs
 import opencover from 'eslint-config-opencover';
 import nextVitals from 'eslint-config-next/core-web-vitals';
 import nextTs from 'eslint-config-next/typescript';
@@ -52,8 +52,8 @@ OpenCover's config should come **last** so its rules take precedence.
 
 Each config object in the exported array has a `name` property (e.g. `opencover`, `opencover/typescript`, `opencover/test`). ESLint's flat config merges all config objects that match a file, so you can override specific rules by adding another config object that targets the same `name`:
 
-```typescript
-// eslint.config.ts
+```javascript
+// eslint.config.mjs
 import opencover from 'eslint-config-opencover';
 
 export default [
@@ -73,8 +73,7 @@ Available config names:
 
 | Name                   | Description                          |
 | ---------------------- | ------------------------------------ |
-| `opencover/gitignore`  | Ignores files from `.gitignore`      |
 | `opencover`            | Base rules (stylistic, imports, etc) |
+| `opencover/gitignore`  | Ignores files from `.gitignore`      |
 | `opencover/typescript` | TypeScript-specific rules            |
 | `opencover/test`       | Test file rules (vitest)             |
-| `opencover/react`      | React-specific rules                 |
