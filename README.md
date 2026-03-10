@@ -50,7 +50,7 @@ OpenCover's config should come **last** so its rules take precedence.
 
 ## Overriding rules
 
-Each config object in the exported array has a `name` property (e.g. `opencover`, `opencover/typescript`, `opencover/test`). ESLint's flat config merges all config objects that match a file, so you can override specific rules by adding another config object that targets the same `name`:
+Each config object in the exported array has a `name` property for debugging (for example in ESLint's config inspector), but flat config overrides are matched by `files`/`ignores`, not by `name`. To override TypeScript-specific rules, add a later config object that matches the same files:
 
 ```javascript
 // eslint.config.mjs
@@ -59,7 +59,7 @@ import opencover from 'eslint-config-opencover';
 export default [
   ...opencover,
   {
-    name: 'opencover/typescript',
+    files: ['**/*.{ts,tsx}'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
     },
@@ -67,7 +67,7 @@ export default [
 ];
 ```
 
-ESLint merges config objects with the same `name` — later entries override earlier ones. This means your overrides are combined with the original `opencover/typescript` rules, only changing the rules you specify.
+Later matching config objects override earlier ones for those files.
 
 Available config names:
 
