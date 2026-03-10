@@ -8,7 +8,7 @@ import unicornPlugin from 'eslint-plugin-unicorn';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier/flat';
 import type { Linter } from 'eslint';
-import { GLOB_EXCLUDE } from './globs.js';
+import { GLOB_EXCLUDE, GLOB_TEST } from './globs.js';
 
 const config: Linter.Config[] = [
     eslint.configs.recommended,
@@ -16,7 +16,10 @@ const config: Linter.Config[] = [
     importPlugin.recommended,
     unicornPlugin.configs.recommended,
     ...tseslint.configs.strictTypeChecked,
-    vitest.configs.recommended,
+    {
+        ...vitest.configs.recommended,
+        files: GLOB_TEST,
+    },
     {
         name: 'opencover',
         rules: {
@@ -132,6 +135,7 @@ const config: Linter.Config[] = [
     },
     {
         name: 'opencover/test',
+        files: GLOB_TEST,
         rules: {
             'vitest/padding-around-before-all-blocks': 'error',
             'vitest/padding-around-describe-blocks': 'error',

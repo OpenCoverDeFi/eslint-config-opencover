@@ -1,3 +1,14 @@
+export const GLOB_TEST = [
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.test.js',
+    '**/*.test.jsx',
+    '**/*.spec.ts',
+    '**/*.spec.tsx',
+    '**/*.spec.js',
+    '**/*.spec.jsx',
+];
+
 export const GLOB_EXCLUDE = [
     '**/dist',
     '**/.dist',
