@@ -46,7 +46,6 @@ const config: Linter.Config[] = [
                 { blankLine: 'always', prev: 'block-like', next: 'if' },
                 { blankLine: 'always', prev: 'if', next: '*' },
             ],
-            '@stylistic/quotes': ['error', 'single', { avoidEscape: true }],
 
             'import-x/order': [
                 'warn',
