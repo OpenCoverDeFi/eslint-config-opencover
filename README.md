@@ -59,7 +59,7 @@ import opencover from 'eslint-config-opencover';
 export default [
   ...opencover,
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx,mts,cts}'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
     },
