@@ -3,7 +3,7 @@ import { lint } from './lint.js';
 
 describe('typescript scoping', () => {
     it('does not apply TypeScript rules to .js files', async () => {
-        const results = await lint('const x = foo!.bar;', 'file.js');
+        const results = await lint('const unused = 1;', 'file.js');
 
         results.forEach((result) => {
             expect(result.messages.filter((m) => m.ruleId?.startsWith('@typescript-eslint/'))).toHaveLength(0);
