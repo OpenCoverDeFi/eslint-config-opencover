@@ -1,3 +1,5 @@
+export const GLOB_TS = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'];
+
 export const GLOB_TEST = [
     '**/*.test.ts',
     '**/*.test.tsx',
