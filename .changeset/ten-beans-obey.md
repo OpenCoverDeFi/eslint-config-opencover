@@ -30,7 +30,7 @@ export default [...nextVitals, ...nextTs, ...opencover];
 
 The default export is the composed preset (ignores + opencover + opencover/typescript + opencover/test).
 
-Each named config (`opencover`, `opencover/typescript`, `opencover/test`) can be overridden via `defineConfig` using the `name` field.
+Each named config (`opencover`, `opencover/typescript`, `opencover/test`) can be overridden by appending a config object with matching `files`/`ignores` patterns after spreading the preset. For example, to disable a TypeScript rule, add a config targeting the same file patterns after `...opencover`.
 
 **Included rule sets**
 
