@@ -2,7 +2,7 @@
 'eslint-config-opencover': major
 ---
 
-Migrate from ESLint 8 legacy config to ESLint 9 flat config.
+Migrate from ESLint 8 legacy config to ESLint 10 flat config.
 
 The package has been rewritten from the ground up. It now exports plain synchronous flat config arrays compatible with ESLint's `eslint.config.mjs` format. The ESLint 8 `module.exports` / `.eslintrc` format is no longer supported.
 
@@ -68,6 +68,6 @@ Each named config (`opencover`, `opencover/typescript`, `opencover/test`) can be
 
 **Other breaking changes**
 
-- Requires ESLint 9 and TypeScript 5. ESLint 8 is no longer supported.
+- Requires ESLint 10 and TypeScript 5. ESLint 8 is no longer supported.
 - TypeScript rules always use `projectService: true`; point ESLint at your project root instead of passing a tsconfig path.
 - Standalone React config available via `eslint-config-opencover/react`. Includes `eslint-plugin-react` and `eslint-plugin-react-hooks` as dependencies.

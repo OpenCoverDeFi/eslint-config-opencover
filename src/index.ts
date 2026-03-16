@@ -5,39 +5,34 @@ import gitignore from 'eslint-config-flat-gitignore';
 import { globalIgnores } from 'eslint/config';
 import { flatConfigs as importPlugin } from 'eslint-plugin-import-x';
 import unicornPlugin from 'eslint-plugin-unicorn';
-import tseslint from 'typescript-eslint';
+import { configs as tseslint } from 'typescript-eslint';
 import prettier from 'eslint-config-prettier/flat';
 import type { Linter } from 'eslint';
+import { createTypeScriptImportResolver } from 'eslint-import-resolver-typescript';
 import { GLOB_EXCLUDE, GLOB_TEST, GLOB_TS } from './globs.js';
-
-const GLOB_JS = ['**/*.js', '**/*.jsx', '**/*.mjs', '**/*.cjs'];
-
-const tsRuleOverrides: Linter.RulesRecord = {};
-
-for (const entry of tseslint.configs.strictTypeChecked) {
-    if (entry.rules) {
-        for (const key of Object.keys(entry.rules)) {
-            if (key.startsWith('@typescript-eslint/')) {
-                tsRuleOverrides[key] = 'off';
-            }
-        }
-    }
-}
 
 const config: Linter.Config[] = [
     eslint.configs.recommended,
     stylisticPlugin.configs.recommended,
     importPlugin.recommended,
     unicornPlugin.configs.recommended,
-    ...tseslint.configs.strictTypeChecked,
     {
-        name: 'opencover/disable-typescript-for-js',
-        files: GLOB_JS,
-        rules: tsRuleOverrides,
+        files: GLOB_TEST,
+        ...vitest.configs.recommended,
+    },
+    ...tseslint.strictTypeChecked.map((config) => ({
+        files: GLOB_TS,
+        ...config,
+    })),
+    {
+        files: GLOB_TS,
+        ...importPlugin.typescript,
     },
     {
-        ...vitest.configs.recommended,
-        files: GLOB_TEST,
+        files: GLOB_TS,
+        settings: {
+            'import-x/resolver-next': [createTypeScriptImportResolver()],
+        },
     },
     {
         name: 'opencover',

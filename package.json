@@ -47,19 +47,19 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@eslint/js": "^9.39.3",
+    "@eslint/js": "^10.0.1",
     "@stylistic/eslint-plugin": "^5.9.0",
     "@vitest/eslint-plugin": "^1.6.9",
     "eslint-config-flat-gitignore": "^2.2.1",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import-x": "^4.16.1",
-    "eslint-plugin-unicorn": "^63.0.0",
-    "typescript-eslint": "^8.56.0"
-  },
-  "peerDependencies": {
-    "eslint": "^9.0.0",
+    "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "typescript-eslint": "^8.56.1"
+  },
+  "peerDependencies": {
+    "eslint": "^10.0.0",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
@@ -67,13 +67,12 @@
     "@changesets/cli": "^2.29.8",
     "@types/node": "^22.19.11",
     "@vitest/coverage-v8": "^4.0.18",
-    "eslint": "^9.39.3",
-    "eslint-plugin-react": "^7.37.5",
-    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint": "^10.0.2",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "husky": "^9.1.7",
     "jiti": "^2.6.1",
-    "knip": "^5.84.0",
-    "lint-staged": "^16.2.7",
+    "knip": "^5.85.0",
+    "lint-staged": "^16.3.1",
     "prettier": "^3.8.1",
     "tsc-alias": "^1.8.16",
     "typescript": "^5.9.3",

@@ -3,7 +3,7 @@ import { lint } from './lint.js';
 
 describe('typescript scoping', () => {
     it('does not apply TypeScript rules to .js files', async () => {
-        const results = await lint('const unused = 1;', 'file.js');
+        const results = await lint('const x = foo!.bar;', 'file.js');
 
         results.forEach((result) => {
             expect(result.messages.filter((m) => m.ruleId?.startsWith('@typescript-eslint/'))).toHaveLength(0);
@@ -29,7 +29,7 @@ describe('test config scoping', () => {
     });
 
     it('does not apply vitest rules to non-test files', async () => {
-        const results = await lint('const _x = 1;', 'src/index.ts');
+        const results = await lint("it('no assertion', () => { const x = 1; });", 'src/index.ts');
 
         results.forEach((result) => {
             expect(result.messages.filter((m) => m.ruleId?.startsWith('vitest/'))).toHaveLength(0);

@@ -6,7 +6,6 @@ const config: Linter.Config = {
         parserOptions: {
             projectService: {
                 allowDefaultProject: ['*.js', '*.jsx', '*.ts', '*.tsx'],
-                defaultProject: 'tsconfig.json',
             },
         },
     },

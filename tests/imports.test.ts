@@ -4,7 +4,7 @@ import { lint } from './lint.js';
 describe('import-x/order', () => {
     it('allows node: imports before external', async () => {
         const results = await lint(
-            ["import fs from 'node:fs';", "import path from 'node:path';", "import express from 'express';"].join('\n'),
+            ["import fs from 'node:fs';", "import path from 'node:path';", "import eslint from 'eslint';"].join('\n'),
             'file.ts'
         );
 
