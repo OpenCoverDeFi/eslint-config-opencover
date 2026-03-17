@@ -40,3 +40,6 @@ jobs:
           publish: pnpm changeset:release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Prevent typescript-eslint from inferring a singleRun on CI to create an isolated TS program with default TS config breaking some tests,
+          # see https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/parseSettings/inferSingleRun.ts#L36
+          TSESTREE_SINGLE_RUN: false
