@@ -53,7 +53,7 @@ const config: Linter.Config[] = [
                 },
             ],
             'no-unneeded-ternary': 'error',
-            'no-use-before-define': ['off'],
+            'no-use-before-define': ['error'],
 
             '@stylistic/padding-line-between-statements': [
                 'error',
