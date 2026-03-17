@@ -1,0 +1,59 @@
+import { describe, it, expect } from 'vitest';
+import opencover from '@/index.js';
+import { lint } from './lint.js';
+
+describe('integration', () => {
+    it('lints a realistic TypeScript module with zero errors', async () => {
+        const code = [
+            'interface Config {',
+            '  readonly name: string;',
+            '  readonly value: number;',
+            '}',
+            '',
+            'class Service {',
+            '  public readonly name: string;',
+            '',
+            '  private readonly config: Config;',
+            '',
+            '  public constructor(config: Config) {',
+            '    this.name = config.name;',
+            '    this.config = config;',
+            '  }',
+            '',
+            '  public getValue(): number {',
+            '    return this.config.value;',
+            '  }',
+            '}',
+            '',
+            'function createService(config: Config): Service {',
+            '  return new Service(config);',
+            '}',
+            '',
+            'export type { Config };',
+            '',
+            'export { Service, createService };',
+        ].join('\n');
+
+        const results = await lint(code, 'file.ts');
+        results.forEach((result) => {
+            const errors = result.messages.filter((m) => m.severity === 2);
+            expect(errors).toHaveLength(0);
+        });
+    });
+});
+
+describe('opencover preset', () => {
+    it('contains all expected named configs', () => {
+        const names = opencover.map((c) => c.name).filter(Boolean);
+
+        expect(names).toContain('opencover');
+        expect(names).toContain('opencover/gitignore');
+        expect(names).toContain('opencover/typescript');
+        expect(names).toContain('opencover/test');
+    });
+
+    it('has a reasonable number of config objects', () => {
+        // Ignores (gitignore + globalIgnores) + base + typescript (setup + rules) + test = at least 5
+        expect(opencover.length).toBeGreaterThanOrEqual(5);
+    });
+});

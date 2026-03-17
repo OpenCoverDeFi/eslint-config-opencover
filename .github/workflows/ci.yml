@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened] # Trigger workflow on PR creation, reopening and when a commit is pushed.
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: .nvmrc
+          cache: 'pnpm'
+
+      - name: 📥 Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: 💊 Run linting
+        run: pnpm lint
+
+      - name: 🧪 Run typecheck
+        run: pnpm typecheck
+
+      - name: 📝 Run knip
+        run: pnpm knip
+
+      - name: 🧪 Run test script
+        run: pnpm test
+        env:
+          # Prevent typescript-eslint from inferring a singleRun on CI to create an isolated TS program with default TS config breaking some tests,
+          # see https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/parseSettings/inferSingleRun.ts#L36
+          TSESTREE_SINGLE_RUN: false
+
+      - name: 🦋 Run changeset check
+        if: ${{ !startsWith(github.head_ref, 'renovate/') && !startsWith(github.head_ref, 'dependabot/') }}
+        run: pnpm changeset status

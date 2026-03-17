@@ -4,6 +4,7 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Runtime data
 pids
@@ -53,11 +54,17 @@ typings/
 
 # Yarn Integrity file
 .yarn-integrity
+.pnpm-store
 
 # dotenv environment variables file
 .env
 .envrc
 
 # Only apps should have lockfiles
-yarn.lock
 .idea
+dist
+.notes/
+
+# ai related
+.claude
+.cursor

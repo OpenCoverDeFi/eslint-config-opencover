@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+pnpm typecheck
+
+pnpm knip
+
+pnpm lint-staged

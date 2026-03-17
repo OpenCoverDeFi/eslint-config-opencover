@@ -1,71 +1,80 @@
 # eslint-config-opencover
 
-> ESLint Typescript shareable config for OpenCover's coding style
+ESLint flat config for OpenCover's TypeScript coding style.
 
-## Install
+## Installation
 
-> Make sure you have already installed `eslint` and `typescript` as they are required packages.
-
-```console
-yarn add -D eslint-config-opencover
+```bash
+pnpm add -D eslint-config-opencover eslint typescript
 ```
 
-Then, add this to your `.eslintrc.js`:
+## Usage
 
-```js
-module.exports = {
-	extends: "@opencover/eslint-config-opencover",
-	rules: {
-		// your overrides
-	},
-};
+### TypeScript project
+
+```javascript
+// eslint.config.mjs
+import opencover from 'eslint-config-opencover';
+
+export default [...opencover];
 ```
 
-### Usage for React
+### React project
 
-Adjust your `.eslintrc.js` like this:
+```javascript
+// eslint.config.mjs
+import opencover from 'eslint-config-opencover';
+import react from 'eslint-config-opencover/react';
 
-```js
-module.exports = {
-	extends: "@opencover/eslint-config-opencover/with-react",
-	rules: {
-		// your overrides
-	},
-};
+export default [...opencover, ...react];
 ```
 
-### Add to .eslintignore certain files, for example:
+### Next.js project
 
-```
-*.css
-*.svg
-```
+Install Next.js ESLint config alongside this package:
 
-### (Optional) Add .prettierc.json with this preferred configuration
-
-```
-{
-    "printWidth": 100,
-    "trailingComma": "es5",
-    "tabWidth": 4,
-    "semi": true,
-    "singleQuote": true
-}
+```bash
+pnpm add -D eslint-config-next
 ```
 
+```javascript
+// eslint.config.mjs
+import opencover from 'eslint-config-opencover';
+import nextVitals from 'eslint-config-next/core-web-vitals';
+import nextTs from 'eslint-config-next/typescript';
 
-### (Optional) Linting with vscode
-
-If you are using vscode this `.vscode/settings.json` file may come in handy:
-
+export default [...nextVitals, ...nextTs, ...opencover];
 ```
-{
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-    "editor.formatOnSave": true,
-    "eslint.alwaysShowStatus": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
+
+OpenCover's config should come **last** so its rules take precedence.
+
+## Overriding rules
+
+Each config object in the exported array has a `name` property for debugging (for example in ESLint's config inspector), but flat config overrides are matched by `files`/`ignores`, not by `name`. To override TypeScript-specific rules, add a later config object that matches the same files:
+
+```javascript
+// eslint.config.mjs
+import opencover from 'eslint-config-opencover';
+
+export default [
+  ...opencover,
+  {
+    files: ['**/*.{ts,tsx,mts,cts}'],
+    rules: {
+      '@typescript-eslint/explicit-function-return-type': 'off',
     },
-    "editor.rulers": [100]
-}
+  },
+];
 ```
+
+Later matching config objects override earlier ones for those files.
+
+Available config names:
+
+| Name                   | Description                          |
+| ---------------------- | ------------------------------------ |
+| `opencover`            | Base rules (stylistic, imports, etc) |
+| `opencover/gitignore`  | Ignores files from `.gitignore`      |
+| `opencover/typescript` | TypeScript-specific rules            |
+| `opencover/test`       | Test file rules (vitest)             |
+| `opencover/react`      | React-specific TSX rules             |

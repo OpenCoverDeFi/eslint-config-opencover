@@ -1,0 +1,40 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:best-practices", "schedule:weekdays"],
+  "enabledManagers": ["npm"],
+  "osvVulnerabilityAlerts": true,
+  "packageRules": [
+    {
+      "description": "Disable all updates by default",
+      "matchPackageNames": ["*"],
+      "enabled": false
+    },
+    {
+      "description": "Enable only packageManager updates",
+      "matchDepTypes": ["packageManager"],
+      "minimumReleaseAge": "14 days",
+      "enabled": true
+    },
+    {
+      "description": "Auto merge minor and patch packageManager updates",
+      "matchDepTypes": ["packageManager"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "minimumReleaseAge": "14 days",
+      "automerge": true,
+      "enabled": true
+    },
+    {
+      "matchSourceUrls": ["https://github.com/**"],
+      "prBodyColumns": ["Package", "Type", "Update", "Change", "Pending", "OpenSSF"],
+      "prBodyDefinitions": {
+        "OpenSSF": "[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/{{sourceRepo}}/badge)](https://securityscorecards.dev/viewer/?uri=github.com/{{sourceRepo}})"
+      }
+    }
+  ],
+  "reviewers": ["team:tx"],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "rangeStrategy": "bump",
+    "automerge": true
+  }
+}
