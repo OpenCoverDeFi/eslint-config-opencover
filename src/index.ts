@@ -53,7 +53,7 @@ const config: Linter.Config[] = [
                 },
             ],
             'no-unneeded-ternary': 'error',
-            'no-use-before-define': ['error'],
+            'no-use-before-define': 'error',
 
             '@stylistic/padding-line-between-statements': [
                 'error',
@@ -128,6 +128,16 @@ const config: Linter.Config[] = [
                     caughtErrorsIgnorePattern: '^_',
                 },
             ],
+            'no-use-before-define': 'off',
+            '@typescript-eslint/no-use-before-define': 'error',
+            '@typescript-eslint/no-restricted-types': [
+                'error',
+                {
+                    types: {
+                        Map: { message: 'Map is not allowed. Use Object instead.' },
+                    },
+                },
+            ],
             '@typescript-eslint/prefer-nullish-coalescing': [
                 'error',
                 {
@@ -135,14 +145,6 @@ const config: Linter.Config[] = [
                     ignoreIfStatements: true,
                     ignorePrimitives: {
                         boolean: true,
-                    },
-                },
-            ],
-            '@typescript-eslint/no-restricted-types': [
-                'error',
-                {
-                    types: {
-                        Map: { message: 'Map is not allowed. Use Object instead.' },
                     },
                 },
             ],
