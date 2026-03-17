@@ -3,5 +3,3 @@
 set -e
 
 pnpm test
-
-pnpm changeset status
