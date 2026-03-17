@@ -47,6 +47,7 @@ describe('opencover preset', () => {
         const names = opencover.map((c) => c.name).filter(Boolean);
 
         expect(names).toContain('opencover');
+        expect(names).toContain('opencover/gitignore');
         expect(names).toContain('opencover/typescript');
         expect(names).toContain('opencover/test');
     });

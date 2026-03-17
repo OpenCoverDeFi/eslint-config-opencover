@@ -1,6 +1,10 @@
-export const GLOB_TS = ['**/*.ts', '**/*.tsx', '**/*.mts', '**/*.cts'];
+export const GLOB_TS = ['**/*.?([cm])ts', '**/*.tsx'];
 
-export const GLOB_TEST = ['**/*.spec.{js,jsx,ts,tsx,cjs,cts,mjs,mts}', '**/*.test.{js,jsx,ts,tsx,cjs,cts,mjs,mts}'];
+export const GLOB_JSX = ['**/*.jsx'];
+
+export const GLOB_TSX = ['**/*.tsx'];
+
+export const GLOB_TEST = ['**/*.spec.?([cm])[jt]s', '**/*.spec.[jt]sx', '**/*.test.?([cm])[jt]s', '**/*.test.[jt]sx'];
 
 export const GLOB_EXCLUDE = [
     '**/dist',
