@@ -77,3 +77,4 @@ Available config names:
 | `opencover/gitignore`  | Ignores files from `.gitignore`      |
 | `opencover/typescript` | TypeScript-specific rules            |
 | `opencover/test`       | Test file rules (vitest)             |
+| `opencover/react`      | React-specific TSX rules             |
