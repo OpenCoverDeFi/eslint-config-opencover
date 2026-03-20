@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.7
+
+### Patch Changes
+
+- [#30](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/30) [`5090441`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/5090441180908b78968729fbb24e6ce0a88bf6be) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Use changeset publish over npm publish
+
 ## 3.0.6
 
 ### Patch Changes
