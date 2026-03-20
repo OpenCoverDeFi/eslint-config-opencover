@@ -39,6 +39,11 @@ jobs:
       - name: 📥 Install deps
         run: pnpm install --frozen-lockfile
 
+      - name: 🔑 Set npm auth
+        run: echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> .npmrc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
       - name: 🚀 Create Release Pull Request or Publish
         uses: changesets/action@v1
         with:
@@ -46,7 +51,6 @@ jobs:
           publish: pnpm changeset:release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
           # Prevent typescript-eslint from inferring a singleRun on CI to create an isolated TS program with default TS config breaking some tests,
           # see https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/typescript-estree/src/parseSettings/inferSingleRun.ts#L36
           TSESTREE_SINGLE_RUN: false
