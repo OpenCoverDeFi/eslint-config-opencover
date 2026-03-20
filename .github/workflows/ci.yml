@@ -30,6 +30,7 @@ jobs:
         run: |
           node -v
           npm -v
+          pnpm -v
 
       - name: 📥 Install deps
         run: pnpm install --frozen-lockfile
