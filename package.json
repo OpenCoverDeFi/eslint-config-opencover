@@ -41,7 +41,7 @@
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "changeset:version": "changeset version",
-    "changeset:release": "pnpm build && npm publish --verbose --access public",
+    "changeset:release": "pnpm build && changeset publish",
     "prepare": "husky",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
