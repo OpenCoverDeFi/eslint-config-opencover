@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.4
+
+### Patch Changes
+
+- [#24](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/24) [`c6fb19e`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/c6fb19ef2dd78eb3308b029c3b63e27fc1557c8c) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Use npm auth token
+
 ## 3.0.3
 
 ### Patch Changes
