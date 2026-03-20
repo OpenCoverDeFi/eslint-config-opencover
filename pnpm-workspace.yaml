@@ -1,6 +1,8 @@
 packages:
   - '.'
 
+blockExoticSubdeps: true
+
 # Wait for 2 weeks to install new packages unless excluded
 minimumReleaseAge: 20160
 minimumReleaseAgeExclude:
