@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.1
+
+### Patch Changes
+
+- [#18](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/18) [`3d2d55e`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/3d2d55e7546e802c0b40f86f4eebddf3f64fd5ba) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Update Node version to 24 in GitHub Actions to enable trusted publishing
+
 ## 3.0.0
 
 ### Major Changes
