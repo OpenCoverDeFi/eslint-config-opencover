@@ -30,6 +30,12 @@ jobs:
           node-version-file: .nvmrc
           cache: 'pnpm'
 
+      - name: 🔎 Show Node and npm versions
+        run: |
+          node -v
+          npm -v
+          pnpm -v
+
       - name: 📥 Install deps
         run: pnpm install --frozen-lockfile
 
