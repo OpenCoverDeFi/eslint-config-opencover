@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.3
+
+### Patch Changes
+
+- [#22](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/22) [`d8c27b6`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/d8c27b6c9cc6bb202a31a8638cbe0b8ff1bc26f8) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Enable verbose for npm publish
+
 ## 3.0.2
 
 ### Patch Changes
