@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.6
+
+### Patch Changes
+
+- [#28](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/28) [`d9867b5`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/d9867b5ac0cd9692f530aa48d3163b4b246fb1f9) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Remove npm auth
+
 ## 3.0.5
 
 ### Patch Changes
