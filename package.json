@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
+    "url": "git+https://github.com/OpenCoverDeFi/eslint-config-opencover.git"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -41,7 +41,7 @@
     "typecheck": "tsc --noEmit",
     "changeset": "changeset",
     "changeset:version": "changeset version",
-    "changeset:release": "pnpm build && npm publish --access public",
+    "changeset:release": "pnpm build && NODE_AUTH_TOKEN=\"\" npm publish --verbose --access public",
     "prepare": "husky",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
