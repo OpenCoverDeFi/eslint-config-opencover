@@ -24,7 +24,7 @@ updates:
     schedule:
       interval: 'weekly'
     groups:
-      github-actions:
+      all:
         patterns:
           - '*'
     cooldown:
