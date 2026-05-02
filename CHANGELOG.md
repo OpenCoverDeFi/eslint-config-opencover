@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.8
+
+### Patch Changes
+
+- [#55](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/55) [`95b42f9`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/95b42f9c24f9c6f5a0b0509b70a8a77c2265d50c) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Add SHA to GitHub Actions and simplify renovate bot config with security:openssf-scorecard preset
+
 ## 3.0.7
 
 ### Patch Changes
