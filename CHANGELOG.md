@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.9
+
+### Patch Changes
+
+- [#58](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/58) [`d10dc48`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/d10dc48a86c48b6b2e5d468bcbc38f493f57138d) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Fix rootDir in TypeScript 6
+
 ## 3.0.8
 
 ### Patch Changes
