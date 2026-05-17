@@ -34,9 +34,9 @@
       "addLabels": ["private-package"]
     },
     {
-      "description": "Disable major updates for Node types and ESLint",
+      "description": "Disable major updates for Node types",
       "matchManagers": ["npm"],
-      "matchPackageNames": ["@types/node", "eslint"],
+      "matchPackageNames": ["@types/node"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
