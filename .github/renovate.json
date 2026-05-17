@@ -1,33 +1,64 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:best-practices", "security:openssf-scorecard", "schedule:weekdays"],
-  "enabledManagers": ["npm"],
+  "extends": ["config:best-practices", "security:openssf-scorecard", ":enableVulnerabilityAlerts", "schedule:weekdays"],
+  "enabledManagers": ["npm", "github-actions"],
+  "lockFileMaintenance": {
+    "automerge": true,
+    "addLabels": ["dependencies", "lockfile", "automerge"]
+  },
+  "minimumReleaseAge": "14 days",
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
-      "description": "Disable all updates by default",
-      "matchPackageNames": ["*"],
+      "description": "Group and automerge npm minor, patch and digest updates",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "minimumReleaseAge": "14 days",
+      "groupName": "npm dependencies",
+      "automerge": true,
+      "addLabels": ["dependencies", "javascript", "automerge"]
+    },
+    {
+      "description": "Group npm major updates for manual review",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["major"],
+      "minimumReleaseAge": "14 days",
+      "groupName": "npm major dependencies",
+      "addLabels": ["dependencies", "javascript", "major"]
+    },
+    {
+      "description": "Disable minimum release age for private OpenCover npm packages",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["/^@opencoverdefi\\//i"],
+      "minimumReleaseAge": null,
+      "addLabels": ["private-package"]
+    },
+    {
+      "description": "Disable major updates for Node types and ESLint",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["@types/node", "eslint"],
+      "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
-      "description": "Enable only packageManager updates",
-      "matchDepTypes": ["packageManager"],
-      "minimumReleaseAge": "14 days",
-      "enabled": true
+      "description": "Group and automerge GitHub Actions minor, patch and digest updates",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "groupName": "github-actions",
+      "automerge": true,
+      "addLabels": ["dependencies", "github-actions", "automerge"]
     },
     {
-      "description": "Auto merge minor and patch packageManager updates",
-      "matchDepTypes": ["packageManager"],
-      "matchUpdateTypes": ["minor", "patch"],
-      "minimumReleaseAge": "14 days",
-      "automerge": true,
-      "enabled": true
+      "description": "Keep GitHub Actions major updates separate for manual review",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["major"],
+      "addLabels": ["dependencies", "github-actions", "major"]
     }
   ],
   "reviewers": ["team:tx"],
   "vulnerabilityAlerts": {
-    "enabled": true,
     "rangeStrategy": "bump",
-    "automerge": true
+    "automerge": true,
+    "addLabels": ["dependencies", "security", "automerge"]
   }
 }
