@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.10
+
+### Patch Changes
+
+- [#72](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/72) [`3fea4f1`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/3fea4f1d1fb23dde2b6f5ac8c39d17af366e07f1) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Switch from dependabot to renovate updates for npm and github actions
+
 ## 3.0.9
 
 ### Patch Changes
