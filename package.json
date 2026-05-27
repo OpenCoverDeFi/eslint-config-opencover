@@ -71,7 +71,7 @@
     "eslint": "10.3.0",
     "husky": "9.1.7",
     "jiti": "2.7.0",
-    "knip": "6.12.2",
+    "knip": "6.13.1",
     "lint-staged": "17.0.4",
     "prettier": "3.8.3",
     "tsc-alias": "1.8.17",
