@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.0.11
+
+### Patch Changes
+
+- [#98](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/98) [`9c4fbb5`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/9c4fbb55a9252c9bc3a7ebcf87960ac59c8c4fcc) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Remove TypeScript 6 default compiler options from tsconfig.
+
 ## 3.0.10
 
 ### Patch Changes
