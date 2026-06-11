@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.0
+
+### Minor Changes
+
+- [#100](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/100) [`5f6931a`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/5f6931a8916b5e7f29cc9ac49c5dcec23a767056) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Require Node.js 24.
+
 ## 3.0.11
 
 ### Patch Changes
