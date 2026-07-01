@@ -89,7 +89,9 @@ const config: Linter.Config[] = [
             'import-x/no-unresolved': 'off',
 
             'unicorn/prevent-abbreviations': 'off',
+            'unicorn/consistent-class-member-order': 'off',
             'unicorn/no-array-for-each': 'off',
+            'unicorn/no-for-each': 'off',
             'unicorn/no-array-reduce': 'off',
             'unicorn/no-null': 'off',
         },
