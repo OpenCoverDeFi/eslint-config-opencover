@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.1
+
+### Patch Changes
+
+- [#110](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/110) [`2b1b0b9`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/2b1b0b9e3839e9b362344bd72b9fb0d3b45e6d8f) Thanks [@renovate](https://github.com/apps/renovate)! - Update Unicorn rule compatibility for eslint-plugin-unicorn 67.
+
 ## 3.1.0
 
 ### Minor Changes
