@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { lint } from './lint.js';
+import { calculateConfig, lint } from './lint.js';
 
 describe('unicorn', () => {
     describe('unicorn/no-array-callback-reference', () => {
@@ -49,6 +49,33 @@ describe('unicorn', () => {
             results.forEach((result) => {
                 expect(result.messages.filter((m) => m.ruleId === 'unicorn/filename-case')).toHaveLength(1);
             });
+        });
+
+        it.each(['js', 'jsx', 'ts', 'tsx'])(
+            'allows .%s files in Next.js dynamic route directories',
+            async (extension) => {
+                const config = await calculateConfig(`src/app/proof-of-cover/[requestId]/page.${extension}`);
+
+                expect(config?.rules?.['unicorn/filename-case']).toEqual([0]);
+            }
+        );
+
+        it.each(['[...requestIds]', '[[...requestIds]]'])('allows Next.js %s route directories', async (directory) => {
+            const config = await calculateConfig(`app/proof-of-cover/${directory}/page.tsx`);
+
+            expect(config?.rules?.['unicorn/filename-case']).toEqual([0]);
+        });
+
+        it('still bans camel-case static route directories', async () => {
+            const config = await calculateConfig('src/app/proofOfCover/page.tsx');
+
+            expect(config?.rules?.['unicorn/filename-case']).toEqual([2]);
+        });
+
+        it('still bans PascalCase filenames in static route directories', async () => {
+            const config = await calculateConfig('src/app/proof-of-cover/MyComponent.tsx');
+
+            expect(config?.rules?.['unicorn/filename-case']).toEqual([2]);
         });
     });
 

@@ -97,6 +97,13 @@ const config: Linter.Config[] = [
         },
     },
     {
+        name: 'opencover/nextjs-dynamic-route',
+        files: ['{app,src/app}/**/[[]*[]]/**/*.{js,jsx,ts,tsx}'],
+        rules: {
+            'unicorn/filename-case': 'off',
+        },
+    },
+    {
         name: 'opencover/typescript',
         files: GLOB_TS,
         languageOptions: {

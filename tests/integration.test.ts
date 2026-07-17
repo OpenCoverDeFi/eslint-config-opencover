@@ -48,6 +48,7 @@ describe('opencover preset', () => {
 
         expect(names).toContain('opencover');
         expect(names).toContain('opencover/gitignore');
+        expect(names).toContain('opencover/nextjs-dynamic-route');
         expect(names).toContain('opencover/typescript');
         expect(names).toContain('opencover/test');
     });
