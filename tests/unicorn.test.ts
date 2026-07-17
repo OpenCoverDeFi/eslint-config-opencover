@@ -2,6 +2,16 @@ import { describe, it, expect } from 'vitest';
 import { calculateConfig, lint } from './lint.js';
 
 describe('unicorn', () => {
+    describe('unicorn/name-replacements', () => {
+        it('allows conventional abbreviations', async () => {
+            const results = await lint('type ButtonProps = { ref: string };', 'file.ts');
+
+            results.forEach((result) => {
+                expect(result.messages.filter((m) => m.ruleId === 'unicorn/name-replacements')).toHaveLength(0);
+            });
+        });
+    });
+
     describe('unicorn/no-array-callback-reference', () => {
         it('allows inline arrow functions', async () => {
             const results = await lint('const result = arr.filter((x) => isValid(x));', 'file.ts');
