@@ -71,10 +71,11 @@ Later matching config objects override earlier ones for those files.
 
 Available config names:
 
-| Name                   | Description                          |
-| ---------------------- | ------------------------------------ |
-| `opencover`            | Base rules (stylistic, imports, etc) |
-| `opencover/gitignore`  | Ignores files from `.gitignore`      |
-| `opencover/typescript` | TypeScript-specific rules            |
-| `opencover/test`       | Test file rules (vitest)             |
-| `opencover/react`      | React-specific TSX rules             |
+| Name                             | Description                                  |
+| -------------------------------- | -------------------------------------------- |
+| `opencover`                      | Base rules (stylistic, imports, etc)         |
+| `opencover/gitignore`            | Ignores files from `.gitignore`              |
+| `opencover/nextjs-dynamic-route` | Allows Next.js dynamic route directory names |
+| `opencover/typescript`           | TypeScript-specific rules                    |
+| `opencover/test`                 | Test file rules (vitest)                     |
+| `opencover/react`                | React-specific TSX rules                     |
