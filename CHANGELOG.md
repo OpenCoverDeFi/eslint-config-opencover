@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.3
+
+### Patch Changes
+
+- [#137](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/137) [`61614c1`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/61614c1f506f975a97f430b87e63dc5c599fbac5) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Keep conventional abbreviations allowed after Unicorn renamed `prevent-abbreviations` to `name-replacements`.
+
 ## 3.1.2
 
 ### Patch Changes
