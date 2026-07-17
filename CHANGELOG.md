@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.2
+
+### Patch Changes
+
+- [#135](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/135) [`9bc9d29`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/9bc9d29bd5245358b487edcc64cd3431800bf675) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Allow files below Next.js App Router dynamic route directories to use the framework's parameter naming conventions.
+
 ## 3.1.1
 
 ### Patch Changes
