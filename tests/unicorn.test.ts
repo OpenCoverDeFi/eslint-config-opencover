@@ -4,11 +4,10 @@ import { calculateConfig, lint } from './lint.js';
 describe('unicorn', () => {
     describe('unicorn/name-replacements', () => {
         it('allows conventional abbreviations', async () => {
-            const results = await lint('type ButtonProps = { ref: string };', 'file.ts');
+            const config = await calculateConfig('file.ts');
+            const rule = config?.rules?.['unicorn/name-replacements'];
 
-            results.forEach((result) => {
-                expect(result.messages.filter((m) => m.ruleId === 'unicorn/name-replacements')).toHaveLength(0);
-            });
+            expect(Array.isArray(rule) ? rule[0] : rule).toBe(0);
         });
     });
 
@@ -77,15 +76,19 @@ describe('unicorn', () => {
         });
 
         it('still bans camel-case static route directories', async () => {
-            const config = await calculateConfig('src/app/proofOfCover/page.tsx');
+            const results = await lint('export {};', 'src/app/proofOfCover/page.js');
 
-            expect(config?.rules?.['unicorn/filename-case']).toEqual([2]);
+            results.forEach((result) => {
+                expect(result.messages.filter((m) => m.ruleId === 'unicorn/filename-case')).toHaveLength(1);
+            });
         });
 
         it('still bans PascalCase filenames in static route directories', async () => {
-            const config = await calculateConfig('src/app/proof-of-cover/MyComponent.tsx');
+            const results = await lint('export {};', 'src/app/proof-of-cover/MyComponent.js');
 
-            expect(config?.rules?.['unicorn/filename-case']).toEqual([2]);
+            results.forEach((result) => {
+                expect(result.messages.filter((m) => m.ruleId === 'unicorn/filename-case')).toHaveLength(1);
+            });
         });
     });
 
