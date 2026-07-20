@@ -98,7 +98,10 @@ const config: Linter.Config[] = [
     },
     {
         name: 'opencover/nextjs-dynamic-route',
-        files: ['{app,src/app}/**/[[]*[]]/**/*.{js,jsx,ts,tsx}'],
+        files: [
+            '{app,src/app}/**/[[]*[]]/**/*.{js,jsx,ts,tsx}',
+            'packages/*/{app,src/app}/**/[[]*[]]/**/*.{js,jsx,ts,tsx}',
+        ],
         rules: {
             'unicorn/filename-case': 'off',
         },

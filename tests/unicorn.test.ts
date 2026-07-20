@@ -75,6 +75,22 @@ describe('unicorn', () => {
             expect(config?.rules?.['unicorn/filename-case']).toEqual([0]);
         });
 
+        it.each([
+            'packages/api/src/app/api/[...slug]/route.ts',
+            'packages/app/src/app/alerts/[workspaceId]/page.tsx',
+            'packages/admin/app/users/[[...userIds]]/page.tsx',
+        ])('allows Next.js dynamic route directories in package workspaces: %s', async (file) => {
+            const config = await calculateConfig(file);
+
+            expect(config?.rules?.['unicorn/filename-case']).toEqual([0]);
+        });
+
+        it('does not treat other workspace roots as Next.js package workspaces', async () => {
+            const config = await calculateConfig('services/api/src/app/api/[...slug]/route.ts');
+
+            expect(config?.rules?.['unicorn/filename-case']).toEqual([2]);
+        });
+
         it('still bans camel-case static route directories', async () => {
             const results = await lint('export {};', 'src/app/proofOfCover/page.js');
 
