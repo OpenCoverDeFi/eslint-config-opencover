@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.4
+
+### Patch Changes
+
+- [#142](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/142) [`f70c957`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/f70c957901ae313f87d2c3ef6c5a227a6e254555) Thanks [@yuryoparin](https://github.com/yuryoparin)! - Support Next.js dynamic route directories inside one-level `packages/*` workspaces.
+
 ## 3.1.3
 
 ### Patch Changes
