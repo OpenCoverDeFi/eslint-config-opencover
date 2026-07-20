@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 3.1.5
+
+### Patch Changes
+
+- [#141](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/141) [`0d3d168`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/0d3d16886d00483f52c04bb42551ec688faf7e57) Thanks [@renovate](https://github.com/apps/renovate)! - Update `eslint-plugin-unicorn` to v71 while preserving the recommended base64 rule.
+
 ## 3.1.4
 
 ### Patch Changes
