@@ -94,6 +94,7 @@ const config: Linter.Config[] = [
             'unicorn/no-for-each': 'off',
             'unicorn/no-array-reduce': 'off',
             'unicorn/no-null': 'off',
+            'unicorn/prefer-uint8array-base64': 'error',
         },
     },
     {
