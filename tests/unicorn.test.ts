@@ -125,4 +125,12 @@ describe('unicorn', () => {
             });
         });
     });
+
+    describe('unicorn/prefer-uint8array-base64', () => {
+        it('remains enabled when Unicorn removes it from the recommended preset', async () => {
+            const config = await calculateConfig('file.ts');
+
+            expect(config?.rules?.['unicorn/prefer-uint8array-base64']).toEqual([2]);
+        });
+    });
 });
