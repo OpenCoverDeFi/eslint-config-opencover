@@ -67,6 +67,7 @@
     "@changesets/changelog-github": "0.7.0",
     "@changesets/cli": "2.31.0",
     "@types/node": "24.13.3",
+    "@typescript/native": "npm:typescript@7.0.2",
     "@vitest/coverage-v8": "4.1.10",
     "eslint": "10.6.0",
     "husky": "9.1.7",
@@ -75,7 +76,7 @@
     "lint-staged": "17.0.8",
     "prettier": "3.9.4",
     "tsc-alias": "1.9.0",
-    "typescript": "7.0.2",
+    "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "4.1.10"
   },
   "engines": {
