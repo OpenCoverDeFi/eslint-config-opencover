@@ -75,7 +75,7 @@
     "knip": "6.26.0",
     "lint-staged": "17.0.8",
     "prettier": "3.9.5",
-    "tsc-alias": "1.9.0",
+    "tsc-alias": "1.9.1",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "4.1.10"
   },
