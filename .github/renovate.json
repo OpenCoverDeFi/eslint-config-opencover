@@ -34,6 +34,12 @@
       "addLabels": ["private-package"]
     },
     {
+      "description": "Disable minimum release age for npm lockfile maintenance",
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "minimumReleaseAge": null
+    },
+    {
       "description": "Disable major updates for Node types",
       "matchManagers": ["npm"],
       "matchPackageNames": ["@types/node"],
