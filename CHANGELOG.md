@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 4.0.0
+
+### Major Changes
+
+- [#158](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/158) [`afffeb2`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/afffeb271a177619a0bb255f6c1b2a552a2bbdf4) Thanks [@renovate](https://github.com/apps/renovate)! - Adopt the `eslint-plugin-unicorn` v72 recommended rules. Consumers may need to update code for newly enabled or changed lint rules.
+
 ## 3.1.5
 
 ### Patch Changes
