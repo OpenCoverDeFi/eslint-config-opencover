@@ -51,3 +51,6 @@ jobs:
       - name: 🦋 Run changeset check
         if: ${{ !startsWith(github.head_ref, 'renovate/') && !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'changeset-release/') }}
         run: pnpm changeset status
+
+      - name: 🛠️ Build
+        run: pnpm build
