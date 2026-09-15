@@ -69,13 +69,13 @@
     "@types/node": "24.13.3",
     "@typescript/native": "npm:typescript@7.0.2",
     "@vitest/coverage-v8": "4.1.11",
-    "eslint": "10.9.0",
+    "eslint": "10.9.1",
     "husky": "9.1.7",
     "jiti": "2.7.0",
-    "knip": "6.32.2",
-    "lint-staged": "17.3.0",
+    "knip": "6.34.0",
+    "lint-staged": "17.4.1",
     "prettier": "3.9.6",
-    "tsc-alias": "1.9.2",
+    "tsc-alias": "1.9.3",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "4.1.11"
   },
@@ -95,5 +95,5 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "packageManager": "pnpm@11.23.0+sha512.f00082e5b283a199b74e079da28d155c008fe232f44c8a06ea7ddfa014ecf719fc362f790ecc67b28106ddac2afb24c49a9a079159da560b2ce7d1e98efd11af"
+  "packageManager": "pnpm@11.25.0"
 }
