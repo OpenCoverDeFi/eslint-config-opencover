@@ -74,7 +74,7 @@
     "jiti": "2.7.0",
     "knip": "6.36.0",
     "lint-staged": "17.5.1",
-    "prettier": "3.9.7",
+    "prettier": "3.9.8",
     "tsc-alias": "1.9.5",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "4.1.11"
