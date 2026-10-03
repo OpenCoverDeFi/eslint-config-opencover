@@ -56,7 +56,7 @@
     "eslint-plugin-import-x": "^4.16.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-unicorn": "^72.0.0",
+    "eslint-plugin-unicorn": "^76.0.0",
     "typescript-eslint": "^8.56.1"
   },
   "peerDependencies": {
@@ -64,11 +64,11 @@
     "typescript": "^6.0.2 || ^7.0.0"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "0.7.0",
-    "@changesets/cli": "2.31.1",
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "@types/node": "24.13.6",
     "@typescript/native": "npm:typescript@7.0.2",
-    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/coverage-v8": "5.0.1",
     "eslint": "10.11.0",
     "husky": "9.1.7",
     "jiti": "2.7.0",
@@ -77,7 +77,7 @@
     "prettier": "3.9.8",
     "tsc-alias": "1.9.5",
     "typescript": "npm:@typescript/typescript6@6.0.2",
-    "vitest": "4.1.11"
+    "vitest": "5.0.1"
   },
   "engines": {
     "node": ">=24",
@@ -95,5 +95,5 @@
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
-  "packageManager": "pnpm@11.27.0+sha512.ad12821463bb143295f1fa3ecde77a6b9b97a7990386da800ff57bffc3964dc64b7b1c7559d5dbe5c337aea659ed9c8937d4370bd198ca2009bc6fa0249808e7"
+  "packageManager": "pnpm@12.5.1+sha512.e3f305bc784a2bc89f5ad3b6138889470fae8d2af5f36b61216ec91c2c3d64089775f9de38aac331044ea40f245cb0d5666392dfdf65824e1907ef6a2c62de5f"
 }
