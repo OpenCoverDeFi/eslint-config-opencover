@@ -1,5 +1,11 @@
 # eslint-config-opencover
 
+## 4.1.0
+
+### Minor Changes
+
+- [#183](https://github.com/OpenCoverDeFi/eslint-config-opencover/pull/183) [`6bdebf2`](https://github.com/OpenCoverDeFi/eslint-config-opencover/commit/6bdebf24dcf0332f8905eec784d36aec199e9058) Thanks [@renovate](https://github.com/apps/renovate)! - Adopt the updated Unicorn recommended rules and fixes. Consumers may receive new lint findings; package exports, peer requirements, and engine requirements are unchanged.
+
 ## 4.0.0
 
 ### Major Changes
