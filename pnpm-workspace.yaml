@@ -6,7 +6,3 @@ allowBuilds:
 
 # Wait for 2 weeks to install new packages unless excluded
 minimumReleaseAge: 20160
-minimumReleaseAgeExclude:
-  - eslint-plugin-import-x@4.16.2
-  # Renovate security update: pnpm@10.28.2 || 11.8.0
-  - pnpm@10.28.2 || 11.8.0
