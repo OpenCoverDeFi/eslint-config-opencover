@@ -68,16 +68,16 @@
     "@changesets/cli": "3.0.3",
     "@types/node": "24.19.0",
     "@typescript/native": "npm:typescript@7.0.2",
-    "@vitest/coverage-v8": "5.0.2",
+    "@vitest/coverage-v8": "5.0.3",
     "eslint": "10.11.0",
     "husky": "9.1.7",
     "jiti": "2.7.0",
-    "knip": "6.38.0",
+    "knip": "6.39.0",
     "lint-staged": "17.6.0",
     "prettier": "3.9.9",
-    "tsc-alias": "1.9.5",
+    "tsc-alias": "1.9.7",
     "typescript": "npm:@typescript/typescript6@6.0.2",
-    "vitest": "5.0.2"
+    "vitest": "5.0.3"
   },
   "engines": {
     "node": ">=24",
