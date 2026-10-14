@@ -10,9 +10,9 @@
   "osvVulnerabilityAlerts": true,
   "packageRules": [
     {
-      "description": "Group and automerge npm minor, patch and digest updates",
+      "description": "Group and automerge npm minor and patch updates",
       "matchManagers": ["npm"],
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": ["minor", "patch"],
       "minimumReleaseAge": "14 days",
       "groupName": "npm dependencies",
       "automerge": true,
