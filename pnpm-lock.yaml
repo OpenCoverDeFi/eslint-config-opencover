@@ -194,8 +194,8 @@ importers:
         specifier: ^7.0.1
         version: 7.1.1(eslint@10.12.0(jiti@2.7.0))
       eslint-plugin-unicorn:
-        specifier: ^76.0.0
-        version: 76.0.0(eslint@10.12.0(jiti@2.7.0))
+        specifier: ^77.0.0
+        version: 77.0.0(eslint@10.12.0(jiti@2.7.0))
       typescript-eslint:
         specifier: ^8.56.1
         version: 8.71.1(@typescript/typescript6@6.0.2)(eslint@10.12.0(jiti@2.7.0))
@@ -1619,8 +1619,8 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-plugin-unicorn@76.0.0:
-    resolution: {integrity: sha512-3ywJrCMHKYhcBP5yFzGaOOX3dY7+iR3hvpuoS/0EnhRFgVWLejly+t4fOdJvWQxJdHZl1C+QBW7hybXPDld4Pw==}
+  eslint-plugin-unicorn@77.0.0:
+    resolution: {integrity: sha512-aayznMCKTXlPAsoyUjRok862sz3BJAfxpQX/t79AT/uVQTmWsCx3FXfXo+9hfhL8aR2mMZQYyXoDZo3/ly6lJw==}
     engines: {node: '>=22'}
     peerDependencies:
       eslint: '>=10.4'
@@ -4108,7 +4108,7 @@ snapshots:
       string.prototype.matchall: 4.1.0
       string.prototype.repeat: 1.0.0
 
-  eslint-plugin-unicorn@76.0.0(eslint@10.12.0(jiti@2.7.0)):
+  eslint-plugin-unicorn@77.0.0(eslint@10.12.0(jiti@2.7.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@10.12.0(jiti@2.7.0))
       '@eslint/css-tree': 4.1.1
