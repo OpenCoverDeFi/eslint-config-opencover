@@ -72,10 +72,10 @@
     "eslint": "10.14.0",
     "husky": "9.1.7",
     "jiti": "2.7.0",
-    "knip": "6.44.0",
+    "knip": "6.44.1",
     "lint-staged": "17.6.0",
     "prettier": "3.9.10",
-    "tsc-alias": "1.9.9",
+    "tsc-alias": "1.9.10",
     "typescript": "npm:@typescript/typescript6@6.0.2",
     "vitest": "5.0.5"
   },
